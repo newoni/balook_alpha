@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class controller {
-    @RequestMapping(value = "/board", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String helloworld() {
         return "helloworld";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
     }

@@ -1,0 +1,119 @@
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style-type: none;
+}
+html{
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(32, 32, 32);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.header_container {
+    margin: auto;
+    background-color: rgb(48, 48, 48);
+    display: flex;
+    justify-content: space-between;
+}
+.header_container .logo {
+    width: 60px;
+    margin-left: 2%;
+}
+.header_container .logo ul {
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+.header_container .logo ul a {
+    color: white;
+    letter-spacing: 3px;
+    font-size: 1.5em;
+}
+.header_container .menu {
+    margin-right: 2%;
+    display: flex;
+}
+.header_container .menu ul {
+    display: flex;
+    align-items: center;
+}
+.header_container .menu ul li {
+    padding: 0 10px;
+}
+.header_container .menu .search_icon {
+    width: 30px;
+}
+.header_container .menu ul .dropdown {
+    position: relative;
+}
+.header_container .menu ul .dropdown:hover .search_content {
+    display: block;
+}
+.header_container .menu ul .dropdown .search_content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+}
+.header_container .menu ul li .search_content form input {
+    display: block;
+    margin-top: 15px;
+    width: 200px;
+    height: 30px;
+    color: white;
+    border: 1px solid white;
+    background-color: rgb(48, 48, 48);
+}
+.header_container .menu .write_icon {
+    width: 30px;
+}
+.header_container .menu .chat_icon {
+    width: 40px;
+}
+.header_container .menu .profile_icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
+    object-fit: cover;
+}
+.section_container {
+    width: 100vw;
+    display: flex;
+}
+.section_container .main_container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+@media screen and (min-width:280px) and (max-width:499px) {
+    .header_container .logo {
+        width: 60px;
+        margin-left: 0;
+        display: flex;
+    }
+    .header_container .logo ul a {
+        color: white;
+        letter-spacing: 1px;
+        font-size: 1em;
+    }
+    .header_container .menu {
+        margin-right: 2%;
+        display: flex;
+    }
+    .header_container .menu ul li {
+        padding: 0;
+    }
+    .header_container .menu ul li .search_content form input {
+        width: 140px;
+    }
+}

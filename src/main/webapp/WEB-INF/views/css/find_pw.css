@@ -1,0 +1,74 @@
+* {
+    padding:0; margin:0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style-type: none;
+}
+html {
+    width: 100vw;
+}
+body {
+    background-color: rgb(32, 32, 32);
+}
+.section_container .main_container .find_pw_container {
+    margin-top: 20%;
+}
+.section_container .main_container .find_pw_container .title {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    text-shadow: 5px 3px 5px rgb(0, 0, 0);
+    margin: 5% 0 5% 0 ;
+}
+.section_container .main_container .find_pw_container .title img {
+    width: 60px;
+    height: 60px;
+}
+.section_container .main_container .find_pw_container .title .logo_name {
+    margin-left: 4%;
+}
+.section_container .main_container .find_pw_container form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.section_container .main_container .find_pw_container form ul {
+    margin : 0 0 3% 0;
+}
+.section_container .main_container .find_pw_container form ul li { 
+    display: flex;
+    color:white;
+    margin-bottom: 1%;
+}
+.section_container .main_container .find_pw_container form ul li input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 280px;
+    outline: none;
+    border: 2px solid rgb(180,180,180);
+    margin:0 0 3% 0;
+}
+.section_container .main_container .find_pw_container .find_pw {
+    display: flex;
+    justify-content: space-between;
+}
+.section_container .main_container .find_pw_container .find_pw button{
+    color: white;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid white;
+    width: 130px;
+    height: 40px;
+    transition: background-color 1s;
+    cursor: pointer;
+}
+.section_container .main_container .find_pw_container .find_pw button:hover{
+    color: rgb(48, 48, 48);;
+    background-color: white;
+    border: 1px solid white;
+    width: 130px;
+}

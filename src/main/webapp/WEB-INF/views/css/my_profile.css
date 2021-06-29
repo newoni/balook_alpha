@@ -1,0 +1,143 @@
+.my_profile_container .my_profile{
+    /* my_boards 와 함께 layout 구조*/
+    width:100%;
+    display:flex; 
+    color:white;
+    padding-top: 5%;
+    margin-bottom: 5%;
+}
+
+.my_profile_container .my_profile .my_profile_info{
+    display:flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.my_profile_container .my_profile .my_profile_info .my_profile_info_img{    
+    border-radius: 50%;
+    overflow: hidden;
+    margin:auto;
+}
+
+.my_profile_container .my_profile .my_profile_info .my_profile_info_img img{
+    
+    width:150px;
+    height:150px;
+    object-fit:cover;
+}
+
+.my_profile_container .my_profile .my_profile_info .my_profile_info_name_setting{
+    display:flex;
+    justify-content: space-between;
+    padding: 0px 5%;
+}
+
+.my_profile_container .my_profile .my_profile_info .my_profile_info_name_setting .my_profile_info_name_setting_my_name{
+    font-size:28px;
+}
+
+.my_profile_container .my_profile .my_profile_info .my_profile_info_name_setting .my_profile_info_name_setting_modify_button{
+    width:30px;
+    height:30px;
+
+    overflow: hidden;
+}
+
+.my_profile_container .my_profile .my_profile_info .my_profile_info_name_setting .my_profile_info_name_setting_modify_button img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.my_profile_container .my_profile .my_profile_status{
+    display:flex;
+    width:70%;
+}
+
+.my_profile_container .my_profile .my_profile_status ul{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.my_profile_container .my_profile .my_profile_status a{
+    text-decoration: none;
+    color:white;
+}
+
+
+
+.my_profile_container .my_profile .my_profile_status .my_profile_status_likes{
+    display:flex;
+    justify-content: space-around;
+    width:100%;
+}
+
+.my_profile_container .my_profile .my_profile_status .my_profile_status_likes_name{}
+
+.my_profile_container .my_profile .my_profile_status .my_profile_status_likes_nubmer{}
+
+.my_profile_container .my_profile .my_profile_status .my_profile_status_follows{
+    display:flex;
+    justify-content: space-around;
+    width:100%;
+}
+
+.my_profile_container .my_profile .my_profile_status .my_profile_status_follows_name{}
+
+.my_profile_container .my_profile .my_profile_status .my_profile_status_follows_number{}
+
+.my_profile_container .my_profile .my_profile_status .my_profile_status_feedbacks{
+    display:flex;
+    justify-content: space-around;
+    width:100%;
+}
+
+.my_profile_container .my_profile .my_profile_status .my_profile_status_feedbacks_name{}
+
+.my_profile_container .my_profile .my_profile_status .my_profile_status_feedbacks_number{}
+
+
+.my_profile_container .my_boards{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.my_profile_container .my_boards .my_boards_img_card{
+    width:33.3%;
+    overflow: hidden;
+}
+
+.my_profile_container .my_boards .my_boards_img_card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+@media screen and (min-width:280px) and (max-width:499px){
+    .my_profile_container .my_profile{
+        flex-direction: column;
+    }
+    .my_profile_container .my_profile .my_profile_info{
+        width:100%;
+    }
+
+    .my_profile_container .my_profile .my_profile_info .my_profile_info_name_setting{
+        margin:5% 0%;
+    }
+
+    .my_profile_container .my_profile .my_profile_status .my_profile_status_likes{
+        margin:3% 0%;
+    }
+
+    .my_profile_container .my_profile .my_profile_status .my_profile_status_follows{
+        margin:3% 0%;
+    }
+
+    .my_profile_container .my_profile .my_profile_status .my_profile_status_feedbacks{
+        margin:3% 0%;
+    }
+    .my_profile_container .my_profile .my_profile_status{
+        width:100%;
+    }
+}

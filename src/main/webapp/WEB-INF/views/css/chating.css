@@ -1,0 +1,57 @@
+.section_container .main_container .chat_wrap {
+    margin: 20% 0;
+}
+.section_container .main_container .chat_wrap .chat_list {
+    background-color: rgb(48, 48, 48);
+    display: flex;
+    width: 500px;
+    height: 80px;
+    align-items: center;
+    justify-content: space-around;
+}
+.section_container .main_container .chat_wrap .chat_profile {
+    
+}
+.section_container .main_container .chat_wrap .chat_profile img {
+    width: 50px; height: 50px;
+    border-radius: 50px;
+}
+.section_container .main_container .chat_wrap .chat_cont {
+    
+}
+.section_container .main_container .chat_wrap .chat_cont ul li h3 {
+    color: white;
+}
+.section_container .main_container .chat_wrap .chat_cont ul li p {
+    color: rgba(224, 224, 224, 0.438);
+}
+.section_container .main_container .chat_wrap .chat_date {
+    
+}
+.section_container .main_container .chat_wrap .chat_date p {
+    color: white;
+}
+.section_container .main_container .chat_wrap .chat_delete form button {
+    color: white;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid white;
+    width: 50px;
+    height: 30px;
+    transition: background-color 1s;
+    cursor: pointer;
+}
+.section_container .main_container .chat_wrap .chat_delete form button:hover {
+    color: rgb(48, 48, 48);;
+    background-color: white;
+    border: 1px solid white;
+    width: 50px;
+}
+@media screen and (min-width:280px) and (max-width:499px) {
+    .section_container .main_container .chat_wrap {
+        margin: 0;
+        width: 100vw;
+    }
+    .section_container .main_container .chat_wrap .chat_list {
+        width: 100%;
+    }
+}

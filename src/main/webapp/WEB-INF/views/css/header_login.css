@@ -1,0 +1,30 @@
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style-type: none;
+}
+html{
+    scroll-behavior: smooth;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: rgb(32, 32, 32);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.section_container {
+    width: 100vw;
+    display: flex;
+}
+.section_container .main_container {
+    max-width: 1200px;
+    margin: auto;
+}

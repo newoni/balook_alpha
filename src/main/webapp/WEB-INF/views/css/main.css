@@ -1,0 +1,96 @@
+.section_container .main_container .card_board_list {
+    background-color: rgb(52, 52, 53);
+    width: 500px;
+    margin-top: 20%;
+    display: flex;
+    flex-direction: column;
+}
+.section_container .main_container .card_board_list .card_board_header {
+    background-color: rgb(48, 48, 48);
+}
+.section_container .main_container .card_board_list .card_board_header ul {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.section_container .main_container .card_board_list .card_board_header ul li {
+    padding: 5px;
+}
+.section_container .main_container .card_board_list .card_board_header ul li a {
+    color: white;
+}
+.section_container .main_container .card_board_list .card_board_header ul li a .more {
+    width: 30px;
+    height: 30px;
+}
+.section_container .main_container .card_board_list .card_board_header ul .more_li {
+    position: absolute;
+    right: 1%;
+}
+.section_container .main_container .card_board_list .card_board_header .profile {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    object-fit: cover;
+}
+.section_container .main_container .card_board_list .card_board_cont {
+    height: auto;
+}
+.section_container .main_container .card_board_list .card_board_cont .board_cont_item1 {
+    display: flex;
+    justify-content: center;
+}
+.section_container .main_container .card_board_list .card_board_cont .board_cont_item2 {
+    display: flex;
+    justify-content: center;
+}
+.section_container .main_container .card_board_list .card_board_cont .board_cont_item1 img {
+    width: 100%;
+}
+.section_container .main_container .card_board_list .card_board_cont .board_cont_item2 ul {
+    display: flex;
+    justify-content: center;
+}
+.section_container .main_container .card_board_list .card_board_cont .board_cont_item2 ul li {
+    margin: 0 10%;
+}
+.section_container .main_container .card_board_list .card_board_cont .board_cont_item2 ul li a {
+    color: white;
+    font-size: 1.5em;
+}
+.section_container .main_container .card_board_list .card_board_footer {
+    background-color: rgb(48, 48, 48);
+    height: auto;
+}
+.section_container .main_container .card_board_list .card_board_footer .footer_icon {
+    display: flex;
+}
+.section_container .main_container .card_board_list .card_board_footer ul {
+    
+}
+.section_container .main_container .card_board_list .card_board_footer ul li {
+    padding: 10px;
+}
+.section_container .main_container .card_board_list .card_board_footer img {
+    width: 30px;
+}
+.section_container .main_container .card_board_list .card_board_footer .footer_comments ul li a {
+    color: white;
+    margin-right: 2%;
+}
+
+@media screen and (min-width:280px) and (max-width:499px) {
+    .section_container .main_container {
+        max-width: 499px;
+        margin: auto;
+    }
+
+    .section_container .main_container .card_board_list {
+        width: 100vw;
+        margin-top: 0;
+    }
+
+    .section_container .main_container .card_board_list .card_board_cont .board_cont_item2 ul li a {
+        font-size: 1.2em;
+    }
+}

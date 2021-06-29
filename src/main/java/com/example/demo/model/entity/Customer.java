@@ -14,6 +14,8 @@ import java.time.LocalDate;
 @Builder
 @Accessors(chain=true)
 @Table(name = "CUSTOMER")
+@Getter
+@Setter
 public class Customer {
 
 //    @GeneratedValue(strategy = GenerationType.IDENTITY) // not 4 oracle

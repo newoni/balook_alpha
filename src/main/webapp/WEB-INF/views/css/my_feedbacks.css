@@ -1,0 +1,194 @@
+.feedback_container{
+    display:flex;
+    flex-direction: column;
+
+    color:white;
+    width:500px;
+}
+
+.feedback_container .feedback_select{
+    display:flex;
+    justify-content: flex-end;
+
+    margin-bottom:10%;
+    margin-top:20%;
+}
+
+.feedback_container .feedback_select .feedback_select_box{
+    width:33.3%
+}
+
+.feedback_container .feedback_select .feedback_select_box button{
+    padding: 8px 12px;
+    border: 1px solid white;
+    border-radius: 4px;
+    background-color:rgb(48, 48, 48);
+    color:white;
+    width:100%
+}
+
+.feedback_container .feedback_select .feedback_select_box button:hover{
+    background-color:rgb(71, 71, 71);
+    cursor: pointer;
+}
+
+
+.feedback_container .feedback_card_container{}
+
+
+.feedback_container .feedback_card_container .feedback_card4response{
+    height:auto;
+    width:100%;
+    border:1px solid white;
+    padding:5px;
+
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feedback_container .feedback_card_container .feedback_card4response .feedback_card4response_user_image{
+    width:100px;
+    height:100px;
+    overflow:hidden;
+    border-radius: 50%;
+}
+
+.feedback_container .feedback_card_container .feedback_card4response .feedback_card4response_user_image img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+
+.feedback_container .feedback_card_container .feedback_card4response .feedback_card4response_info{}
+
+.feedback_container .feedback_card_container .feedback_card4response .feedback_card4response_info .feedback_card4response_board_title{}
+.feedback_container .feedback_card_container .feedback_card4response .feedback_card4response_info .feedback_card4response_author{}
+
+.feedback_container .feedback_card_container .feedback_card4response .feedback_card4response_select_box{}
+
+.feedback_container .feedback_card_container .feedback_card4response .feedback_card4response_select_box div button{
+    width:80px;
+    padding:3px;
+    background-color: rgb(48, 48, 48);
+    border:1px solid white;
+    color:white;
+    margin:5px 0px;
+}
+
+.feedback_container .feedback_card_container .feedback_card4response .feedback_card4response_select_box div button:hover{
+    background-color:rgb(71, 71, 71);
+    cursor: pointer;
+}
+
+.feedback_container .feedback_card_container .feedback_card4request{
+    height:auto;
+    width:100%;
+    border:1px solid white;
+    padding:5px;
+
+    display:flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.feedback_container .feedback_card_container .feedback_card4request .feedback_card4request_user_image{
+    width:100px;
+    height:100px;
+    overflow:hidden;
+    border-radius: 50%;
+}
+
+.feedback_container .feedback_card_container .feedback_card4request .feedback_card4request_user_image img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+
+.feedback_container .feedback_card_container .feedback_card4request .feedback_card4request_info{}
+
+.feedback_container .feedback_card_container .feedback_card4request .feedback_card4request_info .feedback_card4request_opponent{}
+.feedback_container .feedback_card_container .feedback_card4request .feedback_card4request_info .feedback_card4request_status{}
+
+.feedback_container .feedback_card_container .feedback_card4request .feedback_card4request_select_box{}
+.feedback_container .feedback_card_container .feedback_card4request .feedback_card4request_select_box div button{
+    width:80px;
+    padding:3px;
+    background-color: rgb(48, 48, 48);
+    border:1px solid white;
+    color:white;
+    margin:5px 0px;
+}
+
+.feedback_container .feedback_card_container .feedback_card4request .feedback_card4request_select_box div button:hover{
+    background-color:rgb(71, 71, 71);
+    cursor: pointer;
+}
+
+.feedback_container .feedback_card_container .feedback_card4finished{
+    height:auto;
+    width:100%;
+    border:1px solid white;
+    padding:5px;
+
+    display:flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.feedback_container .feedback_card_container .feedback_card4finished .feedback_card4finished_user_image{
+    width:100px;
+    height:100px;
+    overflow:hidden;
+    border-radius: 50%;
+}
+.feedback_container .feedback_card_container .feedback_card4finished .feedback_card4finished_user_image img{
+    width:100%;
+    height:100%;
+    object-fit: cover;
+}
+
+.feedback_container .feedback_card_container .feedback_card4finished .feedback_card4finished_info{}
+
+.feedback_container .feedback_card_container .feedback_card4finished .feedback_card4finished_info .feedback_card4response_board_title{}
+.feedback_container .feedback_card_container .feedback_card4finished .feedback_card4finished_info .feedback_card4response_author{}
+
+@media screen and (min-width:280px) and (max-width:499px){
+
+    .feedback_container{
+        width:100%;
+    }
+    .feedback_container .feedback_card_container .feedback_card4response .feedback_card4response_user_image{
+        width:60px;
+        height:60px;
+    }
+    
+    .feedback_container .feedback_card_container .feedback_card4request .feedback_card4request_user_image{
+        width:60px;
+        height:60px;
+    }
+
+    .feedback_container .feedback_card_container .feedback_card4finished .feedback_card4finished_user_image{
+        width:60px;
+        height:60px;
+    }
+
+    .feedback_container .feedback_select{
+        flex-direction: column;
+        margin-bottom:0%;
+        margin-top:0%;
+    }
+
+    .feedback_container .feedback_select .feedback_select_box{
+        width:100%;
+    }
+
+    
+
+    /*main.css 건드리는 부분*/
+
+    .section_container .main_container {
+        width:100%;
+    }
+
+}

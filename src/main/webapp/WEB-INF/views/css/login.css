@@ -1,0 +1,101 @@
+.section_container .main_container .login_container {
+    margin-top: 20%;
+}
+.section_container .main_container .login_container .title {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    text-shadow: 5px 3px 5px rgb(0, 0, 0);
+    margin: 5% 0;
+}
+.section_container .main_container .login_container .title img {
+    width: 60px;
+    height: 60px;
+}
+.section_container .main_container .login_container .title .logo_name {
+    margin-left: 4%;
+}
+.section_container .main_container .login_container form {
+    display: flex;
+    flex-direction: column;
+}
+.section_container .main_container .login_container form ul li{
+    display: flex;
+    justify-content: center;
+}
+.section_container .main_container .login_container form ul input {
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 280px;
+    outline: none;
+    border: 2px solid rgb(180,180,180);
+    margin:0 0 5% 0;
+}
+.section_container .main_container .login_container form ul li .btn {
+    color: white;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid white;
+    width: 280px;
+    height: 40px;
+    transition: background-color 1s;
+    cursor: pointer;
+}
+
+.section_container .main_container .login_container form ul li .btn:hover {
+    color: rgb(48, 48, 48);;
+    background-color: white;
+    border: 1px solid white;
+    width: 280px;
+}
+
+.section_container .main_container .login_container .find {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5% 0;
+}
+.section_container .main_container .login_container .find button {
+    border-radius: 30px;
+    width:60px;
+    height:60px;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid white;
+    color: white;
+    transition: background-color 1s;
+    cursor: pointer;
+}
+.section_container .main_container .login_container .find button:hover {
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border: 1px solid white;
+    color: black;
+}
+.section_container .main_container .login_container .otherlogin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3% 0 0 0;
+}
+.section_container .main_container .login_container .otherlogin button {
+    height: 40px;
+    background-color: rgb(25,206,96);
+    border: none;
+    color: white;
+    padding : 0 5%;
+    width: 280px;
+    transition: background-color 1s;
+    cursor: pointer;
+    
+}
+.section_container .main_container .login_container .otherlogin button:hover {
+    height: 40px;
+    background-color: white;
+    border: 2px solid white;
+    padding : 0 5%;
+    width: 280px;
+    color: black;
+}

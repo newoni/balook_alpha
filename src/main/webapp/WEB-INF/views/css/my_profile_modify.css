@@ -1,0 +1,153 @@
+.modify_box{
+    width:100%;
+    margin:20% auto;
+    margin-bottom:3%;
+
+    display:flex;
+    flex-direction: column;
+
+    color:white;
+}
+
+.modify_box .modify_box_img{
+    display:flex;
+    margin-bottom:20%;
+}
+
+/* image 썸네일 start */
+.filebox{
+    display:flex;
+    flex-direction: column;
+    margin-bottom:5%;
+}
+
+.modify_box .modify_box_img .filebox label { 
+    display: inline-block; 
+    padding: .5em .75em; 
+    color: #999; 
+    font-size: inherit; 
+    line-height: normal; 
+    vertical-align: middle; 
+    background-color: #525253; 
+    cursor: pointer; 
+    border: 1px solid #ebebeb; 
+    border-bottom-color: #e2e2e2; 
+    border-radius: .25em; 
+    color:white;
+}
+
+.filebox input[type="file"] { /* 파일 필드 숨기기 */ 
+    position: absolute; 
+    width: 1px; 
+    height: 1px; 
+    padding: 0;
+    margin: -1px; 
+    overflow: hidden; 
+    clip:rect(0,0,0,0); 
+    border: 0; }
+
+.filebox .upload-display { /* 이미지가 표시될 지역 */ 
+    margin-bottom: 5px; 
+} 
+
+@media(min-width: 768px) { 
+    .filebox .upload-display { 
+        display: inline-block; 
+        margin-right: 5px; 
+        margin-bottom: 0; 
+    } 
+} 
+
+.filebox .upload-thumb-wrap { /* 추가될 이미지를 감싸는 요소 */ 
+    width: 150px;
+    height:150px;
+    margin: 10% auto; 
+    vertical-align: middle; 
+    border: 1px solid #ddd; 
+    border-radius: 5px; 
+    background-color: #fff; 
+
+    overflow:hidden;
+} 
+.filebox .upload-display img { /* 추가될 이미지 */ 
+    display: block; 
+    max-width: 100%; 
+    width: 100% \9; 
+    height: auto; 
+}
+
+
+.modify_box .modify_box_img form{
+    width:100%;
+}
+
+/* image 썸네일 end */
+
+.modify_box .modify_box_img img{
+    width:150px;
+    height:150px;
+    object-fit:cover;
+}
+
+
+.modify_box .modify_box_img .modify_button{
+    color: white;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid white;
+    width: 100%;
+    height: 30px;
+    transition: background-color 1s;
+}
+
+.modify_box .modify_box_img .modify_button:hover{
+    color: rgb(48, 48, 48);;
+    background-color: white;
+    border: 1px solid white;
+    width: 100%;
+}
+
+.modify_box .modify_box_img .modify_box_img_show_selected{
+    overflow:hidden;
+    width:150px;
+    height:150px;
+    margin: 10% auto;
+}
+
+.modify_box_nick_name{ margin-bottom: 3%; }
+
+.modify_box_nick_name .modify_box_nick_name_input_list{}
+
+.modify_box_nick_name .modify_box_nick_name_input_list ul{
+    margin: 7% auto;
+}
+.modify_box_nick_name .modify_box_nick_name_input_list ul li{
+    margin: 3% auto;
+}
+
+.modify_box_nick_name .modify_text_input{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 280px;
+    outline: none;
+    border: 2px solid rgb(180,180,180);
+    margin:0 0 5% 0;
+
+}
+
+.modify_button{
+    color: white;
+    background-color: rgb(48, 48, 48);
+    border: 1px solid white;
+    width: 100%;
+    height: 30px;
+    transition: background-color 1s;
+}
+
+.modify_button:hover{
+    color: rgb(48, 48, 48);;
+    background-color: white;
+    border: 1px solid white;
+    width: 100%;
+}

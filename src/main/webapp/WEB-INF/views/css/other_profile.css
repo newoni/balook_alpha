@@ -1,0 +1,160 @@
+.other_profile_container .other_profile{
+    /* my_boards 와 함꼐 layout 구조*/
+    width:100%;
+    display:flex; 
+    color:white;
+    padding-top: 5%;
+    margin-bottom: 5%;
+
+}
+
+.other_profile_container .other_profile .other_profile_info{
+    display:flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.other_profile_container .other_profile .other_profile_info .other_profile_info_img{    
+    border-radius: 50%;
+    overflow: hidden;
+    margin:auto;
+}
+
+.other_profile_container .other_profile .other_profile_info .other_profile_info_img img{
+    
+    width:150px;
+    height:150px;
+    object-fit:cover;
+}
+
+.other_profile_container .other_profile .other_profile_info .other_profile_info_name_setting{
+    display:flex;
+    justify-content: space-between;
+    padding: 0px 5%;
+}
+
+.other_profile_container .other_profile .other_profile_info .other_profile_info_name_setting .other_profile_info_name_setting_my_name{
+    font-size:28px;
+}
+
+.other_profile_container .other_profile .other_profile_info .other_profile_info_name_setting .other_profile_info_name_setting_modify_button{
+    width:30px;
+    height:30px;
+
+    overflow: hidden;
+}
+
+.other_profile_container .other_profile .other_profile_info .other_profile_info_name_setting .other_profile_info_name_setting_modify_button img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.other_profile_container .other_profile .other_profile_status{
+    display:flex;
+    width:70%;
+}
+
+.other_profile_container .other_profile .other_profile_status ul{
+    width:100%;
+    display:flex;
+    justify-content: space-around;
+}
+.other_profile_container .other_profile .other_profile_status a{
+    text-decoration: none;
+    color:white;
+}
+
+.other_profile_container .other_profile .other_profile_status .other_profile_status_follows{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width:100%;
+}
+
+.other_profile_container .other_profile .other_profile_status .other_profile_status_follows_name{
+    margin-top:20px;
+    margin-bottom:30px;
+}
+
+.other_profile_container .other_profile .other_profile_status .other_profile_status_follows_img_box{
+    width:40px;
+    height:40px;
+    overflow:hidden;
+}
+.other_profile_container .other_profile .other_profile_status .other_profile_status_follows_img_box img{
+    object-fit: cover;
+    width:100%;
+    height:100%;
+}
+
+.other_profile_container .other_profile .other_profile_status .other_profile_status_chat{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width:100%;
+}
+
+.other_profile_container .other_profile .other_profile_status .other_profile_status_chat_name{
+    margin-top:20px;
+    margin-bottom:30px;
+}
+
+.other_profile_container .other_profile .other_profile_status .other_profile_status_chat_image_box{
+    width:40px;
+    height:40px;
+    overflow:hidden;
+}
+
+.other_profile_container .other_profile .other_profile_status .other_profile_status_chat_image_box img{
+    object-fit: cover;
+    width:100%;
+    height:100%;
+}
+
+
+.other_profile_container .my_boards{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.other_profile_container .my_boards .my_boards_img_card{
+    width:33.3%;
+    overflow: hidden;
+}
+
+.other_profile_container .my_boards .my_boards_img_card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+@media screen and (min-width:280px) and (max-width:499px){
+    .other_profile_container .other_profile{
+        flex-direction: column;
+    }
+    .other_profile_container .other_profile .other_profile_info{
+        width:100%;
+    }
+
+    .other_profile_container .other_profile .other_profile_info .other_profile_info_name_setting{
+        margin:5% 0%;
+    }
+
+    .other_profile_container .other_profile .other_profile_status .other_profile_status_likes{
+        margin:3% 0%;
+    }
+
+    .other_profile_container .other_profile .other_profile_status .other_profile_status_follows{
+        margin:3% 0%;
+    }
+
+    .other_profile_container .other_profile .other_profile_status .other_profile_status_chat{
+        margin:3% 0%;
+    }
+    .other_profile_container .other_profile .other_profile_status{
+        width:100%;
+    }
+}

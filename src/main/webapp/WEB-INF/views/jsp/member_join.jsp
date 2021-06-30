@@ -43,7 +43,7 @@
                     <li><input id ="phone" name = "frontPhoneNumber" type="number" placeholder="PHONE (숫자로만 입력해주세요.)" required="required" size="11"></li>
                 </ul>
                 <div class="joinus">
-                    <button type="button" onclick="operation();">SIGN IN</button>
+                    <button type="button" onclick="mkInfo();">SIGN IN</button>
                     <button type="button" onclick="back();">CANCLE</button>
                 </div>
             </form>
@@ -54,14 +54,17 @@
     var obj;
     var xhr = new XMLHttpRequest();
 
-    var now = new Date();
-    var year = now.getFullYear();
-    var month = now.getMonth() + 1;
-    var date = now.getDate();
-    var hour = now.getHours();
-    var minute = now.getMinutes();
-    var second = now.getSeconds();
-    var time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
+    var now
+    var year
+    var month
+    var date
+    var hour
+    var minute
+    var second
+    var time
+
+    var data
+    var info
 
     function operation(){
         console.log("operation invodked");
@@ -75,23 +78,26 @@
 
     function information() {
         console.log("information invoked");
-        document.getElementById("info").addEventListener('submit', (e) => {
+        document.getElementById("info").addEventListener('click', (e) => {
+            console.log("information invoked1");
             e.preventDefault();
+            console.log("information invoked2");
             const formData = new FormData(e.target);
             const data = Array.from(formData.entries()).reduce((memo, pair) => ({
                 ...memo,
                 [pair[0]]: pair[1],
             }), {});
+            console.log("information invoked3");
             // obj = 'time:'+ time +'data:'+ JSON.stringify(data);
-            obj = {"time":time ,"data":data};
+            obj = {"time":time ,"data":JSON.stringify(data)};
             console.log(obj);
         });
     }
 
     // <21.06.29> KH start
-    function sendJSON(){
+    function sendJSON(input1){
         console.log("sendJSON invodked");
-        console.log(obj);
+        // console.log(obj);
         xhr.onload = function() {
             if (xhr.status === 200 || xhr.status === 201) {
                 console.log(xhr.responseText);
@@ -99,9 +105,40 @@
                 console.error(xhr.responseText);
             }
         };
-        xhr.open('POST', 'customer/create/');
+        xhr.open('POST', 'customer');
         xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
-        xhr.send(JSON.stringify(obj)); // 데이터를 stringify해서 보냄
+        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+    }
+
+    // <21.06.30> KH modify
+    // <21.06.30> KH modify
+    function mkTime(){
+        now = new Date();
+        year = now.getFullYear();
+        month = now.getMonth() + 1;
+        date = now.getDate();
+        hour = now.getHours();
+        minute = now.getMinutes();
+        second = now.getSeconds();
+        time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
+    }
+
+    function mkData(){
+        data = {
+            'userId' : document.getElementById("id").value,
+            'password': document.getElementById("pw").value ,
+            'passwordCheck': document.getElementById("pwcheck").value
+        };
+    }
+    function mkInfo(){
+        mkTime();
+        mkData();
+        info = {'time':time, 'data':data};
+        console.log(info);
+        var info_json = JSON.stringify(info);
+
+        console.log(info_json);
+        sendJSON(info_json);
     }
 
 

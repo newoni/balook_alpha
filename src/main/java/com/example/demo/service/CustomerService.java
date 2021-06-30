@@ -43,11 +43,11 @@ public class CustomerService {
         return resHeader;
     }
 
-    public Header<CustomerResponse> idDuplicationCheck(Header<CustomerRequest> header){
-        return resHeader;
-    }
-
-    public Boolean pwDuplicationCheck(Header<CustomerRequest> header){
-
-    }
+//    public Header<CustomerResponse> idDuplicationCheck(Header<CustomerRequest> header){
+//        return resHeader;
+//    }
+//
+//    public Boolean pwDuplicationCheck(Header<CustomerRequest> header){
+//
+//    }
 }

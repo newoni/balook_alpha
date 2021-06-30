@@ -28,7 +28,7 @@ public class CustomerController {
         return "/jsp/login";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public Header<CustomerResponse> create(@RequestBody Header<CustomerRequest> header){
         System.out.println(header);
         return customerService.signUp(header);

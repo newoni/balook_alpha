@@ -23,12 +23,14 @@ public class CustomerController {
         return "/jsp/member_join";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+
+//    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json; charset=utf8")
     public String member_log_in() {
         return "/jsp/login";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.POST)
     public Header<CustomerResponse> create(@RequestBody Header<CustomerRequest> header){
         System.out.println(header);
         return customerService.signUp(header);

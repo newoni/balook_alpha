@@ -125,15 +125,15 @@
 
     function mkData(){
         data = {
-            'userId' : document.getElementById("id").value,
-            'password': document.getElementById("pw").value ,
-            'passwordCheck': document.getElementById("pwcheck").value
+            "userId" : document.getElementById("id").value,
+            "password": document.getElementById("pw").value ,
+            "passwordCheck": document.getElementById("pwcheck").value
         };
     }
     function mkInfo(){
         mkTime();
         mkData();
-        info = {'time':time, 'data':data};
+        info = {time:time, data:data};
         console.log(info);
         var info_json = JSON.stringify(info);
 

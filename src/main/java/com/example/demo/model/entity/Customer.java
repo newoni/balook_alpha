@@ -7,15 +7,12 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
-@ToString
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Accessors(chain=true)
 @Table(name = "CUSTOMER")
-@Getter
-@Setter
 public class Customer {
 
 //    @GeneratedValue(strategy = GenerationType.IDENTITY) // not 4 oracle

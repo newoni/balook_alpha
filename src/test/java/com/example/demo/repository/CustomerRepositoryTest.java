@@ -12,7 +12,14 @@ public class CustomerRepositoryTest{
 
     @Test
     public void create() {
-        Customer customer = Customer.builder()
+        Customer customer1 = new Customer();
+        customer1.setId(1L);
+        customer1.setCustomerId("testId");
+        customer1.setPassword("testPw");
+        customer1.setNickName("newoni");
+        customer1.setName("KH");
+
+        Customer customer2 = Customer.builder()
                 .id(1L)
                 .customerId("testId")
                 .password("testPw")
@@ -23,15 +30,21 @@ public class CustomerRepositoryTest{
         System.out.println("hello");
         System.out.println("hello");
         System.out.println("hello");
-        System.out.println(customer);
+        System.out.println(customer1);
+        System.out.println(customer2);
 
-        Customer newCustomer = customerRepository.save(customer);
-
+        Customer newCustomer1 = customerRepository.save(customer1);
+        Customer newCustomer2 = customerRepository.save(customer2);
+//
         System.out.println("hi....");
         System.out.println("hi....");
         System.out.println("hi....");
         System.out.println("hi....");
 
-        System.out.println(newCustomer);
+        System.out.println("customer1");
+        System.out.println(newCustomer1);
+
+        System.out.println("customer2");
+        System.out.println(newCustomer2);
         }
 }

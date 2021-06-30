@@ -1,4 +1,4 @@
-package com.example.demo.model.request;
+package com.example.demo.model.network.request;
 
 import lombok.Data;
 
@@ -11,4 +11,6 @@ public class CustomerRequest {
     private String domain;
     private String frontPhoneNumber;
     private String backPhoneNumber;
+    private String nickname;
+    private String passwordCheck;
 }

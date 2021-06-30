@@ -9,23 +9,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 
-@Controller
+@RestController
 @RequestMapping(value="/customer")
 public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String member_join() {
-        return "/jsp/member_join";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
-    }
-
-
-//    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+//    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json; charset=utf8")
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String member_log_in() {
         return "/jsp/login";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
     }

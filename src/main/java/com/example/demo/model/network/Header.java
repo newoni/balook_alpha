@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Header<T> {
     private String time;
+    
     private T data;
 }

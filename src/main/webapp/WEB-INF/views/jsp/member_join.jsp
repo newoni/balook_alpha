@@ -66,48 +66,30 @@
     var data
     var info
 
-    function operation(){
-        console.log("operation invodked");
-        information();
-        sendJSON(obj);
-    }
-
     function back() {
         location.href="login.html";
-    }
-
-    function information() {
-        console.log("information invoked");
-        document.getElementById("info").addEventListener('click', (e) => {
-            console.log("information invoked1");
-            e.preventDefault();
-            console.log("information invoked2");
-            const formData = new FormData(e.target);
-            const data = Array.from(formData.entries()).reduce((memo, pair) => ({
-                ...memo,
-                [pair[0]]: pair[1],
-            }), {});
-            console.log("information invoked3");
-            // obj = 'time:'+ time +'data:'+ JSON.stringify(data);
-            obj = {"time":time ,"data":JSON.stringify(data)};
-            console.log(obj);
-        });
     }
 
     // <21.06.29> KH start
     function sendJSON(input1){
         console.log("sendJSON invodked");
-        // console.log(obj);
+
+        console.log("sendJSON invodked1");
+        xhr.open('POST', 'customer');
+        console.log("sendJSON invodked2");
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        console.log("sendJSON invodked3");
+        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
         xhr.onload = function() {
+            console.log("sendJSON invodked4");
             if (xhr.status === 200 || xhr.status === 201) {
+                console.log("everything is over");
                 console.log(xhr.responseText);
             } else {
                 console.error(xhr.responseText);
             }
         };
-        xhr.open('POST', 'customer');
-        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
-        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
     }
 
     // <21.06.30> KH modify
@@ -125,20 +107,21 @@
 
     function mkData(){
         data = {
-            "userId" : document.getElementById("id").value,
+            "user_id" : document.getElementById("id").value,
             "password": document.getElementById("pw").value ,
-            "passwordCheck": document.getElementById("pwcheck").value
+            "password_check": document.getElementById("pwcheck").value,
+            "email":document.getElementById("email").value,
+            "nickname":document.getElementById("nickname").value,
+            "name":document.getElementById("name").value,
+            "front_phone_number":document.getElementById("phone").value
         };
     }
+
     function mkInfo(){
         mkTime();
         mkData();
-        info = {time:time, data:data};
-        console.log(info);
-        var info_json = JSON.stringify(info);
-
-        console.log(info_json);
-        sendJSON(info_json);
+        info = {time:time, data:data, status:300};
+        sendJSON(info);
     }
 
 

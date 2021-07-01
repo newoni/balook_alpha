@@ -8,15 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
-@Entity
-@Builder
-@Accessors(chain = true)
-@Getter
-@Setter
 @Data
-@ToString
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Accessors(chain = true)
 @Table(name="BOARD")
 public class Board{
     @Id

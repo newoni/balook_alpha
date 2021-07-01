@@ -11,14 +11,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../css/header_login.css" rel="stylesheet">
-    <link href="../css/member_join.css" rel="stylesheet">
+<%--    <link href="../css/header_login.css" rel="stylesheet">--%>
+<%--    <link href="../css/member_join.css" rel="stylesheet">--%>
+    <!-- <21.07.01> KH modified -->
+    <link rel="stylesheet" href="/css/member_join.css">
+    <link rel="stylesheet" href="/css/header_login.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Member Join</title>
     <style>
     </style>
 </head>
 <body>
+
 <section class="section_container">
     <div class="main_container">
         <div class="join_container">
@@ -73,19 +78,32 @@
 
     // <21.06.29> KH start
     function sendJSON(input1, address){
-        console.log("sendJSON invodked");
-
-        console.log("sendJSON invodked1");
         xhr.open('POST', address);
-        console.log("sendJSON invodked2");
         xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
-        console.log("sendJSON invodked3");
         xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
 
         xhr.onload = function() {
-            console.log("sendJSON invodked4");
             if (xhr.status === 200 || xhr.status === 201) {
-                console.log(xhr.responseText);
+                location.href("main.jsp");
+            } else {
+                console.error(xhr.responseText);
+            }
+        };
+    }
+
+    //<21.07.01> KH start
+    function sendJSON4duplicationCheck(input1, address){
+        xhr.open('POST', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                if(JSON.parse(xhr.response)["result_code"]=="ERROR"){
+                    alert("user id is already exist!!!");
+                }else{
+                    alert("you can use that id");
+                }
             } else {
                 console.error(xhr.responseText);
             }
@@ -133,7 +151,7 @@
         mkTime();
         mkData4checkDuplication();
         info = {time:time, data:data};
-        sendJSON(info, "/customer/checkDuplication");
+        sendJSON4duplicationCheck(info, "/customer/checkDuplication");
     }
 
 

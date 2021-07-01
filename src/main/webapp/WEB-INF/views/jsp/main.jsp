@@ -20,8 +20,8 @@
 <header class="header_container">
     <div class="logo">
         <ul>
-            <li><a href="main.html"><img class="logo" src="../img/logo.png"></a></li>
-            <li><a href="main.html">balook</a></li>
+            <li><a href="main.jsp"><img class="logo" src="../img/logo.png"></a></li>
+            <li><a href="main.jsp">balook</a></li>
         </ul>
     </div>
     <div class="menu">
@@ -29,14 +29,14 @@
             <li class="dropdown">
                 <a href="#" class="dropbtn"><img class="search_icon" src="../img/search.png"></a>
                 <div class="search_content">
-                    <form action="search_result.html" method="POST">
+                    <form action="search_result.jsp" method="POST">
                         <input type="text" placeholder="검색어 입력">
                     </form>
                 </div>
             </li>
-            <li><a href="board_write.html"><img class="write_icon" src="../img/write.png"></a></li>
-            <li><a href="chating.html"><img class="chat_icon" src="../img/chat.png"></a></li>
-            <li><a href="my_profile.html"><img class="profile_icon" src="../img/profile.png"></a></li>
+            <li><a href="board_write.jsp"><img class="write_icon" src="../img/write.png"></a></li>
+            <li><a href="chating.jsp"><img class="chat_icon" src="../img/chat.png"></a></li>
+            <li><a href="my_profile.jsp"><img class="profile_icon" src="../img/profile.png"></a></li>
         </ul>
     </div>
 </header>
@@ -47,7 +47,7 @@
                 <ul>
                     <li><a href="#"><img class="profile" src="../img/profile.png"></a></li>
                     <li><a href="#">vue_ys</a></li>
-                    <li class="more_li"><a href="board_modify.html"><img class="more" src="../img/more.png"></a></li>
+                    <li class="more_li"><a href="board_modify.jsp"><img class="more" src="../img/more.png"></a></li>
                 </ul>
             </div>
             <div class="card_board_cont">
@@ -73,9 +73,9 @@
                 </ul>
                 <div class="footer_comments">
                     <ul>
-                        <li><a href="board_view.html">vue_ys</a><a href="#">ㄹㅇ 실화냐? 이게 된다고?</a></li>
-                        <li><a href="board_view.html">vue_ys</a><a href="#">#고스트 바둑왕</a></li>
-                        <li><a href="board_view.html">더보기</a></li>
+                        <li><a href="board_view.jsp">vue_ys</a><a href="#">ㄹㅇ 실화냐? 이게 된다고?</a></li>
+                        <li><a href="board_view.jsp">vue_ys</a><a href="#">#고스트 바둑왕</a></li>
+                        <li><a href="board_view.jsp">더보기</a></li>
                     </ul>
                 </div>
             </div>
@@ -106,14 +106,14 @@
             <div class="card_board_footer">
                 <ul class="footer_icon">
                     <li><a href="#"><img src="../img/like.png"></a></li>
-                    <li><a href="board_view.html"><img src="../img/comments.png"></a></li>
-                    <li><a href="board_view.html"><img src="../img/feedback.png"></a></li>
+                    <li><a href="board_view.jsp"><img src="../img/comments.png"></a></li>
+                    <li><a href="board_view.jsp"><img src="../img/feedback.png"></a></li>
                 </ul>
                 <div class="footer_comments">
                     <ul>
-                        <li><a href="board_view.html">vue_ys</a><a href="#">ㄹㅇ 실화냐? 이게 된다고?</a></li>
-                        <li><a href="board_view.html">vue_ys</a><a href="#">#고스트 바둑왕</a></li>
-                        <li><a href="board_view.html">더보기</a></li>
+                        <li><a href="board_view.jsp">vue_ys</a><a href="#">ㄹㅇ 실화냐? 이게 된다고?</a></li>
+                        <li><a href="board_view.jsp">vue_ys</a><a href="#">#고스트 바둑왕</a></li>
+                        <li><a href="board_view.jsp">더보기</a></li>
                     </ul>
                 </div>
             </div>

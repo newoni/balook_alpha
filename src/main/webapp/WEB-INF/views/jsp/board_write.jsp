@@ -11,8 +11,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="${path}/css/header.css" rel="stylesheet">
-    <link href="${path}/css/board_write.css" rel="stylesheet">
+<%--    <link href="${path}/css/header.css" rel="stylesheet">--%>
+    <link href="css/header.css" rel="stylesheet">
+<%--    <link href="${path}/css/board_write.css" rel="stylesheet">--%>
+    <link href="css/board_write.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>board_write</title>
 </head>
@@ -36,7 +38,7 @@
 <section class="section_container">
     <div class="main_container">
         <div class="board_wrtie_container">
-            <form id="write_json" action="http://192.168.11.128:8081/board" method="POST" enctype="multipart/form-data">
+            <form id="write_json" action="board/uploadFormAction" method="POST" enctype="multipart/form-data">
                 <div class="form_group">
                     <div class="label_group">
                         <label for="title">제목</label>
@@ -50,17 +52,17 @@
                         <label for="content">내용</label>
                     </div>
                     <div class="content_textarea">
-                        <textarea id="content" name="content" placeholder="내용 입력 (4~1000)" required="required" maxlength="1000"></textarea>
+                        <textarea id="content" name="contents" placeholder="내용 입력 (4~1000)" required="required" maxlength="1000"></textarea>
                     </div>
                 </div>
                 <div class="file_group">
                     <label for="file" class="file_btn">업로드</label>
-                    <input class="file_choose" type="file" id="file" name="file" accept=".sgf">
+                    <input class="file_choose" type="file" id="file" name="uploadFile" accept=".sgf">
                 </div>
                 <div class="btn_wrap">
                     <!-- <21.06.29> KH modified-->
                     <!-- <button class="btn" type="submit" onclick="trans()">확인</button> -->
-                    <button class="btn" type="button" onclick="mkInfo()">확인</button>
+                    <button class="btn" type="submit" onclick="mkInfo()">확인</button>
                     <!-- end -->
                     <button class="btn" type="button" onclick="back()">취소</button>
                 </div>
@@ -68,78 +70,6 @@
         </div>
     </div>
 </section>
-<script>
-    // <21.06.29> KH start
-    var obj;
-    var xhr = new XMLHttpRequest();
 
-    var now
-    var year
-    var month
-    var date
-    var hour
-    var minute
-    var second
-    var time
-
-    var data
-    var info
-    // end
-    // <21.06.29> KH start
-    function sendJSON(input1){
-        console.log("sendJSON invodked");
-
-        console.log("sendJSON invodked1");
-        xhr.open('POST', 'board');
-        console.log("sendJSON invodked2");
-        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
-        console.log("sendJSON invodked3");
-        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
-
-        xhr.onload = function() {
-            console.log("sendJSON invodked4");
-            if (xhr.status === 200 || xhr.status === 201) {
-                console.log("everything is over");
-                console.log(xhr.responseText);
-            } else {
-                console.error(xhr.responseText);
-            }
-        };
-    }
-
-    // <21.06.30> KH modify
-    // <21.06.30> KH modify
-    function mkTime(){
-        now = new Date();
-        year = now.getFullYear();
-        month = now.getMonth() + 1;
-        date = now.getDate();
-        hour = now.getHours();
-        minute = now.getMinutes();
-        second = now.getSeconds();
-        time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
-    }
-
-    function mkData(){
-        data = {
-            "title" : document.getElementById("title").value,
-            "content" : document.getElementById("content").value,
-            "filepath" : document.getElementById("file").value
-        };
-    }
-
-    function mkInfo(){
-        mkTime();
-        mkData();
-        info = {time:time, data:data, status:300};
-        sendJSON(info);
-    }
-
-
-    // end
-    function back() {
-        location.href="main.html";
-    }
-</script>
 </body>
 </html>

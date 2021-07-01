@@ -19,10 +19,10 @@ public class BoardService {
     public Header<BoardResponse> create(Header<BoardRequest> header) {
         BoardRequest boardRequest = header.getData();
         Board board = Board.builder()
-                .id(boardRequest.getId())
-                .author(boardRequest.getAuthor())
-                .boardedAt(boardRequest.getBoardedAt())
-                .updatedAt(boardRequest.getUpdatedAt())
+                .id(boardRequest.getId())// need to auto create
+                .author(boardRequest.getAuthor())//  need to auto create (maybe with ses
+                .boardedAt(boardRequest.getBoardedAt()) // need to consider type
+                .updatedAt(boardRequest.getUpdatedAt())// need to consider type
                 .title(boardRequest.getTitle())
                 .contents(boardRequest.getContents())
                 .filePath(boardRequest.getFilePath())

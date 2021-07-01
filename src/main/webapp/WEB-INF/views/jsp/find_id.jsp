@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: balook
+  User: user
   Date: 6/29/21
-  Time: 12:48 AM
+  Time: 9:51 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,45 +11,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../css/login.css" rel="stylesheet">
+    <link href="../css/find_id.css" rel="stylesheet">
     <link href="../css/header_login.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <title>LogIn</title>
+    <title>Find ID</title>
+    <style>
+
+    </style>
 </head>
 <body>
 <section class="section_container">
     <div class="main_container">
-        <div class="login_container">
+        <div class="find_id_container">
             <div class="title">
-                <img src="../img/badookdol.png"> <span class="logo_name">BALOOK</span>
+                <img src="../img/badookdol.png"><span class="logo_name">FIND ID</span>
             </div>
-            <form id = "login_form" action="#" method="post">
+            <form id="find_id_form">
                 <ul>
-                    <li><input id="userid" name ="userid" type="text" placeholder="ID" required="required"></li>
-                    <li><input id="password" name = "password" type="password" placeholder="PASSWORD" required="required"></li>
-                    <li><button class="btn" onclick="operation();" type="submit">LogIn</button></li>
+                    <li>NAME</li>
+                    <li><input id ="name" name = "name" type="text" placeholder="NAME"></li>
                 </ul>
+                <ul>
+                    <li>E-MAIL</li>
+                    <li><input id ="email" name ="email" type="email" placeholder="E-MAIL"></li>
+                </ul>
+                <ul>
+                    <li>PHONE</li>
+                    <li><input id ="phone" name = "phone" type="number" placeholder="PHONE"></li>
+                </ul>
+
+                <div class="find_id">
+                    <button type="submit" onclick="operation();"><a href="find_id_result.jsp">FIND ID</a></button>
+                    <button type="button" onclick="back()">CANCLE</button>
+                </div>
             </form>
-            <div class="otherlogin">
-                <button type="button">Login with Naver</button>
-            </div>
-            <div class="find">
-                <button type="button" onclick="move_id();">Find ID</button>
-                <button type="button" onclick="move_pw();">Find PW</button>
-                <button type="button" onclick="move_member_join();">Join Us</button>
-            </div>
         </div>
     </div>
 </section>
 <script>
-    function move_id() {
-        location.href="find_id.jsp";
-    }
-    function move_pw() {
-        location.href="find_pw.jsp";
-    }
-    function move_member_join() {
-        location.href="member_join.jsp";
+    function back() {
+        location.href="main.jsp";
     }
     var obj;
     var xhr = new XMLHttpRequest();
@@ -107,8 +108,9 @@
 
     function mkData(){
         data = {
-            "user_id" : document.getElementById("userid").value,
-            "password": document.getElementById("password").value
+            "name" : document.getElementById("name").value,
+            "email": document.getElementById("email").value,
+            "phone": document.getElementById("phone").value
         };
     }
 
@@ -118,6 +120,7 @@
         info = {time:time, data:data, status:300};
         sendJSON(info);
     }
+
 
 </script>
 </body>

@@ -7,7 +7,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class controller {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/main",method = RequestMethod.GET)
+    public String main(){
+        return "/jsp/main";
+    }
+
+    @RequestMapping(value = "/customer/signIn",method = RequestMethod.GET)
+    public String login(){
+        return "/jsp/login";
+    }
+
+    @RequestMapping(value = "/customer/signUp", method = RequestMethod.GET)
     public String member_join() {
         return "/jsp/member_join";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
     }

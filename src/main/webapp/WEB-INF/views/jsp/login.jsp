@@ -11,8 +11,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../../../resources/static/css/login.css" rel="stylesheet">
-    <link href="../../../../resources/static/css/header_login.css" rel="stylesheet">
+    <link href="/css/login.css" rel="stylesheet">
+    <link href="/css/header_login.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>LogIn</title>
 </head>
@@ -27,7 +27,7 @@
                 <ul>
                     <li><input id="userid" name ="userid" type="text" placeholder="ID" required="required"></li>
                     <li><input id="password" name = "password" type="password" placeholder="PASSWORD" required="required"></li>
-                    <li><button class="btn" onclick="operation();" type="submit">LogIn</button></li>
+                    <li><button class="btn" onclick="mkInfo();" type="button">LogIn</button></li>
                 </ul>
             </form>
             <div class="otherlogin">
@@ -71,21 +71,18 @@
     }
 
     // <21.06.29> KH start
-    function sendJSON(input1){
-        console.log("sendJSON invodked");
-
-        console.log("sendJSON invodked1");
-        xhr.open('POST', 'customer');
-        console.log("sendJSON invodked2");
+    function sendJSON(input1, address){
+        xhr.open('POST', address);
         xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
-        console.log("sendJSON invodked3");
         xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
 
         xhr.onload = function() {
-            console.log("sendJSON invodked4");
             if (xhr.status === 200 || xhr.status === 201) {
-                console.log("everything is over");
-                console.log(xhr.responseText);
+                console.log("function invoked ");
+                if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
+                    location.replace("http://192.168.163.128:8081/main");
+                }
+
             } else {
                 console.error(xhr.responseText);
             }
@@ -115,8 +112,8 @@
     function mkInfo(){
         mkTime();
         mkData();
-        info = {time:time, data:data, status:300};
-        sendJSON(info);
+        info = {time:time, data:data};
+        sendJSON(info,"/customer/signIn");
     }
 
 </script>

@@ -14,7 +14,23 @@ import java.time.LocalDateTime;
 public class CustomerService {
     @Autowired
     CustomerRepository customerRepository;
+    public Header<CustomerResponse> signIn(Header<CustomerRequest> header){
+        CustomerRequest customerRequest = header.getData();
 
+        Customer customer = Customer.builder()
+                .customerId(customerRequest.getUserId())
+                .password(customerRequest.getPassword())
+                .build();
+
+        Customer resCustomer = customerRepository.findByCustomerIdAndPassword(customer.getCustomerId(), customer.getPassword());
+
+        CustomerResponse customerResponse = CustomerResponse.builder()
+                .customerId(resCustomer.getCustomerId())
+                .nickName(resCustomer.getNickName())
+                .build();
+
+        return Header.OK(customerResponse);
+    }
     public Header<CustomerResponse> signUp(Header<CustomerRequest> header){
         CustomerRequest customerRequest = header.getData();
 

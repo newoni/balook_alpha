@@ -20,9 +20,11 @@ public class CustomerController {
     CustomerService customerService;
 
 //    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json; charset=utf8")
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String member_log_in() {
-        return "/jsp/login";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
+    @RequestMapping(value = "/signIn", method = RequestMethod.POST)
+    public Header<CustomerResponse> signIn(@RequestBody Header<CustomerRequest> header) {
+        System.out.println(header);
+
+        return customerService.signIn(header);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

@@ -47,12 +47,14 @@ public class CustomerService {
                 .build();
 
         Customer findCustomer = customerRepository.findByCustomerIdLike(customer.getCustomerId());
-
-        CustomerResponse customerResponse = CustomerResponse.builder()
-                .customerId(findCustomer.getCustomerId())
-                .build();
-
-        return Header.OK(customerResponse);
+        System.out.println("print findID result ");
+        System.out.println(findCustomer);
+        System.out.println(findCustomer==null);
+        if(findCustomer==null){
+            return Header.OK();
+        }else{
+            return Header.ERROR();
+        }
     }
 
 }

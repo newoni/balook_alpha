@@ -47,4 +47,15 @@ public class CustomerRepositoryTest{
         System.out.println("customer2");
         System.out.println(newCustomer2);
         }
+
+    @Test
+    public void findCustomerByCustomerId(){
+        Customer customer = Customer.builder()
+                .customerId("test")
+                .build();
+
+        Customer findedCustomer = customerRepository.findByCustomerIdLike(customer.getCustomerId());
+
+        System.out.println(findedCustomer);
+    }
 }

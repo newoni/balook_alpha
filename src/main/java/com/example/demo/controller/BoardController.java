@@ -27,10 +27,10 @@ public class BoardController {
         System.out.println(header);
         return boardService.create(header);
     }
-    @RequestMapping("/board/insertBoard.do")
-    public String insertBoard(BoardDto board,
-                              MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
-        boardService.insertBoard(board, multipartHttpServletRequest);
-        return "redirect:/board/openBoardList.do";
-    }
+//    @RequestMapping("/board/insertBoard.do")
+//    public String insertBoard(BoardDto board,
+//                              MultipartHttpServletRequest multipartHttpServletRequest) throws Exception {
+//        boardService.insertBoard(board, multipartHttpServletRequest);
+//        return "redirect:/board/openBoardList.do";
+//    }
 }

@@ -32,7 +32,7 @@ public class Customer {
     private String nickName;
     private String picturePath;
     private String name;
-    private String eMail;
+    private String email;
     private String phoneNumber;
     private String status;
     private LocalDate registeredAt;

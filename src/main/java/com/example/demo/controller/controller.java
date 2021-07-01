@@ -12,9 +12,14 @@ public class controller {
         return "/jsp/main";
     }
 
-    @RequestMapping(value = "/customer/signIn",method = RequestMethod.GET)
+    @RequestMapping(value = "/customer/signIn", method = RequestMethod.GET)
     public String login(){
         return "/jsp/login";
+    }
+
+    @RequestMapping(value = "/customer/findCustomerId", method = RequestMethod.GET)
+    public String findCustomerId(){
+        return "/jsp/find_id";
     }
 
     @RequestMapping(value = "/customer/signUp", method = RequestMethod.GET)

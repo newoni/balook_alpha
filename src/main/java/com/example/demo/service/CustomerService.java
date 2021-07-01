@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class CustomerService {
     @Autowired
     CustomerRepository customerRepository;
+
     public Header<CustomerResponse> signIn(Header<CustomerRequest> header){
         CustomerRequest customerRequest = header.getData();
 
@@ -31,6 +32,32 @@ public class CustomerService {
 
         return Header.OK(customerResponse);
     }
+
+    public Header<CustomerResponse> findCustomerId(Header<CustomerRequest> header){
+        CustomerRequest customerRequest = header.getData();
+
+        Customer customer = Customer.builder()
+                .name(customerRequest.getName())
+                .phoneNumber(customerRequest.getFrontPhoneNumber())
+                .email(customerRequest.getEmail())
+                .build();
+
+        Customer newCustomer = customerRepository.findByNameAndEmailAndPhoneNumber(customer.getName(), customer.getEmail(), customer.getPhoneNumber());
+
+        System.out.println("newCustomer");
+        System.out.println(newCustomer);
+
+        CustomerResponse customerResponse = CustomerResponse.builder()
+                .customerId(newCustomer.getName())
+                .build();
+
+        System.out.println("customer response");
+        System.out.println(customerResponse);
+
+        return Header.OK(customerResponse);
+    }
+
+
     public Header<CustomerResponse> signUp(Header<CustomerRequest> header){
         CustomerRequest customerRequest = header.getData();
 
@@ -41,7 +68,7 @@ public class CustomerService {
                 .password(customerRequest.getPassword())
                 .name(customerRequest.getName())
                 .nickName(customerRequest.getNickname())
-                .eMail(customerRequest.getEmail())
+                .email(customerRequest.getEmail())
                 .phoneNumber(customerRequest.getFrontPhoneNumber())
                 .build();
 

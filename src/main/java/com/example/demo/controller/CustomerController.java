@@ -22,9 +22,14 @@ public class CustomerController {
 //    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json; charset=utf8")
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
     public Header<CustomerResponse> signIn(@RequestBody Header<CustomerRequest> header) {
-        System.out.println(header);
-
         return customerService.signIn(header);
+    }
+
+    @RequestMapping(value = "/findCustomerId", method = RequestMethod.POST)
+    public Header<CustomerResponse> findCustomerId(@RequestBody Header<CustomerRequest> header) {
+        System.out.println("header");
+        System.out.println(header);
+        return customerService.findCustomerId(header);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

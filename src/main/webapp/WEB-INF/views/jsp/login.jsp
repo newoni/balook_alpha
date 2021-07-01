@@ -43,13 +43,13 @@
 </section>
 <script>
     function move_id() {
-        location.href="find_id.jsp";
+        location.replace="http://192.168.163.128:8081/customer/findCustomerId";
     }
     function move_pw() {
-        location.href="find_pw.jsp";
+        location.replace="find_pw.jsp";
     }
     function move_member_join() {
-        location.href="member_join.jsp";
+        location.replace="member_join.jsp";
     }
     var obj;
     var xhr = new XMLHttpRequest();

@@ -11,8 +11,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../../../resources/static/css/find_id.css" rel="stylesheet">
-    <link href="../../../../resources/static/css/header_login.css" rel="stylesheet">
+    <link href="/css/find_id.css" rel="stylesheet">
+    <link href="/css/header_login.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Find ID</title>
     <style>
@@ -41,7 +41,7 @@
                 </ul>
 
                 <div class="find_id">
-                    <button type="submit" onclick="operation();"><a href="find_id_result.jsp">FIND ID</a></button>
+                    <button type="submit" onclick="mkInfo();"><a href="find_id_result.jsp">FIND ID</a></button>
                     <button type="button" onclick="back()">CANCLE</button>
                 </div>
             </form>
@@ -72,18 +72,12 @@
     }
 
     // <21.06.29> KH start
-    function sendJSON(input1){
-        console.log("sendJSON invodked");
-
-        console.log("sendJSON invodked1");
-        xhr.open('POST', 'customer');
-        console.log("sendJSON invodked2");
+    function sendJSON(input1, address){
+        xhr.open('POST', address);
         xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
-        console.log("sendJSON invodked3");
         xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
 
         xhr.onload = function() {
-            console.log("sendJSON invodked4");
             if (xhr.status === 200 || xhr.status === 201) {
                 console.log("everything is over");
                 console.log(xhr.responseText);
@@ -110,15 +104,15 @@
         data = {
             "name" : document.getElementById("name").value,
             "email": document.getElementById("email").value,
-            "phone": document.getElementById("phone").value
+            "front_phone_number": document.getElementById("phone").value
         };
     }
 
     function mkInfo(){
         mkTime();
         mkData();
-        info = {time:time, data:data, status:300};
-        sendJSON(info);
+        info = {time:time, data:data};
+        sendJSON(info,"/customer/findCustomerId");
     }
 
 

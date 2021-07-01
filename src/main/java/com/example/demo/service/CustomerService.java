@@ -32,22 +32,27 @@ public class CustomerService {
         Customer newCustomer = customerRepository.save(customer);
 
 //        result part
-        Header<CustomerResponse> resHeader = new Header<CustomerResponse>();
+
         CustomerResponse customerResponse = CustomerResponse.builder()
                 .customerId(newCustomer.getCustomerId())
                 .nickName(newCustomer.getNickName())
                 .build();
-        resHeader.setData(customerResponse);
-        resHeader.setTime(LocalDateTime.now().toString());
-
-        return resHeader;
+        return Header.OK(customerResponse);
     }
 
-//    public Header<CustomerResponse> idDuplicationCheck(Header<CustomerRequest> header){
-//        return resHeader;
-//    }
-//
-//    public Boolean pwDuplicationCheck(Header<CustomerRequest> header){
-//
-//    }
+    public Header<CustomerResponse> findIdByNickName(Header<CustomerRequest> header){
+        CustomerRequest customerRequest = header.getData();
+        Customer customer = Customer.builder()
+                .customerId(customerRequest.getUserId())
+                .build();
+
+        Customer findCustomer = customerRepository.findByCustomerIdLike(customer.getCustomerId());
+
+        CustomerResponse customerResponse = CustomerResponse.builder()
+                .customerId(findCustomer.getCustomerId())
+                .build();
+
+        return Header.OK(customerResponse);
+    }
+
 }

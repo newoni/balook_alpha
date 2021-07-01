@@ -25,9 +25,15 @@ public class CustomerController {
         return "/jsp/login";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Header<CustomerResponse> create(@RequestBody Header<CustomerRequest> header){
         System.out.println(header);
         return customerService.signUp(header);
+    }
+
+    @RequestMapping(value = "/checkDuplication", method = RequestMethod.POST)
+    public Header<CustomerResponse> checkDuplication(@RequestBody Header<CustomerRequest> header){
+        System.out.println(header);
+        return customerService.findIdByNickName(header);
     }
 }

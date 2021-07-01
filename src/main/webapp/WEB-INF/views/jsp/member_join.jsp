@@ -27,7 +27,7 @@
             </div>
             <form id ="info" name="join" method="post">
                 <ul>
-                    <li class="horizen">ID<button type="button">ID Check</button></li>
+                    <li class="horizen">ID<button type="button" onclick="checkDuplicationId()">ID Check</button></li>
                     <li><input id ="id" name = "userId" type="text" placeholder="ID" required="required"></li>
                     <li>PASSWORD</li>
                     <li><input id ="pw" name = "password" type="password" placeholder="PASSWORD" required="required"></li>
@@ -43,7 +43,7 @@
                     <li><input id ="phone" name = "frontPhoneNumber" type="number" placeholder="PHONE (숫자로만 입력해주세요.)" required="required" size="11"></li>
                 </ul>
                 <div class="joinus">
-                    <button type="button" onclick="mkInfo();">SIGN IN</button>
+                    <button type="button" onclick="signUp();">SIGN IN</button>
                     <button type="button" onclick="back();">CANCLE</button>
                 </div>
             </form>
@@ -66,16 +66,17 @@
     var data
     var info
 
+
     function back() {
         location.href="login.html";
     }
 
     // <21.06.29> KH start
-    function sendJSON(input1){
+    function sendJSON(input1, address){
         console.log("sendJSON invodked");
 
         console.log("sendJSON invodked1");
-        xhr.open('POST', 'customer');
+        xhr.open('POST', address);
         console.log("sendJSON invodked2");
         xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
         console.log("sendJSON invodked3");
@@ -84,7 +85,6 @@
         xhr.onload = function() {
             console.log("sendJSON invodked4");
             if (xhr.status === 200 || xhr.status === 201) {
-                console.log("everything is over");
                 console.log(xhr.responseText);
             } else {
                 console.error(xhr.responseText);
@@ -92,7 +92,6 @@
         };
     }
 
-    // <21.06.30> KH modify
     // <21.06.30> KH modify
     function mkTime(){
         now = new Date();
@@ -117,11 +116,24 @@
         };
     }
 
-    function mkInfo(){
+    function mkData4checkDuplication(){
+        data = {
+            "user_id": document.getElementById("id").value
+        }
+    }
+
+    function signUp(){
         mkTime();
         mkData();
-        info = {time:time, data:data, status:300};
-        sendJSON(info);
+        info = {time:time, data:data};
+        sendJSON(info, "/customer/create");
+    }
+
+    function checkDuplicationId(){
+        mkTime();
+        mkData4checkDuplication();
+        info = {time:time, data:data};
+        sendJSON(info, "/customer/checkDuplication");
     }
 
 

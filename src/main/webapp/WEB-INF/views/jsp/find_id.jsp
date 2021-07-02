@@ -83,7 +83,7 @@
                 console.log(xhr.responseText);
                 alert("your ID is " + JSON.parse(xhr.responseText)["data"]["customer_id"]);
                 //check
-                console.replace("http://192.168.177.128:/customer/login");
+                location.replace("http://192.168.177.128:8081/customer/findCustomerIdResult");
             } else {
                 console.error(xhr.responseText);
             }

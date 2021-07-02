@@ -22,6 +22,11 @@ public class controller {
         return "/jsp/find_id";
     }
 
+    @RequestMapping(value = "/customer/findCustomerIdResult", method = RequestMethod.GET)
+    public String findCustomerIdResult(){
+        return "/jsp/find_id_result";
+    }
+
     @RequestMapping(value = "/customer/findCustomerPassword", method = RequestMethod.GET)
     public String findCustomerPassword(){
         return "/jsp/find_pw";

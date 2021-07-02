@@ -22,15 +22,18 @@ public class CustomerService {
                 .customerId(customerRequest.getUserId())
                 .password(customerRequest.getPassword())
                 .build();
+        try {
+            Customer resCustomer = customerRepository.findByCustomerIdAndPassword(customer.getCustomerId(), customer.getPassword());
 
-        Customer resCustomer = customerRepository.findByCustomerIdAndPassword(customer.getCustomerId(), customer.getPassword());
+            CustomerResponse customerResponse = CustomerResponse.builder()
+                    .customerId(resCustomer.getCustomerId())
+                    .nickName(resCustomer.getNickName())
+                    .build();
 
-        CustomerResponse customerResponse = CustomerResponse.builder()
-                .customerId(resCustomer.getCustomerId())
-                .nickName(resCustomer.getNickName())
-                .build();
-
-        return Header.OK(customerResponse);
+            return Header.OK(customerResponse);
+        }catch(Exception e){
+            return Header.ERROR();
+        }
     }
 
     public Header<CustomerResponse> findCustomerId(Header<CustomerRequest> header){

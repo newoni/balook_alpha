@@ -81,6 +81,10 @@
                 console.log("function invoked ");
                 if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
                     location.replace("http://192.168.177.128:8081/main");
+                }else(JSON.parse(xhr.responseText)["result_code"]=="ERROR")
+                {
+                    alert("LogIn failed...");
+                    location.reload();
                 }
 
             } else {

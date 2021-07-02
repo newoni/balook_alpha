@@ -35,7 +35,7 @@
                     <li>PASSWORD</li>
                     <li><input id ="pw" name = "password" type="password" placeholder="PASSWORD" required="required"></li>
                     <li>PASSWORD CHECK</li>
-                    <li><input id ="pwcheck" type="passwordCheck" placeholder="PASSWORD" required="required"></li>
+                    <li><input id ="pwcheck" name = "password" type="password" placeholder="PASSWORD" required="required"></li>
                     <li>NAME</li>
                     <li><input id ="name" name = "name" type="text" placeholder="NAME" required="required"></li>
                     <li>NICKNAME</li>

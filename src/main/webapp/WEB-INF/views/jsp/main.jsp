@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: balook
@@ -6,6 +7,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import = "com.example.demo.controller.CustomerController"%>
+<%@ page import = "com.example.demo.model.network.Header"%>
+<%@ page import = "com.example.demo.model.network.request.CustomerRequest"%>
+<%@ page import = "com.example.demo.model.network.response.CustomerResponse"%>
+<%@ page import = "com.example.demo.controller.BoardController"%>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -17,6 +24,11 @@
     <title>index</title>
 </head>
 <body>
+<%
+    CustomerRequest customerRequest = new CustomerRequest();
+    System.out.println(session.getAttribute("customerId"));
+    System.out.println(customerRequest);
+%>
 <header class="header_container">
     <div class="logo">
         <ul>

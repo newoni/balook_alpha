@@ -11,4 +11,5 @@ public class CustomerResponse {
     private String customerId;
     private String password;
     private String nickName;
+    private String picturePath;
 }

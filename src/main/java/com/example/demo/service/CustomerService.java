@@ -28,6 +28,7 @@ public class CustomerService {
             CustomerResponse customerResponse = CustomerResponse.builder()
                     .customerId(resCustomer.getCustomerId())
                     .nickName(resCustomer.getNickName())
+                    .picturePath(resCustomer.getPicturePath())
                     .build();
 
             return Header.OK(customerResponse);

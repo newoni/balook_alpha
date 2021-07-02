@@ -80,9 +80,11 @@
             if (xhr.status === 200 || xhr.status === 201) {
                 console.log("function invoked ");
                 if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
-                    location.replace("http://192.168.177.128:8081/main");
-                }else(JSON.parse(xhr.responseText)["result_code"]=="ERROR")
-                {
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    location.href="../main";
+
+                }else{
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
                     alert("LogIn failed...");
                     location.reload();
                 }

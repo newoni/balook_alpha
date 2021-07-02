@@ -22,8 +22,16 @@ public class CustomerController {
 
 //    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json; charset=utf8")
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
-    public Header<CustomerResponse> signIn(@RequestBody Header<CustomerRequest> header) {
-        return customerService.signIn(header);
+    public Header<CustomerResponse> signIn(@RequestBody Header<CustomerRequest> header, HttpSession session) {
+        System.out.println("input in CustomerController ");
+        System.out.println(header);
+        Header<CustomerResponse> result =  customerService.signIn(header);
+
+        session.setAttribute("customerId", result.getData().getCustomerId());
+        session.setAttribute("nickname", result.getData().getNickName());
+        session.setAttribute("picturePath", result.getData().getPicturePath());
+
+        return result;
     }
 
     @RequestMapping(value = "/findCustomerId", method = RequestMethod.POST)

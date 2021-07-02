@@ -22,6 +22,11 @@ public class controller {
         return "/jsp/find_id";
     }
 
+    @RequestMapping(value = "/customer/findCustomerPassword", method = RequestMethod.GET)
+    public String findCustomerPassword(){
+        return "/jsp/find_pw";
+    }
+
     @RequestMapping(value = "/customer/signUp", method = RequestMethod.GET)
     public String member_join() {
         return "/jsp/member_join";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp

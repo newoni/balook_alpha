@@ -20,23 +20,23 @@
 <header class="header_container">
     <div class="logo">
         <ul>
-            <li><a href="main.jsp"><img class="logo" src="../img/logo.png"></a></li>
+            <li><a href="main.jsp"><img class="logo" src="/img/logo.png"></a></li>
             <li><a href="main.jsp">balook</a></li>
         </ul>
     </div>
     <div class="menu">
         <ul>
             <li class="dropdown">
-                <a href="#" class="dropbtn"><img class="search_icon" src="../img/search.png"></a>
+                <a href="#" class="dropbtn"><img class="search_icon" src="/img/search.png"></a>
                 <div class="search_content">
                     <form action="search_result.jsp" method="POST">
                         <input type="text" placeholder="검색어 입력">
                     </form>
                 </div>
             </li>
-            <li><a href="board_write.jsp"><img class="write_icon" src="../img/write.png"></a></li>
-            <li><a href="chating.jsp"><img class="chat_icon" src="../img/chat.png"></a></li>
-            <li><a href="my_profile.jsp"><img class="profile_icon" src="../img/profile.png"></a></li>
+            <li><a href="board_write.jsp"><img class="write_icon" src="/img/write.png"></a></li>
+            <li><a href="chating.jsp"><img class="chat_icon" src="/img/chat.png"></a></li>
+            <li><a href="my_profile.jsp"><img class="profile_icon" src="/img/profile.png"></a></li>
         </ul>
     </div>
 </header>
@@ -45,14 +45,14 @@
         <div class="card_board_list">
             <div class="card_board_header">
                 <ul>
-                    <li><a href="#"><img class="profile" src="../img/profile.png"></a></li>
+                    <li><a href="#"><img class="profile" src="/img/profile.png"></a></li>
                     <li><a href="#">vue_ys</a></li>
-                    <li class="more_li"><a href="board_modify.jsp"><img class="more" src="../img/more.png"></a></li>
+                    <li class="more_li"><a href="board_modify.jsp"><img class="more" src="/img/more.png"></a></li>
                 </ul>
             </div>
             <div class="card_board_cont">
                 <div class="board_cont_item1">
-                    <img class="board_cont_img" src="../img/go.png">
+                    <img class="board_cont_img" src="/img/go.png">
                 </div>
                 <div class="board_cont_item2">
                     <ul class="board_cont_ul">
@@ -67,9 +67,9 @@
             </div>
             <div class="card_board_footer">
                 <ul class="footer_icon">
-                    <li><a href="#"><img src="../img/like.png"></a></li>
-                    <li><a href="board_view.html"><img src="../img/comments.png"></a></li>
-                    <li><a href="board_view.html"><img src="../img/feedback.png"></a></li>
+                    <li><a href="#"><img src="/img/like.png"></a></li>
+                    <li><a href="board_view.html"><img src="/img/comments.png"></a></li>
+                    <li><a href="board_view.html"><img src="/img/feedback.png"></a></li>
                 </ul>
                 <div class="footer_comments">
                     <ul>
@@ -83,14 +83,14 @@
         <div class="card_board_list">
             <div class="card_board_header">
                 <ul>
-                    <li><a href="#"><img class="profile" src="../img/profile.png"></a></li>
+                    <li><a href="#"><img class="profile" src="/img/profile.png"></a></li>
                     <li><a href="#">vue_ys</a></li>
-                    <li class="more_li"><a href="#"><img class="more" src="../img/more.png"></a></li>
+                    <li class="more_li"><a href="#"><img class="more" src="/img/more.png"></a></li>
                 </ul>
             </div>
             <div class="card_board_cont">
                 <div class="board_cont_item1">
-                    <img class="board_cont_img" src="../img/go.png">
+                    <img class="board_cont_img" src="/img/go.png">
                 </div>
                 <div class="board_cont_item2">
                     <ul class="board_cont_ul">
@@ -106,8 +106,8 @@
             <div class="card_board_footer">
                 <ul class="footer_icon">
                     <li><a href="#"><img src="../img/like.png"></a></li>
-                    <li><a href="board_view.jsp"><img src="../img/comments.png"></a></li>
-                    <li><a href="board_view.jsp"><img src="../img/feedback.png"></a></li>
+                    <li><a href="board_view.jsp"><img src="/img/comments.png"></a></li>
+                    <li><a href="board_view.jsp"><img src="/img/feedback.png"></a></li>
                 </ul>
                 <div class="footer_comments">
                     <ul>

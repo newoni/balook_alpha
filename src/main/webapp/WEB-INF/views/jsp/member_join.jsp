@@ -26,7 +26,7 @@
     <div class="main_container">
         <div class="join_container">
             <div class="title">
-                <img src="../img/badookdol.png"> <span class="logo_name">BALOOK</span>
+                <img src="/img/badookdol.png"> <span class="logo_name">BALOOK</span>
             </div>
             <form id ="info" name="join" method="post">
                 <ul>
@@ -82,7 +82,8 @@
 
         xhr.onload = function() {
             if (xhr.status === 200 || xhr.status === 201) {
-                location.href("main.jsp");
+                alert("welcome!")
+                location.replace("signIn");
             } else {
                 console.error(xhr.responseText);
             }

@@ -21,7 +21,7 @@
     <div class="main_container">
         <div class="login_container">
             <div class="title">
-                <img src="../img/badookdol.png"> <span class="logo_name">BALOOK</span>
+                <img src="/img/badookdol.png"> <span class="logo_name">BALOOK</span>
             </div>
             <form id = "login_form" action="#" method="post">
                 <ul>
@@ -43,10 +43,10 @@
 </section>
 <script>
     function move_id() {
-        location.replace="http://192.168.163.128:8081/customer/findCustomerId";
+        location.replace="http://192.168.177.128:/customer/findCustomerId";
     }
     function move_pw() {
-        location.replace="find_pw.jsp";
+        location.replace="http://192.168.177.128:/customer/findCustomerPassword";
     }
     function move_member_join() {
         location.replace="member_join.jsp";
@@ -80,7 +80,7 @@
             if (xhr.status === 200 || xhr.status === 201) {
                 console.log("function invoked ");
                 if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
-                    location.replace("http://192.168.163.128:8081/main");
+                    location.replace("http://192.168.177.128:/main");
                 }
 
             } else {

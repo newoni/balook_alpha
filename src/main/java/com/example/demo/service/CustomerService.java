@@ -48,7 +48,7 @@ public class CustomerService {
         System.out.println(newCustomer);
 
         CustomerResponse customerResponse = CustomerResponse.builder()
-                .customerId(newCustomer.getName())
+                .customerId(newCustomer.getCustomerId())
                 .build();
 
         System.out.println("customer response");
@@ -57,6 +57,30 @@ public class CustomerService {
         return Header.OK(customerResponse);
     }
 
+    public Header<CustomerResponse> findCustomerPassword(Header<CustomerRequest> header){
+        CustomerRequest customerRequest = header.getData();
+
+        Customer customer = Customer.builder()
+                .name(customerRequest.getName())
+                .phoneNumber(customerRequest.getFrontPhoneNumber())
+                .email(customerRequest.getEmail())
+                .customerId((customerRequest.getUserId()))
+                .build();
+
+        Customer newCustomer = customerRepository.findByNameAndEmailAndPhoneNumberAndCustomerId(customer.getName(), customer.getEmail(), customer.getPhoneNumber(), customer.getCustomerId());
+
+        System.out.println("newCustomer");
+        System.out.println(newCustomer);
+
+        CustomerResponse customerResponse = CustomerResponse.builder()
+                .password(newCustomer.getPassword())
+                .build();
+
+        System.out.println("customer response");
+        System.out.println(customerResponse);
+
+        return Header.OK(customerResponse);
+    }
 
     public Header<CustomerResponse> signUp(Header<CustomerRequest> header){
         CustomerRequest customerRequest = header.getData();

@@ -32,6 +32,13 @@ public class CustomerController {
         return customerService.findCustomerId(header);
     }
 
+    @RequestMapping(value = "/findCustomerPassword", method = RequestMethod.POST)
+    public Header<CustomerResponse> findCustomerPassword(@RequestBody Header<CustomerRequest> header) {
+        System.out.println("header");
+        System.out.println(header);
+        return customerService.findCustomerPassword(header);
+    }
+
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Header<CustomerResponse> create(@RequestBody Header<CustomerRequest> header){
         System.out.println(header);

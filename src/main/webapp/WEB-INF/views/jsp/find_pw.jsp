@@ -54,7 +54,7 @@
 </section>
 <script>
     function back() {
-        location.href="login.jsp";
+        location.href="signUp";
     }
     var obj;
     var xhr = new XMLHttpRequest();
@@ -72,7 +72,7 @@
     var info
 
     function back() {
-        location.href="find_pw.jsp";
+        location.href="signIn";
     }
 
     // <21.06.29> KH start
@@ -85,8 +85,8 @@
             console.log("sendJSON invodked4");
             if (xhr.status === 200 || xhr.status === 201) {
                 console.log("everything is over");
-                alert("your PW is " + JSON.parse(xhr.responseText)["data"]["password"]);
-                location.replace("http://192.168.177.128:/customer/login");
+                // alert("your PW is " + JSON.parse(xhr.responseText)["data"]["password"]);
+                location.replace("http://192.168.177.128:8081/customer/findCustomerPasswordResult");
             } else {
                 console.error(xhr.responseText);
             }

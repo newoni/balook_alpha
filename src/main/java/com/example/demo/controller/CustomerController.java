@@ -38,10 +38,12 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/findCustomerPassword", method = RequestMethod.POST)
-    public Header<CustomerResponse> findCustomerPassword(@RequestBody Header<CustomerRequest> header) {
+    public Header<CustomerResponse> findCustomerPassword(@RequestBody Header<CustomerRequest> header, HttpSession session) {
         System.out.println("header");
         System.out.println(header);
-        return customerService.findCustomerPassword(header);
+        Header<CustomerResponse> result = customerService.findCustomerPassword(header);
+        session.setAttribute("password", result.getData().getPassword());
+        return result;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

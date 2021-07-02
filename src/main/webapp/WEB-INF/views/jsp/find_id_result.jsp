@@ -42,10 +42,10 @@
 </section>
 <script>
   function back() {
-    location.href="login"
+    location.href="signUp"
   }
   function move() {
-    location.href="find_pw.jsp";
+    location.href="findCustomerPassword";
   }
 </script>
 </body>

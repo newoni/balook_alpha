@@ -41,7 +41,7 @@
                 </ul>
 
                 <div class="find_id">
-                    <button type="button" onclick="mkInfo();"><a href="find_id_result.jsp">FIND ID</a></button>
+                    <button type="button" onclick="mkInfo();">FIND ID</button>
                     <button type="button" onclick="back()">CANCLE</button>
                 </div>
             </form>
@@ -68,7 +68,7 @@
     var info
 
     function back() {
-        location.href="login.jsp";
+        location.href="signIn";
     }
 
     // <21.06.29> KH start
@@ -81,7 +81,7 @@
             if (xhr.status === 200 || xhr.status === 201) {
                 console.log("everything is over");
                 console.log(xhr.responseText);
-                alert("your ID is " + JSON.parse(xhr.responseText)["data"]["customer_id"]);
+                // alert("your ID is " + JSON.parse(xhr.responseText)["data"]["customer_id"]);
                 //check
                 location.replace("http://192.168.177.128:8081/customer/findCustomerIdResult");
             } else {

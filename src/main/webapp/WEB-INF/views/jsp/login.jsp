@@ -43,13 +43,13 @@
 </section>
 <script>
     function move_id() {
-        location.replace="http://192.168.177.128:/customer/findCustomerId";
+        location.href="findCustomerId";
     }
     function move_pw() {
-        location.replace="http://192.168.177.128:/customer/findCustomerPassword";
+        location.href="findCustomerPassword";;
     }
     function move_member_join() {
-        location.replace="member_join.jsp";
+        location.href="signUp";
     }
     var obj;
     var xhr = new XMLHttpRequest();
@@ -67,7 +67,7 @@
     var info
 
     function back() {
-        location.href="login.jsp";
+        location.href="signIn";
     }
 
     // <21.06.29> KH start
@@ -80,7 +80,7 @@
             if (xhr.status === 200 || xhr.status === 201) {
                 console.log("function invoked ");
                 if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
-                    location.replace("http://192.168.177.128:/main");
+                    location.replace("http://192.168.177.128:8081/main");
                 }
 
             } else {

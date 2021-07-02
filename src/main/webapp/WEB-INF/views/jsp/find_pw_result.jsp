@@ -11,8 +11,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../css/find_pw_result.css" rel="stylesheet">
-    <link href="../css/header_login.css" rel="stylesheet">
+    <link href="/css/find_pw_result.css" rel="stylesheet">
+    <link href="/css/header_login.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>Find PW Result</title>
     <style>
@@ -24,12 +24,12 @@
     <div class="main_container">
         <div class="find_pw_result_container">
             <div class="title">
-                <img src="../img/badookdol.png"><span class="logo_name">BALOOK</span>
+                <img src="/img/badookdol.png"><span class="logo_name">BALOOK</span>
             </div>
             <form>
                 <ul>
                     <li>회원님의 비밀번호는</li>
-                    <li><output></output></li>
+                    <li><output><%=session.getAttribute("password")%></output></li>
                     <li class="right">입니다.</li>
                 </ul>
             </form>
@@ -41,7 +41,7 @@
 </section>
 <script>
     function move() {
-        location.href="login.jsp";
+        location.href="signIn";
     }
 </script>
 </body>

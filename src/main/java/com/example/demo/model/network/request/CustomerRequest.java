@@ -19,4 +19,5 @@ public class CustomerRequest {
     private String backPhoneNumber;
     private String nickname;
     private String passwordCheck;
+    private String picturePath;
 }

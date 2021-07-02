@@ -27,6 +27,21 @@
 <%
     CustomerRequest customerRequest = new CustomerRequest();
     System.out.println(session.getAttribute("customerId"));
+    System.out.println(session.getAttribute("nickname"));
+    System.out.println(session.getAttribute("picturePath"));
+
+    customerRequest.setUserId(session.getAttribute("customerId").toString());
+    customerRequest.setNickname(session.getAttribute("nickname").toString());
+
+    String picturePath="";
+
+    if(session.getAttribute("picturePath") == null){
+        picturePath = "/img/myprofile.png";
+    }else{
+        picturePath = session.getAttribute("picturePath").toString();
+    }
+    customerRequest.setPicturePath(picturePath);
+
     System.out.println(customerRequest);
 %>
 <header class="header_container">
@@ -48,7 +63,7 @@
             </li>
             <li><a href="board_write.jsp"><img class="write_icon" src="/img/write.png"></a></li>
             <li><a href="chating.jsp"><img class="chat_icon" src="/img/chat.png"></a></li>
-            <li><a href="my_profile.jsp"><img class="profile_icon" src="/img/profile.png"></a></li>
+            <li><a href="my_profile.jsp"><img class="profile_icon" src=<%= picturePath %>></a></li>
         </ul>
     </div>
 </header>

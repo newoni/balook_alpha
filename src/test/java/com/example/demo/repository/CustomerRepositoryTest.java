@@ -11,6 +11,19 @@ public class CustomerRepositoryTest{
     private CustomerRepository customerRepository;
 
     @Test
+    public void findByNickName(){
+        Customer customer = Customer.builder()
+                .nickName("newoninewoni")
+                .build();
+
+
+        Customer resCustomer = customerRepository.findByNickName(customer.getNickName());
+
+        System.out.println("hi");
+        System.out.println(resCustomer);
+    }
+
+    @Test
     public void create() {
         Customer customer1 = new Customer();
         customer1.setId(1L);

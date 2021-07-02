@@ -10,19 +10,19 @@ public class BoardRepositoryTest {
     @Autowired
     BoardRepository boardRepository;
 
-    @Test
-    public void create(){
-        Board board = Board.builder()
-                .id(1L)
-                .author("newoni")
-                .title("test Title")
-                .filePath("test")
-                .build();
-
-        System.out.println(board);
-
-        Board newBoard = boardRepository.save(board);
-    }
+//    @Test
+//    public void create(){
+//        Board board = Board.builder()
+//                .id(1L)
+//                .author("newoni")
+//                .title("test Title")
+//                .filePath("test")
+//                .build();
+//
+//        System.out.println(board);
+//
+//        Board newBoard = boardRepository.save(board);
+//    }
 
 
 }

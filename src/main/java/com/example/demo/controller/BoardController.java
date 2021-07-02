@@ -24,11 +24,11 @@ public class BoardController {
     @Autowired
     BoardService boardService;
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Header<BoardResponse> create(@RequestBody Header<BoardRequest> header){
-        System.out.println(header);
-        return boardService.create(header);
-    }
+//    @RequestMapping(value = "/create", method = RequestMethod.POST)
+//    public Header<BoardResponse> create(@RequestBody Header<BoardRequest> header){
+//        System.out.println(header);
+//        return boardService.create(header);
+//    }
 
     @PostMapping("/uploadFormAction")
     public void uploadFormPost(MultipartFile uploadFile, @RequestParam("title") String title, @RequestParam("contents")String contents) {

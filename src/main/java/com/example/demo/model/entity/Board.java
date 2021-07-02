@@ -19,7 +19,7 @@ public class Board{
     @Id
     Long id;
     String title;
-    String author;
+    Long author;
     String filePath;
     String contents;
     Date boardedAt;

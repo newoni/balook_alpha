@@ -22,4 +22,5 @@ public class CustomerRequest {
     private String nickname;
     private String passwordCheck;
     private String picturePath;
+
 }

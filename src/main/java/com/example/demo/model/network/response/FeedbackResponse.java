@@ -7,7 +7,9 @@ import lombok.experimental.Accessors;
 @Data
 @Builder
 @Accessors(chain = true)
-public class LikesResponse {
-    private String author;
-    private String targetBoard;
+public class FeedbackResponse {
+    private String status;
+    private String contents;
+    private String requestTo;
+    private String requestBy;
 }

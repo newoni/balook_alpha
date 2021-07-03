@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FollowRepository extends JpaRepository<Follow, Long>{
-    Long countByFollowBy(Long id);
+    Long countByFollowTo(Long followTo);
 }

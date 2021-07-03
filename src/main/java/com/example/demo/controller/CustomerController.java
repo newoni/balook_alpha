@@ -23,8 +23,6 @@ public class CustomerController {
 //    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json; charset=utf8")
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
     public Header<CustomerResponse> signIn(@RequestBody Header<CustomerRequest> header, HttpSession session) {
-        System.out.println("input in CustomerController ");
-        System.out.println(header);
         Header<CustomerResponse> result =  customerService.signIn(header);
 
         session.setAttribute("customerId", result.getData().getCustomerId());
@@ -56,13 +54,16 @@ public class CustomerController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Header<CustomerResponse> create(@RequestBody Header<CustomerRequest> header){
-        System.out.println(header);
         return customerService.signUp(header);
     }
 
     @RequestMapping(value = "/checkDuplication", method = RequestMethod.POST)
     public Header<CustomerResponse> checkDuplication(@RequestBody Header<CustomerRequest> header){
-        System.out.println(header);
         return customerService.findIdByNickName(header);
+    }
+
+    @RequestMapping(value="/countProfiles")
+    public Header<CustomerResponse> countProfiles(@RequestBody Header<CustomerRequest> header){
+        return customerService.countProfiles(header);
     }
 }

@@ -10,5 +10,4 @@ import lombok.experimental.Accessors;
 @Builder
 @Accessors(chain = true)
 public class FollowResponse {
-    private Long followCount;
 }

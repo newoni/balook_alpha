@@ -16,8 +16,9 @@ public class CustomerRepositoryTest{
                 .nickName("newoninewoni")
                 .build();
 
-
-        Customer resCustomer = customerRepository.findByNickName(customer.getNickName());
+        System.out.println(customer.getNickName());
+        Customer resCustomer = customerRepository.findByNickNameLike(customer.getNickName());
+        resCustomer = customerRepository.findByNickNameLike("newoninewoni");
 
         System.out.println("hi");
         System.out.println(resCustomer);

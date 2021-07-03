@@ -12,4 +12,8 @@ public class CustomerResponse {
     private String password;
     private String nickName;
     private String picturePath;
+
+    private Long likesCount;
+    private Long followCount;
+    private Long feedbackCount;
 }

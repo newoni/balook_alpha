@@ -7,6 +7,10 @@
 <%@ page import="com.example.demo.service.FollowService" %>
 <%@ page import="com.example.demo.model.network.request.FollowRequest" %>
 <%@ page import="com.example.demo.model.network.response.FollowResponse" %>
+<%@ page import="com.example.demo.service.FeedbackService" %>
+<%@ page import="com.example.demo.model.network.request.FeedbackRequest" %>
+<%@ page import="com.example.demo.model.network.response.FeedbackResponse" %>
+<%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -37,24 +41,6 @@
     }else{
         picturePath = session.getAttribute("picturePath").toString();
     }
-
-    //for likes count, feedback count
-    LikesService likesService = new LikesService();
-    LikesRequest likesRequest = new LikesRequest();
-    likesRequest.setNickName(session.getAttribute("nickname").toString());
-    Header<LikesRequest> likesReqHeader = new Header<LikesRequest>();
-    likesReqHeader.setData(likesRequest);
-    Header<LikesResponse> likesResHeader = likesService.countLikes(likesReqHeader);
-    System.out.println(likesResHeader);
-
-    //for follow count
-    FollowService followService = new FollowService();
-    FollowRequest followRequest = new FollowRequest();
-    followRequest.setNickName(session.getAttribute("nickname").toString());
-    Header<FollowRequest> followReqHeader = new Header<FollowRequest>();
-    followReqHeader.setData(followRequest);
-    Header<FollowResponse> followResHeader = followService.countFollow(followReqHeader);
-    System.out.println(followResHeader);
 %>
 <header class="header_container">
     <div class="logo">
@@ -99,7 +85,6 @@
                                         좋아요
                                     </div>
                                     <div class="my_profile_status_likes_number">
-                                        <%= likesResHeader.getData().getLikeCount()%>
                                     </div>
                                 </div>
                             </li>
@@ -112,7 +97,6 @@
                                         팔로우
                                     </div>
                                     <div class="my_profile_status_follows_number">
-                                        <%=followResHeader.getData().getFollowCount()%>
                                     </div>
                                 </div>
                             </li>
@@ -125,7 +109,6 @@
                                         피드백
                                     </div>
                                     <div class="my_profile_status_feedbacks_number">
-                                        200
                                     </div>
                                 </div>
                             </li>
@@ -146,4 +129,78 @@
     </div>
 </section>
 </body>
+<script>
+    var nickName = '<%=session.getAttribute("nickname").toString()%>'
+    var obj;
+
+    var xhr = new XMLHttpRequest();
+
+    var now
+    var year
+    var month
+    var date
+    var hour
+    var minute
+    var second
+    var time
+
+    var data
+    var header_data
+
+    window.onload(onload());
+
+
+    function onload(){
+        mkTime();
+        mkData();
+
+        header_data = {time:time, data:data};
+        sendJSON(header_data, "/customer/countProfiles");
+    };
+
+    function mkTime(){
+        now = new Date();
+        year = now.getFullYear();
+        month = now.getMonth() + 1;
+        date = now.getDate();
+        hour = now.getHours();
+        minute = now.getMinutes();
+        second = now.getSeconds();
+        time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
+    }
+
+    function mkData(){
+        data = {
+            "nickname" : nickName
+        };
+    }
+
+    function sendJSON(input1, address){
+        xhr.open('POST', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+                if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
+                    console.log("sendJSON successed")
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    document.getElementsByClassName("my_profile_status_likes_number")[0].innerHTML=JSON.parse(xhr.response)["data"]['likes_count'];
+                    document.getElementsByClassName("my_profile_status_follows_number")[0].innerHTML=JSON.parse(xhr.response)["data"]['follow_count'];
+                    document.getElementsByClassName("my_profile_status_feedbacks_number")[0].innerHTML=JSON.parse(xhr.response)["data"]['feedback_count'];
+
+                }else{
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    alert("sendJSON failed...");
+                    location.reload();
+                }
+
+            } else {
+                console.error(xhr.responseText);
+            }
+        };
+    }
+
+</script>
 </html>

@@ -5,6 +5,9 @@ import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.CustomerRequest;
 import com.example.demo.model.network.response.CustomerResponse;
 import com.example.demo.repository.CustomerRepository;
+import com.example.demo.repository.FeedbackRepository;
+import com.example.demo.repository.FollowRepository;
+import com.example.demo.repository.LikesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,12 @@ import java.time.LocalDateTime;
 public class CustomerService {
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    LikesRepository likesRepository;
+    @Autowired
+    FollowRepository followRepository;
+    @Autowired
+    FeedbackRepository feedbackRepository;
 
     public Header<CustomerResponse> signIn(Header<CustomerRequest> header){
         CustomerRequest customerRequest = header.getData();
@@ -22,6 +31,7 @@ public class CustomerService {
                 .customerId(customerRequest.getUserId())
                 .password(customerRequest.getPassword())
                 .build();
+
         try {
             Customer resCustomer = customerRepository.findByCustomerIdAndPassword(customer.getCustomerId(), customer.getPassword());
 
@@ -33,6 +43,7 @@ public class CustomerService {
 
             return Header.OK(customerResponse);
         }catch(Exception e){
+            e.printStackTrace();
             return Header.ERROR();
         }
     }
@@ -128,4 +139,21 @@ public class CustomerService {
         }
     }
 
+    public Header<CustomerResponse> countProfiles(Header<CustomerRequest> header){
+        CustomerRequest customerRequest = header.getData();
+        System.out.println(customerRequest);
+        Customer resCustomer = customerRepository.findByNickNameLike(customerRequest.getNickname());
+
+        Long likesCount = likesRepository.countByAuthor(resCustomer.getId());
+        Long followCount = followRepository.countByFollowTo(resCustomer.getId());
+        Long feedbackCount = feedbackRepository.countByRequestTo(resCustomer.getId());
+
+        CustomerResponse customerResponse = CustomerResponse.builder()
+                .likesCount(likesCount)
+                .followCount(followCount)
+                .feedbackCount(feedbackCount)
+                .build();
+
+        return Header.OK(customerResponse);
+    }
 }

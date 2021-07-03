@@ -10,12 +10,17 @@ import com.example.demo.repository.BoardRepository;
 import com.example.demo.service.BoardService;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RestController
@@ -24,11 +29,7 @@ public class BoardController {
     @Autowired
     BoardService boardService;
 
-//    @RequestMapping(value = "/create", method = RequestMethod.POST)
-//    public Header<BoardResponse> create(@RequestBody Header<BoardRequest> header){
-//        System.out.println(header);
-//        return boardService.create(header);
-//    }
+
 
     @PostMapping("/uploadFormAction")
     public void uploadFormPost(MultipartFile uploadFile, @RequestParam("title") String title, @RequestParam("contents")String contents) {

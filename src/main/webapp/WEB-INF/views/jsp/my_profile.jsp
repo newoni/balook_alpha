@@ -52,7 +52,7 @@
     <div class="menu">
         <ul>
             <li><a href="search_result.jsp"><img class="search_icon" src="/img/search.png"></a></li>
-            <li><a href="board_write.jsp"><img class="write_icon" src="/img/write.png"></a></li>
+            <li><a href="../board/createPage"><img class="write_icon" src="/img/write.png"></a></li>
             <li><a href="chating.jsp"><img class="chat_icon" src="/img/chat.png"></a></li>
             <li><a href="myProfile"><img class="profile_icon" src=<%=picturePath%>></a></li>
         </ul>

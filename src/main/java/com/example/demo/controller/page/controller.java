@@ -12,8 +12,8 @@ public class controller {
     }
 
 //    @RequestMapping(value = "/board", method = RequestMethod.GET, produces="application/json; charset=utf-8")
-    @RequestMapping(value = "/board", method = RequestMethod.GET)
-    public String board_write() {
-        return "/jsp/board_write";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
-    }
+//    @RequestMapping(value = "/board", method = RequestMethod.GET)
+//    public String board_write() {
+//        return "/jsp/board_write";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
+//    }
 }

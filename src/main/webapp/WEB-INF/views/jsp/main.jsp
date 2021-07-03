@@ -50,7 +50,7 @@
                     </form>
                 </div>
             </li>
-            <li><a href="board_write.jsp"><img class="write_icon" src="/img/write.png"></a></li>
+            <li><a href="../board/createPage"><img class="write_icon" src="/img/write.png"></a></li>
             <li><a href="chating.jsp"><img class="chat_icon" src="/img/chat.png"></a></li>
             <li><a href="customer/myProfile"><img class="profile_icon" src=<%= picturePath %>></a></li>
         </ul>

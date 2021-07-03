@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -15,6 +16,6 @@ public class BoardResponse {
     private String author;
     private String filePath;
     private String contents;
-    private Date boardedAt;
-    private Date updatedAt;
+    private LocalDate boardedAt;
+    private LocalDate updatedAt;
 }

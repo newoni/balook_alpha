@@ -5,10 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = "/likes")
-public class LikesPageController {
-    @RequestMapping(value="/likeStatus", method = RequestMethod.GET)
-    public String likeStatus(){
-        return "/jsp/like_status";
-    }
+@RequestMapping(value = "/follow")
+public class FollowPageController {
+    @RequestMapping(value="followStatus", method = RequestMethod.GET)
+    public String followStatus(){return "/jsp/follow_status";}
 }

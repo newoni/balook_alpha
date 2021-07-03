@@ -4,6 +4,9 @@
 <%@ page import="com.example.demo.service.LikesService" %>
 <%@ page import="com.example.demo.model.network.request.LikesRequest" %>
 <%@ page import="com.example.demo.model.network.response.LikesResponse" %>
+<%@ page import="com.example.demo.service.FollowService" %>
+<%@ page import="com.example.demo.model.network.request.FollowRequest" %>
+<%@ page import="com.example.demo.model.network.response.FollowResponse" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -35,14 +38,23 @@
         picturePath = session.getAttribute("picturePath").toString();
     }
 
-    //for likes, follow, feedback count
+    //for likes count, feedback count
     LikesService likesService = new LikesService();
     LikesRequest likesRequest = new LikesRequest();
     likesRequest.setNickName(session.getAttribute("nickname").toString());
     Header<LikesRequest> likesReqHeader = new Header<LikesRequest>();
     likesReqHeader.setData(likesRequest);
-    Header<LikesResponse> likesResHeader = likesService.countLike(likesReqHeader);
+    Header<LikesResponse> likesResHeader = likesService.countLikes(likesReqHeader);
     System.out.println(likesResHeader);
+
+    //for follow count
+    FollowService followService = new FollowService();
+    FollowRequest followRequest = new FollowRequest();
+    followRequest.setNickName(session.getAttribute("nickname").toString());
+    Header<FollowRequest> followReqHeader = new Header<FollowRequest>();
+    followReqHeader.setData(followRequest);
+    Header<FollowResponse> followResHeader = followService.countFollow(followReqHeader);
+    System.out.println(followResHeader);
 %>
 <header class="header_container">
     <div class="logo">
@@ -93,20 +105,20 @@
                             </li>
                         </a>
 
-                        <a href="follow_status.jsp">
+                        <a href="../follow/followStatus">
                             <li>
                                 <div class="my_profile_status_follows">
                                     <div class="my_profile_status_follows_name">
                                         팔로우
                                     </div>
                                     <div class="my_profile_status_follows_number">
-                                        81
+                                        <%=followResHeader.getData().getFollowCount()%>
                                     </div>
                                 </div>
                             </li>
                         </a>
 
-                        <a href="feedback_status.jsp">
+                        <a href="../feedback/feedbackStatus">
                             <li>
                                 <div class="my_profile_status_feedbacks">
                                     <div class="my_profile_status_feedbacks_name">

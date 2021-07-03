@@ -21,7 +21,7 @@ public class LikesService {
     @Autowired
     CustomerRepository customerRepository;
 
-    public Header<LikesResponse> countLike(Header<LikesRequest> header){
+    public Header<LikesResponse> countLikes(Header<LikesRequest> header){
         LikesRequest likesRequest = header.getData();
         Long likeCountNumber;
 
@@ -30,7 +30,7 @@ public class LikesService {
             Customer resCustomer = customerRepository.findByNickName(likesRequest.getAuthor());
             likeCountNumber = likesRepository.countByAuthor(resCustomer.getId());
         }catch(Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
             likeCountNumber = 0L;
         }
 

@@ -36,8 +36,8 @@
 <header class="header_container">
     <div class="logo">
         <ul>
-            <li><a href="main.jsp"><img class="logo" src="/img/logo.png"></a></li>
-            <li><a href="main.jsp">balook</a></li>
+            <li><a href="main"><img class="logo" src="/img/logo.png"></a></li>
+            <li><a href="main">balook</a></li>
         </ul>
     </div>
     <div class="menu">

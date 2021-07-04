@@ -22,12 +22,11 @@ public class ChatService {
     @Autowired
     CustomerRepository customerRepository;
 
-    public Header<ChatListResponse> showChatList(Header<ChatRequest> request){
-        ChatRequest chatRequest = request.getData();
+    public Header<ChatListResponse> showChatList(String request){
 
-        Customer customer = customerRepository.findByNickNameLike(chatRequest.getNickName());
+        Customer customer = customerRepository.findByNickNameLike(request);
 
-        List<Chat> resChatList = chatRepository.findByParticipant1OOrAndParticipant2(customer.getId(), customer.getId());
+        List<Chat> resChatList = chatRepository.findByParticipant1OrAndParticipant2(customer.getId(), customer.getId());
 
         ArrayList<ChatResponse> chatResponseList = new ArrayList<ChatResponse>();
 

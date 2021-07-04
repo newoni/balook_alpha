@@ -51,7 +51,7 @@
                 </div>
             </li>
             <li><a href="../board/createPage"><img class="write_icon" src="/img/write.png"></a></li>
-            <li><a href="../chat/showChatList"><img class="chat_icon" src="/img/chat.png"></a></li>
+            <li><a href="../chat/showChatListPage" onclick="getChatList()"><img class="chat_icon" src="/img/chat.png"></a></li>
             <li><a href="customer/myProfile"><img class="profile_icon" src=<%= picturePath %>></a></li>
         </ul>
     </div>
@@ -137,4 +137,110 @@
     </div>
 </section>
 </body>
+<script>
+    var nickName = '<%=session.getAttribute("nickname").toString()%>'
+    var obj;
+
+    var xhr = new XMLHttpRequest();
+
+    var now
+    var year
+    var month
+    var date
+    var hour
+    var minute
+    var second
+    var time
+
+    var data
+    var header_data
+
+    var opponent // In chat List, opponent nick name
+
+    function mkTime(){
+        now = new Date();
+        year = now.getFullYear();
+        month = now.getMonth() + 1;
+        date = now.getDate();
+        hour = now.getHours();
+        minute = now.getMinutes();
+        second = now.getSeconds();
+        time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
+    }
+
+    function mkData4chatList(){
+        data = {
+            "nickname" : nickName
+        };
+    }
+
+    function sendJSON4chatList(input1, address){
+        xhr.open('GET', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+                if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
+                    console.log("sendJSON successed")
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+
+                    <%--    for(let i = 0 ; i < JSON.parse(xhr.responseText)["data"]["chat_response_list"].length ; i++){--%>
+                    <%--      if(JSON.parse(xhr.responseText)["data"]["chat_response_list"][i]["participant1"]=="<%=session.getAttribute("nickname")%>"){--%>
+
+                    <%--        console.log("participant2 is");--%>
+                    <%--        console.log(JSON.parse(xhr.responseText)["data"]["chat_response_list"][i]["participant2"]);--%>
+                    <%--        document.getElementsByClassName("chat_wrap")[0].innerHTML=`--%>
+                    <%--        <div class="chat_list">--%>
+                    <%--  <div class="chat_profile">--%>
+                    <%--    <a href="my_profile.jsp"><img src="/img/profile.png"></a>--%>
+                    <%--  </div>--%>
+                    <%--  <div class="chat_cont">--%>
+                    <%--    <ul>--%>
+                    <%--      <a onlcick="sendFinalFunction()">--%>
+                    <%--        <li><h3>${JSON.parse(xhr.responseText)["data"]["chat_response_list"][i]["participant2"]}</h3></li>--%>
+                    <%--        <li><p>너는 지금 뭐해 자니 밖이야?</p></li>--%>
+                    <%--      </a>--%>
+                    <%--    </ul>--%>
+                    <%--  </div>--%>
+                    <%--  <div class="chat_date">--%>
+                    <%--    <p>06/22 10:27</p>--%>
+                    <%--  </div>--%>
+                    <%--  <div class="chat_delete">--%>
+                    <%--    <form>--%>
+                    <%--      <button type="submit">삭제</button>--%>
+                    <%--    </form>--%>
+                    <%--  </div>--%>
+                    <%--</div>`;--%>
+                    <%--      }else{--%>
+                    <%--        var opponent = JSON.parse(xhr.responseText)["data"]["chat_response_list"][i]["participant1"];--%>
+                    <%--        console.log("participant1 is");--%>
+                    <%--        console.log(opponent);--%>
+                    <%--      }--%>
+                    <%--    }--%>
+
+                    // document.getElementsByClassName("my_profile_status_feedbacks_number")[0].innerHTML=JSON.parse(xhr.response)["data"]['feedback_count'];
+
+                }else{
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    alert("sendJSON failed...");
+                    location.reload();
+                }
+
+            } else {
+                console.error(xhr.responseText);
+            }
+        };
+    }
+
+    function getChatList(){
+        mkTime();
+        mkData4chatList();
+
+        header_data = {time:time, data:data};
+        sendJSON4chatList(header_data, "/chat/showChatList/<%=session.getAttribute("nickname").toString()%>");
+    }
+
+</script>
 </html>

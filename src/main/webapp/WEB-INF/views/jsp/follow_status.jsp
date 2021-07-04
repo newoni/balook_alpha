@@ -40,7 +40,7 @@
         <ul>
             <li><a href="search_result.jsp"><img class="search_icon" src="/img/search.png"></a></li>
             <li><a href="../board/createPage"><img class="write_icon" src="/img/write.png"></a></li>
-            <li><a href="../chat/showChatList"><img class="chat_icon" src="/img/chat.png"></a></li>
+            <li><a href="../chat/showChatListPage"><img class="chat_icon" src="/img/chat.png"></a></li>
             <li><a href="../customer/myProfile"><img class="profile_icon" src=<%= picturePath%>></a></li>
         </ul>
     </div>

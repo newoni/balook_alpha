@@ -162,38 +162,10 @@
         second = now.getSeconds();
         time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
     }
-
-    function mkData4BoardList(){
-        data = {};
-    }
-
+    
     function mkData4chatList(){
         data = {
             "nickname" : nickName
-        };
-    }
-
-    function sendJSON4boardList(input1, address){
-        xhr.open('GET',address);
-        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
-        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
-
-        xhr.onload = function() {
-            if (xhr.status === 200 || xhr.status === 201) {
-                console.log("function invoked ");
-                if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
-                    console.log("sendJSON successed")
-                    console.log(JSON.parse(xhr.responseText)["result_code"]);
-
-                }else{
-                    console.log(JSON.parse(xhr.responseText)["result_code"]);
-                    alert("sendJSON failed...");
-                    location.reload();
-                }
-
-            } else {
-                console.error(xhr.responseText);
-            }
         };
     }
 
@@ -221,23 +193,12 @@
         };
     }
 
-    function getBoardList(){
-        console.log("sendJSON4boardList");
-        mkTime();
-        mkData4BoardList();
-        header_data = {time:time, data:data};
-        sendJSON4boardList(header_data, "/board/showBoardList")
-    }
-
     function getChatList(){
         mkTime();
         mkData4chatList();
-
         header_data = {time:time, data:data};
         sendJSON4chatList(header_data, "/chat/showChatList/<%=session.getAttribute("nickname").toString()%>");
     }
-
-
 
     //for go
     window.onload = initGame(document.getElementById('gocanvas'), document.getElementById('movecount'), document.forms.go);

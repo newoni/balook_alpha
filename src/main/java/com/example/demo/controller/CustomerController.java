@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.CustomerRequest;
+import com.example.demo.model.network.response.BoardListResponse;
 import com.example.demo.model.network.response.CustomerResponse;
+import com.example.demo.service.BoardService;
 import com.example.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 
 @RestController
@@ -19,15 +22,21 @@ import java.util.HashMap;
 public class CustomerController {
     @Autowired
     CustomerService customerService;
+    @Autowired
+    BoardService boardService;
 
 //    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json; charset=utf8")
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
-    public Header<CustomerResponse> signIn(@RequestBody Header<CustomerRequest> header, HttpSession session) {
+    public Header<CustomerResponse> signIn(@RequestBody Header<CustomerRequest> header, HttpSession session) throws IOException {
         Header<CustomerResponse> result =  customerService.signIn(header);
 
         session.setAttribute("customerId", result.getData().getCustomerId());
         session.setAttribute("nickname", result.getData().getNickName());
         session.setAttribute("picturePath", result.getData().getPicturePath());
+
+        Header<BoardListResponse> boardListResult = boardService.showBoardList(result.getData().getNickName());
+
+        session.setAttribute("boardList", boardListResult.getData().getBoardList());
 
         return result;
     }

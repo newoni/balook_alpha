@@ -12,6 +12,8 @@
 <%@ page import = "com.example.demo.model.network.request.CustomerRequest"%>
 <%@ page import = "com.example.demo.model.network.response.CustomerResponse"%>
 <%@ page import = "com.example.demo.controller.BoardController"%>
+<%@ page import="com.example.demo.model.network.response.BoardListResponse" %>
+<%@ page import="java.util.ArrayList" %>
 
 <html>
 <head>
@@ -63,6 +65,7 @@
 </header>
 <section class="section_container">
     <div class="main_container">
+<%--        <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>--%>
         <div class="card_board_list">
             <div class="card_board_header">
                 <ul>
@@ -127,6 +130,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </section>
 </body>
@@ -162,7 +166,7 @@
         second = now.getSeconds();
         time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
     }
-    
+
     function mkData4chatList(){
         data = {
             "nickname" : nickName

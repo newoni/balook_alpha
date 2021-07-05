@@ -14,6 +14,7 @@
 <%@ page import = "com.example.demo.controller.BoardController"%>
 <%@ page import="com.example.demo.model.network.response.BoardListResponse" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.demo.model.network.response.BoardResponse" %>
 
 <html>
 <head>
@@ -65,72 +66,72 @@
 </header>
 <section class="section_container">
     <div class="main_container">
-<%--        <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>--%>
-        <div class="card_board_list">
-            <div class="card_board_header">
-                <ul>
-                    <li><a href="#"><img class="profile" src="/img/profile.png"></a></li>
-                    <li><a href="#">vue_ys</a></li>
-                    <li class="more_li"><a href="#"><img class="more" src="/img/more.png"></a></li>
-                </ul>
-            </div>
-            <div class="card_board_cont">
-                <div class="board_cont_item1">
-                    <canvas height="451" width="451" id="gocanvas"></canvas>
-                    <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
-
-                    <FORM style="display:none;" id="go" name="go">
-                        <FIELDSET>
-                            <LEGEND ACCESSKEY=A>Actions:</LEGEND>
-                            <input type="button" name="confirm" value="Confirm" />
-                            <input type="button" name="pass" value="Pass" />
-                            <input type="button" name="resign" value="Resign" />
-                        </FIELDSET>
-                        <FIELDSET>
-                            <LEGEND ACCESSKEY=P>Next Player:</LEGEND>
-                            <input type="radio" name="player" value="b" id="black" onclick="return false" /><label for="black" class="blackLabel">Black</label>
-                            <input type="radio" name="player" value="w" id="white" onclick="return false" /><label for="white" class="whiteLabel">White</label>
-                        </FIELDSET>
-                        <br />
-                        <label>Show SGF logs: <input type="checkbox" title="show SGF logs" name="enableLogs" id="enableLogs"  /></label>
-                        <div id="displayMoves" style="display:none"></div>
-                        <label>Size of Board:
-                            <select name= "boardSize">
-                                <option>5</option>
-                                <option>9</option>
-                                <option>13</option>
-                                <option selected="selected">19</option>
-                            </select>
-                        </label>
-                    </FORM>
-                </div>
-                <div class="board_cont_item2">
-                    <ul class="board_cont_ul">
-                        <li><a href="#"><<<</a></li>
-                        <li><a href="#"><<</a></li>
-                        <li><a href="#"><</a></li>
-                        <li><a href="#">></a></li>
-                        <li><a href="#">>></a></li>
-                        <li><a href="#">>>></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card_board_footer">
-                <ul class="footer_icon">
-                    <li><a href="#"><img src="../img/like.png"></a></li>
-                    <li><a href="board_view.jsp"><img src="/img/comments.png"></a></li>
-                    <li><a href="board_view.jsp"><img src="/img/feedback.png"></a></li>
-                </ul>
-                <div class="footer_comments">
+        <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
+            <div class="card_board_list">
+                <div class="card_board_header">
                     <ul>
-                        <li><a href="board_view.jsp">vue_ys</a><a href="#">ㄹㅇ 실화냐? 이게 된다고?</a></li>
-                        <li><a href="board_view.jsp">vue_ys</a><a href="#">#고스트 바둑왕</a></li>
-                        <li><a href="board_view.jsp">더보기</a></li>
+                        <li><a href="#"><img class="profile" src="/img/profile.png"></a></li>
+                        <li><a href="#"><%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%></a></li>
+                        <li class="more_li"><a href="#"><img class="more" src="/img/more.png"></a></li>
                     </ul>
                 </div>
-            </div>
-        </div>
+                <div class="card_board_cont">
+                    <div class="board_cont_item1">
+                        <canvas height="451" width="451" id="gocanvas<%=i%>"></canvas>
+                        <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
 
+                        <FORM style="display:none;" id="go" name="go">
+                            <FIELDSET>
+                                <LEGEND ACCESSKEY=A>Actions:</LEGEND>
+                                <input type="button" name="confirm" value="Confirm" />
+                                <input type="button" name="pass" value="Pass" />
+                                <input type="button" name="resign" value="Resign" />
+                            </FIELDSET>
+                            <FIELDSET>
+                                <LEGEND ACCESSKEY=P>Next Player:</LEGEND>
+                                <input type="radio" name="player" value="b" id="black" onclick="return false" /><label for="black" class="blackLabel">Black</label>
+                                <input type="radio" name="player" value="w" id="white" onclick="return false" /><label for="white" class="whiteLabel">White</label>
+                            </FIELDSET>
+                            <br />
+                            <label>Show SGF logs: <input type="checkbox" title="show SGF logs" name="enableLogs" id="enableLogs"  /></label>
+                            <div id="displayMoves" style="display:none"></div>
+                            <label>Size of Board:
+                                <select name= "boardSize">
+                                    <option>5</option>
+                                    <option>9</option>
+                                    <option>13</option>
+                                    <option selected="selected">19</option>
+                                </select>
+                            </label>
+                        </FORM>
+                    </div>
+                    <div class="board_cont_item2">
+                        <ul class="board_cont_ul">
+                            <li><a href="#"><<<</a></li>
+                            <li><a href="#"><<</a></li>
+                            <li><a href="#"><</a></li>
+                            <li><a href="#">></a></li>
+                            <li><a href="#">>></a></li>
+                            <li><a href="#">>>></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card_board_footer">
+                    <ul class="footer_icon">
+                        <li><a href="#"><img src="../img/like.png"></a></li>
+                        <li><a href="board_view.jsp"><img src="/img/comments.png"></a></li>
+                        <li><a href="board_view.jsp"><img src="/img/feedback.png"></a></li>
+                    </ul>
+                    <div class="footer_comments">
+                        <ul>
+                            <li><a href="board_view.jsp">vue_ys</a><a href="#">ㄹㅇ 실화냐? 이게 된다고?</a></li>
+                            <li><a href="board_view.jsp">vue_ys</a><a href="#">#고스트 바둑왕</a></li>
+                            <li><a href="board_view.jsp">더보기</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <%}%>
     </div>
 </section>
 </body>
@@ -153,8 +154,6 @@
     var header_data
 
     var opponent // In chat List, opponent nick name
-
-    window.onload = getBoardList();
 
     function mkTime(){
         now = new Date();
@@ -205,7 +204,9 @@
     }
 
     //for go
-    window.onload = initGame(document.getElementById('gocanvas'), document.getElementById('movecount'), document.forms.go);
+    <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
+        window.onload = initGame(document.getElementById('gocanvas<%=i%>'), document.getElementById('movecount'), document.forms.go);
+    <%}%>
     document.forms.go.enableLogs.onclick = function(ev) {
         var dm=document.getElementById('displayMoves');
         if (dm) dm.style.display = this.checked ? '' : 'none';

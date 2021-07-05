@@ -22,6 +22,11 @@
     <link href="/css/main.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>index</title>
+
+<%--    for go--%>
+    <script type="text/javascript" src="/js/go.js"></script>
+    <script type="text/javascript" src="/js/gocanvas.js"></script>
+
 </head>
 <body>
 <%
@@ -63,50 +68,38 @@
                 <ul>
                     <li><a href="#"><img class="profile" src="/img/profile.png"></a></li>
                     <li><a href="#">vue_ys</a></li>
-                    <li class="more_li"><a href="board_modify.jsp"><img class="more" src="/img/more.png"></a></li>
-                </ul>
-            </div>
-            <div class="card_board_cont">
-                <div class="board_cont_item1">
-                    <img class="board_cont_img" src="/img/go.png">
-                </div>
-                <div class="board_cont_item2">
-                    <ul class="board_cont_ul">
-                        <li><a href="#"><<<</a></li>
-                        <li><a href="#"><<</a></li>
-                        <li><a href="#"><</a></li>
-                        <li><a href="#">></a></li>
-                        <li><a href="#">>></a></li>
-                        <li><a href="#">>>></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="card_board_footer">
-                <ul class="footer_icon">
-                    <li><a href="#"><img src="/img/like.png"></a></li>
-                    <li><a href="board_view.html"><img src="/img/comments.png"></a></li>
-                    <li><a href="board_view.html"><img src="/img/feedback.png"></a></li>
-                </ul>
-                <div class="footer_comments">
-                    <ul>
-                        <li><a href="board_view.jsp">vue_ys</a><a href="#">ㄹㅇ 실화냐? 이게 된다고?</a></li>
-                        <li><a href="board_view.jsp">vue_ys</a><a href="#">#고스트 바둑왕</a></li>
-                        <li><a href="board_view.jsp">더보기</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="card_board_list">
-            <div class="card_board_header">
-                <ul>
-                    <li><a href="#"><img class="profile" src="/img/profile.png"></a></li>
-                    <li><a href="#">vue_ys</a></li>
                     <li class="more_li"><a href="#"><img class="more" src="/img/more.png"></a></li>
                 </ul>
             </div>
             <div class="card_board_cont">
                 <div class="board_cont_item1">
-                    <img class="board_cont_img" src="/img/go.png">
+                    <canvas height="451" width="451" id="gocanvas"></canvas>
+                    <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
+
+                    <FORM style="display:none;" id="go" name="go">
+                        <FIELDSET>
+                            <LEGEND ACCESSKEY=A>Actions:</LEGEND>
+                            <input type="button" name="confirm" value="Confirm" />
+                            <input type="button" name="pass" value="Pass" />
+                            <input type="button" name="resign" value="Resign" />
+                        </FIELDSET>
+                        <FIELDSET>
+                            <LEGEND ACCESSKEY=P>Next Player:</LEGEND>
+                            <input type="radio" name="player" value="b" id="black" onclick="return false" /><label for="black" class="blackLabel">Black</label>
+                            <input type="radio" name="player" value="w" id="white" onclick="return false" /><label for="white" class="whiteLabel">White</label>
+                        </FIELDSET>
+                        <br />
+                        <label>Show SGF logs: <input type="checkbox" title="show SGF logs" name="enableLogs" id="enableLogs"  /></label>
+                        <div id="displayMoves" style="display:none"></div>
+                        <label>Size of Board:
+                            <select name= "boardSize">
+                                <option>5</option>
+                                <option>9</option>
+                                <option>13</option>
+                                <option selected="selected">19</option>
+                            </select>
+                        </label>
+                    </FORM>
                 </div>
                 <div class="board_cont_item2">
                     <ul class="board_cont_ul">
@@ -157,6 +150,8 @@
 
     var opponent // In chat List, opponent nick name
 
+    window.onload = getBoardList();
+
     function mkTime(){
         now = new Date();
         year = now.getFullYear();
@@ -168,9 +163,37 @@
         time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
     }
 
+    function mkData4BoardList(){
+        data = {};
+    }
+
     function mkData4chatList(){
         data = {
             "nickname" : nickName
+        };
+    }
+
+    function sendJSON4boardList(input1, address){
+        xhr.open('GET',address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+                if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
+                    console.log("sendJSON successed")
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+
+                }else{
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    alert("sendJSON failed...");
+                    location.reload();
+                }
+
+            } else {
+                console.error(xhr.responseText);
+            }
         };
     }
 
@@ -186,42 +209,6 @@
                     console.log("sendJSON successed")
                     console.log(JSON.parse(xhr.responseText)["result_code"]);
 
-                    <%--    for(let i = 0 ; i < JSON.parse(xhr.responseText)["data"]["chat_response_list"].length ; i++){--%>
-                    <%--      if(JSON.parse(xhr.responseText)["data"]["chat_response_list"][i]["participant1"]=="<%=session.getAttribute("nickname")%>"){--%>
-
-                    <%--        console.log("participant2 is");--%>
-                    <%--        console.log(JSON.parse(xhr.responseText)["data"]["chat_response_list"][i]["participant2"]);--%>
-                    <%--        document.getElementsByClassName("chat_wrap")[0].innerHTML=`--%>
-                    <%--        <div class="chat_list">--%>
-                    <%--  <div class="chat_profile">--%>
-                    <%--    <a href="my_profile.jsp"><img src="/img/profile.png"></a>--%>
-                    <%--  </div>--%>
-                    <%--  <div class="chat_cont">--%>
-                    <%--    <ul>--%>
-                    <%--      <a onlcick="sendFinalFunction()">--%>
-                    <%--        <li><h3>${JSON.parse(xhr.responseText)["data"]["chat_response_list"][i]["participant2"]}</h3></li>--%>
-                    <%--        <li><p>너는 지금 뭐해 자니 밖이야?</p></li>--%>
-                    <%--      </a>--%>
-                    <%--    </ul>--%>
-                    <%--  </div>--%>
-                    <%--  <div class="chat_date">--%>
-                    <%--    <p>06/22 10:27</p>--%>
-                    <%--  </div>--%>
-                    <%--  <div class="chat_delete">--%>
-                    <%--    <form>--%>
-                    <%--      <button type="submit">삭제</button>--%>
-                    <%--    </form>--%>
-                    <%--  </div>--%>
-                    <%--</div>`;--%>
-                    <%--      }else{--%>
-                    <%--        var opponent = JSON.parse(xhr.responseText)["data"]["chat_response_list"][i]["participant1"];--%>
-                    <%--        console.log("participant1 is");--%>
-                    <%--        console.log(opponent);--%>
-                    <%--      }--%>
-                    <%--    }--%>
-
-                    // document.getElementsByClassName("my_profile_status_feedbacks_number")[0].innerHTML=JSON.parse(xhr.response)["data"]['feedback_count'];
-
                 }else{
                     console.log(JSON.parse(xhr.responseText)["result_code"]);
                     alert("sendJSON failed...");
@@ -234,6 +221,14 @@
         };
     }
 
+    function getBoardList(){
+        console.log("sendJSON4boardList");
+        mkTime();
+        mkData4BoardList();
+        header_data = {time:time, data:data};
+        sendJSON4boardList(header_data, "/board/showBoardList")
+    }
+
     function getChatList(){
         mkTime();
         mkData4chatList();
@@ -242,5 +237,13 @@
         sendJSON4chatList(header_data, "/chat/showChatList/<%=session.getAttribute("nickname").toString()%>");
     }
 
+
+
+    //for go
+    window.onload = initGame(document.getElementById('gocanvas'), document.getElementById('movecount'), document.forms.go);
+    document.forms.go.enableLogs.onclick = function(ev) {
+        var dm=document.getElementById('displayMoves');
+        if (dm) dm.style.display = this.checked ? '' : 'none';
+    }
 </script>
 </html>

@@ -24,24 +24,43 @@ public class ChatService {
 
     public Header<ChatListResponse> showChatList(String request){
 
-        Customer customer = customerRepository.findByNickNameLike(request);
-
-        List<Chat> resChatList = chatRepository.findByParticipant1OrAndParticipant2(customer.getId(), customer.getId());
-
         ArrayList<ChatResponse> chatResponseList = new ArrayList<ChatResponse>();
+        String opponentPicturePath = "/img/myprofile";
+        try {
+            Customer customer = customerRepository.findByNickNameLike(request);
+            System.out.println("here is chat service . showChatList method customer.getId() is");
+            System.out.println(customer.getId());
 
-        for(Chat chat: resChatList){
-            Customer participant1 = customerRepository.findById(chat.getParticipant1()).get();
-            Customer participant2 = customerRepository.findById(chat.getParticipant2()).get();
 
-            ChatResponse chatResponse = ChatResponse.builder()
-                    .participant1(participant1.getNickName())
-                    .participant2(participant2.getNickName())
-                    .contents(chat.getFilePath())
-                    .build();
+            List<Chat> resChatList = chatRepository.findByParticipant1OrParticipant2(customer.getId(), customer.getId());
 
-            chatResponseList.add(chatResponse);
-        }
+            for (Chat chat : resChatList) {
+                Customer participant1 = customerRepository.findById(chat.getParticipant1()).get();
+                Customer participant2 = customerRepository.findById(chat.getParticipant2()).get();
+
+                if(participant1.getNickName().equals(request)){
+                    try{
+                        opponentPicturePath = participant2.getPicturePath();
+                    }catch(Exception e){
+                        System.out.println("picture Path is not exist");
+                    }
+                }else{
+                    try {
+                        opponentPicturePath = participant1.getPicturePath();
+                    }catch(Exception e){
+                        System.out.println("picture Path is not exist");
+                    }
+                }
+
+                ChatResponse chatResponse = ChatResponse.builder()
+                        .participant1(participant1.getNickName())
+                        .participant2(participant2.getNickName())
+                        .contents(chat.getFilePath())
+                        .build();
+
+                chatResponseList.add(chatResponse);
+            }
+        }catch(Exception e){}
 
         ChatListResponse chatListResponse = ChatListResponse.builder()
                 .chatResponseList(chatResponseList)

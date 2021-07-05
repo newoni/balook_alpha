@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ChatRepository extends JpaRepository<Chat, Long> {
-    List<Chat> findByParticipant1OrAndParticipant2(Long participant1, Long participant2);
-
+    List<Chat> findByParticipant1OrParticipant2(Long participant1, Long participant2);
 }

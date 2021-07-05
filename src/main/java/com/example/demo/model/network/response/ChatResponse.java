@@ -15,4 +15,5 @@ public class ChatResponse {
     private String participant1;
     private String participant2;
     private String contents;
+    private String opponentPicturePath;
 }

@@ -212,22 +212,23 @@
         <%}%>
     }
 
-
     // make session data to js variable
     function getGiboData(){
         <%for(int i =0; i<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
-            iterNumber =<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().size()%>;
-            var gibo = [];
-            gPiecesKH_tmp = []
+
+            console.log("total count of gibo is");
+            console.log(<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).size()%>);
+
             <% for(int j =0; j<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().size(); j++){ %>
+                console.log("in gibo, movement Number is");
+                console.log(<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().size()%>);
                 var player = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getPlayer()%>;
                 var columnNumber = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getCol()%>;
                 var rowNumber = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getRow()%>;
 
                 goOnKH(rowNumber, columnNumber, player);
-
             <%}%>
-            gPiecesKH[<%=i%>] = gPiecesKH_tmp;
+            gPiecesKH[<%=i%>] = gPiecesKH_tmp.slice();
         <%
         }
         %>

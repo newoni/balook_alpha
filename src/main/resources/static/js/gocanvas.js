@@ -203,14 +203,15 @@ function addPiece(cell, color) {
 /** Add piece to board with KH version */
 function addPieceKH(cell, color) {
     console.log('addPiece KH version is invoked');
-    console.log(cell);
-    console.log(color);
 
     cell.color = color;
     log(cell);
 
     // check for capture or illegal move // 잘못된 이동 확인 여부
     var points = checkCapture(cell, color, true);
+
+    gPiecesKH_tmp.push(cell)  // modify subject
+
     if (points) {
         updateScore(color, points);
     } else if (illegalmove(cell, color)) {
@@ -223,9 +224,8 @@ function addPieceKH(cell, color) {
         return false
     }
     // moveAndCapture(cell)
-    gPiecesKH_tmp.push(cell)  // midify subject
+
     // nextPlayer()
-    //showUpdatedBoard();
     return true;
 }
 

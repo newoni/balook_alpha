@@ -22,7 +22,8 @@ var gCanvasElement;
 var gDrawingContext;
 var gPattern;
 
-var gPieces;
+// var gPieces;
+var gPieces=[]; // KH modified;
 var gNumPieces;
 var gSelectedPieceIndex;
 var gSelectedPieceHasMoved;
@@ -438,7 +439,7 @@ function initGameKH(idx, canvasElement, moveCountElement, frm) {
     if (!canvasElement) {
         console.log("2nd if");
         canvasElement = document.createElement("canvas");
-        canvasElement.id = "gocanvas";
+        canvasElement.id = "gocanvas"+idx;
         document.body.appendChild(canvasElement);
     }
     if (!moveCountElement) {
@@ -459,7 +460,7 @@ function initGameKH(idx, canvasElement, moveCountElement, frm) {
 
 //newGame KH version
 function newGameKH(idx) {
-    gPieces = gPiecesKH[idx];
+    gPieces = [];
     gNumPieces = gPieces.length;
     gSelectedPieceIndex = -1;
     gSelectedPieceHasMoved = false;

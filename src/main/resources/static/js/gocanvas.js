@@ -18,8 +18,8 @@ var kPieceHeight= 30; // 네모 한칸 세로 사이즈 30px
 var kPixelWidth = 1 + (kBoardWidth * kPieceWidth); // 가로 전체 길이 451px
 var kPixelHeight= 1 + (kBoardHeight * kPieceHeight); // 세로 전체 길이 451px
 
-var gCanvasElement;
-var gDrawingContext;
+var gCanvasElement = []; // KH modified;
+var gDrawingContext = []; // KH modified;
 var gPattern;
 
 // var gPieces;
@@ -104,20 +104,16 @@ function goOnClick(e) {
 }
 
 // ####s made by KH <21.06.27>
-function goOnKH(row, col, playerNumber){
-    var cell = getKHPosition(row, col);
+function goOnKH(idx, row, col, playerNumber){
+    var cell = getKHPosition(idx, row, col);
     var player = playerNumber % 2 ? BLACK : WHITE; // gMoveCount 짝수는 흰돌 홀수는 흑돌
     addPieceKH(cell, player); // cell에 돌 추가
 }
 
-function goOnKHAfter(idx){
-    gPieces[idx] = gPiecesKH;
-}
-
 // make KH position
-function getKHPosition(row, col){
-    x=gCanvasElement.offsetLeft + col*30  -150;
-    y=gCanvasElement.offsetTop + row *30  -210;
+function getKHPosition(idx, row, col){
+    x=gCanvasElement[idx].offsetLeft + row*30-330;
+    y=gCanvasElement[idx].offsetTop + col *30 -210 ;
     var cell = new Cell(Math.floor(y/kPieceHeight), Math.floor(x/kPieceWidth));
     return cell;
 }
@@ -231,7 +227,6 @@ function addPieceKH(cell, color) {
 
 /** Next Player's Turn */ //다음 플레이어 턴
 function nextPlayer() {
-    console.log('nextPlayer is invoked');
     gPieces = updateBoard(gPieces);
 	drawBoard()
 	var pnum = (gMoveCount++) % 2;
@@ -332,6 +327,44 @@ function drawBoard() { // 새로운 바둑판 그리기
     saveGameState();
 }
 
+function drawBoardKH(idx) { // 새로운 바둑판 그리기
+    console.log('drawBoard is invoked');
+    if (gGameInProgress && isTheGameOver()) {
+        console.log("test here is drawBoard KH end game is invoked");
+        endGame();
+    }
+
+    gDrawingContext[idx].clearRect(0, 0, kPixelWidth, kPixelHeight); // (x, y, 가로 전체길이, 세로 전체길이)
+
+    gDrawingContext[idx].beginPath(); //새로운 경로 생성
+
+    /* vertical lines */
+    var startpx = kPieceWidth / 2;
+    for (var x = startpx; x <= kPixelWidth; x += kPieceWidth) {
+        gDrawingContext[idx].moveTo(0.5 + x, startpx); //moveTo(x, y) (en-US) 펜을  x와 y 로 지정된 좌표로 옮깁니다.
+        gDrawingContext[idx].lineTo(0.5 + x, kPixelHeight - startpx); //lineTo(x, y) (en-US) 현재의 드로잉 위치에서 x와 y로 지정된 위치까지 선을 그립니다.
+    }
+
+    /* horizontal lines */
+    for (var y = startpx; y <= kPixelHeight; y += kPieceHeight) {
+        gDrawingContext[idx].moveTo(startpx, 0.5 + y);
+        gDrawingContext[idx].lineTo(kPixelWidth - startpx, 0.5 +  y);
+    }
+
+    /* draw it! */
+    gDrawingContext[idx].strokeStyle = "#ccc";
+    gDrawingContext[idx].stroke();
+
+    for (var i = 0; i < gPiecesKH[idx].length; i++) {
+        console.log("here is drawBoardKH, drawPieceKH will invoke ");
+        drawPieceKH(idx, gPiecesKH[idx][i], isBlack(gPiecesKH[idx][i], i == gSelectedPieceIndex));
+    }
+
+    gMoveCountElem.innerHTML = gMoveCount;
+
+    saveGameState();
+}
+
 function drawPiece(p, selected) { //바둑 돌 그리기
     var column = p.column;
     var row = p.row;
@@ -349,6 +382,25 @@ function drawPiece(p, selected) { //바둑 돌 그리기
 	gDrawingContext.fillStyle = "#000";
     }
     gDrawingContext.fill();
+}
+//KH modified
+function drawPieceKH(idx, p, selected) { //바둑 돌 그리기
+    var column = p.column;
+    var row = p.row;
+    var x = (column * kPieceWidth) + (kPieceWidth/2);
+    var y = (row * kPieceHeight) + (kPieceHeight/2);
+    var radius = (kPieceWidth/2) - (kPieceWidth/10);
+    gDrawingContext[idx].strokeStyle = "#000";
+    gDrawingContext[idx].strokeWidth = 4;
+    gDrawingContext[idx].beginPath();
+    gDrawingContext[idx].arc(x, y, radius, 0, Math.PI*2, false); // arc(x, y, radius, startAngle, endAngle, anticlockwise) (en-US) 원그릴때 false이면 시계방향 true이면 반 시계방향
+    gDrawingContext[idx].closePath();
+    gDrawingContext[idx].stroke();
+    gDrawingContext[idx].fillStyle = "#fff";
+    if (selected) {
+        gDrawingContext[idx].fillStyle = "#000";
+    }
+    gDrawingContext[idx].fill();
 }
 
 if (typeof resumeGame != "function") {
@@ -447,11 +499,11 @@ function initGameKH(idx, canvasElement, moveCountElement, frm) {
         moveCountElement = document.createElement("p");
         document.body.appendChild(moveCountElement);
     }
-    gCanvasElement = canvasElement;
-    gCanvasElement.width = kPixelWidth;
-    gCanvasElement.height = kPixelHeight;
+    gCanvasElement[idx] = canvasElement;
+    gCanvasElement[idx].width = kPixelWidth;
+    gCanvasElement[idx].height = kPixelHeight;
     gMoveCountElem = moveCountElement;
-    gDrawingContext = gCanvasElement.getContext("2d");
+    gDrawingContext[idx] = gCanvasElement[idx].getContext("2d");
     initForm(frm);
     if (!resumeGame()) {
         newGameKH(idx);
@@ -466,5 +518,6 @@ function newGameKH(idx) {
     gSelectedPieceHasMoved = false;
     gMoveCount = 0;
     gGameInProgress = true;
-    drawBoard();
+    // drawBoard();
+    // drawBoardKH(idx);
 }

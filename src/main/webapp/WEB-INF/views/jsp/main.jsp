@@ -226,8 +226,10 @@
                 var rowNumber = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getRow()%>;
 
                 goOnKH(<%=i%>, rowNumber, columnNumber, player);
+                gPiecesKH[<%=i%>] = gPiecesKH_tmp.slice();
+                drawBoardKH(<%=i%>);
+                gMoveCount[<%=i%>] = gPiecesKH[<%=i%>].length;
             <%}%>
-            gPiecesKH[<%=i%>] = gPiecesKH_tmp.slice();
             gPiecesKH_tmp = [];
         <%
         }
@@ -238,8 +240,6 @@
     function initPage(){
         initGameKHs();
         getGiboData();
-        drawBoardKH(0);
-        gMoveCount[0] = gPiecesKH[0].length;
     }
 
     window.onload = initPage();

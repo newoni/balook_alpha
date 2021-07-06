@@ -64,49 +64,11 @@ Cell.prototype.toString = function() { //Cell 문자열 반환 r == 행 c == 열
 }
 
 
-function getCursorPosition(e) { //커서 위치
-    /* returns Cell with .row and .column properties */
-    var x;
-    var y;
-    if (e.pageX != undefined && e.pageY != undefined) {
-	x = e.pageX; // pageX x좌표 스크롤 포함 측정
-	y = e.pageY; // pageY y좌표 스크롤 포함 측정
-    }
-    else {
-	x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; // clientX x좌표 스크롤 무시 해당 페이지 상단 0으로 측정, scrollLeft : 가로 픽셀 수
-	y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop; // clientY y좌표 스크롤 무시 해당 페이지 상단 0으로 측정 scrollTop : 세로 픽셀 수
-    }
-
-    console.log('check gCanvas Element');
-    console.log(gCanvasElement.offsetLeft);
-    console.log(gCanvasElement.offsetTop);
-    x -= gCanvasElement.offsetLeft; // offsetX 이벤트 대상객체 상대적 마우스 x좌표 위치 반환, e.clientX - offsetLeft
-    y -= gCanvasElement.offsetTop; // offsetY 이벤트 대상객체 상대적 마우스 y좌표 위치 반환 e.clientY - offsetTop
-    x = Math.min(x, kBoardWidth * kPieceWidth);
-    y = Math.min(y, kBoardHeight * kPieceHeight);
-
-    console.log('x, y position');
-    console.log(x);
-    console.log(y);
-    var cell = new Cell(Math.floor(y/kPieceHeight), Math.floor(x/kPieceWidth));
-    return cell;
-}
-
-// jsw
-
-function goOnClick(e) {
-    console.log('go on click is invoked');
-	var cell = getCursorPosition(e);
-
-	var player = gMoveCount % 2 ? WHITE : BLACK; // gMoveCount 짝수는 흰돌 홀수는 흑돌
-    return addPiece(cell, player); // cell에 돌 추가
-
-}
 
 // ####s made by KH <21.06.27>
 function goOnKH(idx, row, col, playerNumber){
     var cell = getKHPosition(idx, row, col);
-    var player = playerNumber % 2 ? BLACK : WHITE; // gMoveCount 짝수는 흰돌 홀수는 흑돌
+    var player = playerNumber % 2 ? BLACK : WHITE;
     addPieceKH(cell, player); // cell에 돌 추가
 }
 
@@ -199,7 +161,6 @@ function addPieceKH(cell, color) {
 
     // check for capture or illegal move // 잘못된 이동 확인 여부
     var points = checkCapture(cell, color, true);
-
     if (points) {
         updateScore(color, points);
     } else if (illegalmove(cell, color)) {
@@ -212,7 +173,7 @@ function addPieceKH(cell, color) {
         return false
     }
     // moveAndCapture(cell)
-    gPiecesKH_tmp.push(cell)  // modify subject
+    gPiecesKH_tmp.push(cell);  // modify subject
     gPiecesKH_tmp = updateBoardKH(gPiecesKH_tmp);
     // nextPlayer()
     return true;
@@ -244,43 +205,6 @@ function initForm(frm) {
 	if (frm.confirm) frm.confirm.onclick = function(ev) {gPassedCount = 0;}
 	if (frm.pass) frm.pass.onclick = function(ev) {++gPassedCount;info("pass");nextPlayer();}
 	if (frm.resign) frm.resign.onclick = function(ev) {gResigned = true; GO.showFinalVictor(); }
-}
-
-//draw board with KH method
-function drawBoardWithKHMethod(cnt) { // 새로운 바둑판 그리기
-    console.log('drawBoard is invoked');
-    if (gGameInProgress && isTheGameOver()) {
-        endGame();
-    }
-
-    gDrawingContext.clearRect(0, 0, kPixelWidth, kPixelHeight); // (x, y, 가로 전체길이, 세로 전체길이)
-
-    gDrawingContext.beginPath(); //새로운 경로 생성
-
-    /* vertical lines */
-    var startpx = kPieceWidth / 2;
-    for (var x = startpx; x <= kPixelWidth; x += kPieceWidth) {
-        gDrawingContext.moveTo(0.5 + x, startpx); //moveTo(x, y) (en-US) 펜을  x와 y 로 지정된 좌표로 옮깁니다.
-        gDrawingContext.lineTo(0.5 + x, kPixelHeight - startpx); //lineTo(x, y) (en-US) 현재의 드로잉 위치에서 x와 y로 지정된 위치까지 선을 그립니다.
-    }
-
-    /* horizontal lines */
-    for (var y = startpx; y <= kPixelHeight; y += kPieceHeight) {
-        gDrawingContext.moveTo(startpx, 0.5 + y);
-        gDrawingContext.lineTo(kPixelWidth - startpx, 0.5 +  y);
-    }
-
-    /* draw it! */
-    gDrawingContext.strokeStyle = "#ccc";
-    gDrawingContext.stroke();
-
-    for (var i = 0; i < gPieces.length - cnt; i++) {
-        drawPiece(gPieces[i], isBlack(gPieces[i], i == gSelectedPieceIndex));
-    }
-
-    gMoveCountElem.innerHTML = gMoveCount;
-
-    saveGameState();
 }
 
 // draw board

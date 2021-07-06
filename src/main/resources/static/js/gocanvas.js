@@ -112,8 +112,8 @@ function goOnKH(idx, row, col, playerNumber){
 
 // make KH position
 function getKHPosition(idx, row, col){
-    x=gCanvasElement[idx].offsetLeft + row*30-330;
-    y=gCanvasElement[idx].offsetTop + col *30 -210 ;
+    x=gCanvasElement[idx].offsetTop + row * 30 ;
+    y=gCanvasElement[idx].offsetLeft + col *30 ;
     var cell = new Cell(Math.floor(y/kPieceHeight), Math.floor(x/kPieceWidth));
     return cell;
 }
@@ -504,6 +504,7 @@ function initGameKH(idx, canvasElement, moveCountElement, frm) {
     gCanvasElement[idx].height = kPixelHeight;
     gMoveCountElem = moveCountElement;
     gDrawingContext[idx] = gCanvasElement[idx].getContext("2d");
+    // gCanvasElement.addEventListener("click", goOnClick, false);
     initForm(frm);
     if (!resumeGame()) {
         newGameKH(idx);

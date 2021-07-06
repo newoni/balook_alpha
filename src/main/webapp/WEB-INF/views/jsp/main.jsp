@@ -29,7 +29,11 @@
 <%--    for go--%>
     <script type="text/javascript" src="/js/go.js"></script>
     <script type="text/javascript" src="/js/gocanvas.js"></script>
-
+    <style>
+        .tmp_canvas{
+            offset-position: 0 0;
+        }
+    </style>
 </head>
 <body>
 <%
@@ -77,7 +81,7 @@
                 </div>
                 <div class="card_board_cont">
                     <div class="board_cont_item1">
-                        <canvas height="451" width="451" id="gocanvas<%=i%>"></canvas>
+                        <canvas class="tmp_canvas" height="451" width="451" id="gocanvas<%=i%>"></canvas>
 <%--                        <canvas height="451" width="451" id="gocanvas"></canvas>--%>
                         <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
 

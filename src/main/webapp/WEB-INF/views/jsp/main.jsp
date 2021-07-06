@@ -83,7 +83,7 @@
                     <div class="board_cont_item1">
                         <canvas class="tmp_canvas" height="451" width="451" id="gocanvas<%=i%>"></canvas>
 <%--                        <canvas height="451" width="451" id="gocanvas"></canvas>--%>
-                        <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
+                        <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount<%=i%>">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
 
                         <FORM style="display:none;" id="go" name="go">
                             <FIELDSET>
@@ -112,12 +112,12 @@
                     </div>
                     <div class="board_cont_item2">
                         <ul class="board_cont_ul">
-                            <li><a href="#"><<<</a></li>
-                            <li><a href="#"><<</a></li>
-                            <li><a href="#"><</a></li>
-                            <li><a href="#">></a></li>
-                            <li><a href="#">>></a></li>
-                            <li><a href="#">>>></a></li>
+                            <li onclick="drawMovedBoardKH(<%=i%>,-gMoveCount[<%=i%>])"><<<</li>
+                            <li onclick="drawMovedBoardKH(<%=i%>,-5)"> <<</li>
+                            <li onclick="drawMovedBoardKH(<%=i%>,-1)"> <</li>
+                            <li onclick="drawMovedBoardKH(<%=i%>,1)"> > </li>
+                            <li onclick="drawMovedBoardKH(<%=i%>,5)"> >>> </li>
+                            <li onclick="drawMovedBoardKH(<%=i%>,gPiecesKH[<%=i%>].length-gMoveCount[<%=i%>])"> >>></li>
                         </ul>
                     </div>
                 </div>
@@ -232,12 +232,14 @@
         <%
         }
         %>
+        gPieces = gPiecesKH.slice(); //for move draw, make duplication
     }
 
     function initPage(){
         initGameKHs();
         getGiboData();
         drawBoardKH(0);
+        gMoveCount[0] = gPiecesKH[0].length;
     }
 
     window.onload = initPage();

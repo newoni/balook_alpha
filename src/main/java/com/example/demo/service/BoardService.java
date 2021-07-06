@@ -62,12 +62,14 @@ public class BoardService {
 
     public Header<BoardListResponse> showBoardList(String request) throws IOException {
         List<Board> boardList = boardRepository.findAll();
+
         ArrayList<BoardResponse> boardResponseArrayList = new ArrayList<BoardResponse>();
         BoardListResponse boardListResponse = new BoardListResponse();
 
 //        start get gibo
 
         for(Board board: boardList) {
+            System.out.println(board.getId());
             File file = new File(board.getFilePath());
 
             ArrayList<Stone> gibo = new ArrayList<Stone>();

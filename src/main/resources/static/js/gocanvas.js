@@ -27,7 +27,7 @@ var gPieces=[]; // KH modified;
 var gNumPieces;
 var gSelectedPieceIndex;
 var gSelectedPieceHasMoved;
-var gMoveCount;
+var gMoveCount=[];
 var gMoveCountElem;
 var gGameInProgress;
 
@@ -88,7 +88,7 @@ function getCursorPosition(e) { //커서 위치
     console.log('x, y position');
     console.log(x);
     console.log(y);
-    var cell = new Cell(Math.floor(y/kPieceHeight), Math.floor(x/kPieceWidth)); // 지정된 수보다 더 큰 정수로 반환
+    var cell = new Cell(Math.floor(y/kPieceHeight), Math.floor(x/kPieceWidth));
     return cell;
 }
 
@@ -114,7 +114,8 @@ function goOnKH(idx, row, col, playerNumber){
 function getKHPosition(idx, row, col){
     x=gCanvasElement[idx].offsetTop + row * 30 ;
     y=gCanvasElement[idx].offsetLeft + col *30 ;
-    var cell = new Cell(Math.floor(y/kPieceHeight), Math.floor(x/kPieceWidth));
+    // var cell = new Cell(Math.floor(y/kPieceHeight), Math.floor(x/kPieceWidth));
+    var cell = new Cell(row, col);
     return cell;
 }
 
@@ -140,7 +141,7 @@ function rndBoard(size) {
 	return sum/size; 
 }
 
-function isOccupied(cell) { //어떤 부분이 클릭되었는지 아는 함수
+function isOccupied(cell) {
   for (var i = 0; i < gPieces.length; i++) {
 	if ((gPieces[i].row == cell.row) && 
 	    (gPieces[i].column == cell.column)) {	    
@@ -168,10 +169,6 @@ function moveToCell(cell) {
 
 /** Add piece to board */
 function addPiece(cell, color) {
-    console.log('addPiece is invoked');
-    console.log(cell);
-    console.log(color);
-
 	cell.color = color;
     log(cell);
 
@@ -195,18 +192,13 @@ function addPiece(cell, color) {
 	return true;
 }
 
-
 /** Add piece to board with KH version */
 function addPieceKH(cell, color) {
-    console.log('addPiece KH version is invoked');
-
     cell.color = color;
     log(cell);
 
     // check for capture or illegal move // 잘못된 이동 확인 여부
     var points = checkCapture(cell, color, true);
-
-    gPiecesKH_tmp.push(cell)  // modify subject
 
     if (points) {
         updateScore(color, points);
@@ -220,7 +212,8 @@ function addPieceKH(cell, color) {
         return false
     }
     // moveAndCapture(cell)
-
+    gPiecesKH_tmp.push(cell)  // modify subject
+    gPiecesKH_tmp = updateBoardKH(gPiecesKH_tmp);
     // nextPlayer()
     return true;
 }
@@ -327,6 +320,7 @@ function drawBoard() { // 새로운 바둑판 그리기
     saveGameState();
 }
 
+// draw board KH modified;
 function drawBoardKH(idx) { // 새로운 바둑판 그리기
     console.log('drawBoard is invoked');
     if (gGameInProgress && isTheGameOver()) {
@@ -360,7 +354,7 @@ function drawBoardKH(idx) { // 새로운 바둑판 그리기
         drawPieceKH(idx, gPiecesKH[idx][i], isBlack(gPiecesKH[idx][i], i == gSelectedPieceIndex));
     }
 
-    gMoveCountElem.innerHTML = gMoveCount;
+    gMoveCountElem.innerHTML = gMoveCount[idx];
 
     saveGameState();
 }
@@ -401,6 +395,43 @@ function drawPieceKH(idx, p, selected) { //바둑 돌 그리기
         gDrawingContext[idx].fillStyle = "#000";
     }
     gDrawingContext[idx].fill();
+}
+
+function drawMovedBoardKH(idx, num) {
+    if (gGameInProgress && isTheGameOver()) {
+        console.log("test here is drawBoard KH end game is invoked");
+        endGame();
+    }
+
+    gDrawingContext[idx].clearRect(0, 0, kPixelWidth, kPixelHeight); // (x, y, 가로 전체길이, 세로 전체길이)
+
+    gDrawingContext[idx].beginPath(); //새로운 경로 생성
+
+    /* vertical lines */
+    var startpx = kPieceWidth / 2;
+    for (var x = startpx; x <= kPixelWidth; x += kPieceWidth) {
+        gDrawingContext[idx].moveTo(0.5 + x, startpx); //moveTo(x, y) (en-US) 펜을  x와 y 로 지정된 좌표로 옮깁니다.
+        gDrawingContext[idx].lineTo(0.5 + x, kPixelHeight - startpx); //lineTo(x, y) (en-US) 현재의 드로잉 위치에서 x와 y로 지정된 위치까지 선을 그립니다.
+    }
+
+    /* horizontal lines */
+    for (var y = startpx; y <= kPixelHeight; y += kPieceHeight) {
+        gDrawingContext[idx].moveTo(startpx, 0.5 + y);
+        gDrawingContext[idx].lineTo(kPixelWidth - startpx, 0.5 +  y);
+    }
+
+    /* draw it! */
+    gDrawingContext[idx].strokeStyle = "#ccc";
+    gDrawingContext[idx].stroke();
+
+    for (var i = 0; i < (gMoveCount[idx] + num); i++) {
+        drawPieceKH(idx, gPiecesKH[idx][i], isBlack(gPiecesKH[idx][i], i == gSelectedPieceIndex));
+    }
+    gMoveCount[idx] +=num;
+
+    gMoveCountElem.innerHTML = gMoveCount[idx];
+
+    saveGameState();
 }
 
 if (typeof resumeGame != "function") {
@@ -470,7 +501,6 @@ function initGame(canvasElement, moveCountElement, frm) {
     }
 }
 
-
 // init Game KH version
 function initGameKH(idx, canvasElement, moveCountElement, frm) {
     console.log("init Game is invoked");
@@ -517,7 +547,7 @@ function newGameKH(idx) {
     gNumPieces = gPieces.length;
     gSelectedPieceIndex = -1;
     gSelectedPieceHasMoved = false;
-    gMoveCount = 0;
+    gMoveCount[idx] = 0;
     gGameInProgress = true;
     // drawBoard();
     // drawBoardKH(idx);

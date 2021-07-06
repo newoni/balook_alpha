@@ -326,6 +326,8 @@ function areOutOfBounds(/*vargs...*/) {
 
 function updateBoard() { return gPieces.filter(function (p) {return !isBlank(p.row, p.column);}); }
 
+function updateBoardKH() { return gPiecesKH_tmp.filter(function (p) {return !isBlank(p.row, p.column);}); }
+
 //~ function showUpdatedBoard(r, c, p) { if (findCaptures(r, c, p)) { gPieces = updateBoard(gPieces); drawBoard(); } }
 
 function showUpdatedBoard() { gPieces = updateBoard(gPieces); drawBoard(); }

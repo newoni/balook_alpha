@@ -66,18 +66,23 @@
 </header>
 <section class="section_container">
     <div class="main_container">
-        <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
+<%--        <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>--%>
+<%--        <%--%>
+<%--            System.out.println("here is main jsp, and");--%>
+<%--            System.out.println(((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).get(i).getBoardList());--%>
+<%--        %>--%>
             <div class="card_board_list">
                 <div class="card_board_header">
                     <ul>
                         <li><a href="#"><img class="profile" src="/img/profile.png"></a></li>
-                        <li><a href="#"><%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%></a></li>
+                        <li><a href="#"><%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(0).getAuthor()%></a></li>
                         <li class="more_li"><a href="#"><img class="more" src="/img/more.png"></a></li>
                     </ul>
                 </div>
                 <div class="card_board_cont">
                     <div class="board_cont_item1">
-                        <canvas height="451" width="451" id="gocanvas<%=i%>"></canvas>
+<%--                        <canvas height="451" width="451" id="gocanvas<%=i%>"></canvas>--%>
+                        <canvas height="451" width="451" id="gocanvas"></canvas>
                         <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
 
                         <FORM style="display:none;" id="go" name="go">
@@ -131,7 +136,7 @@
                     </div>
                 </div>
             </div>
-        <%}%>
+<%--        <%}%>--%>
     </div>
 </section>
 </body>
@@ -204,12 +209,32 @@
     }
 
     //for go
-    <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
-        window.onload = initGame(document.getElementById('gocanvas<%=i%>'), document.getElementById('movecount'), document.forms.go);
-    <%}%>
-    document.forms.go.enableLogs.onclick = function(ev) {
-        var dm=document.getElementById('displayMoves');
-        if (dm) dm.style.display = this.checked ? '' : 'none';
+<%--    <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>--%>
+<%--        window.onload = initGame(document.getElementById('gocanvas<%=i%>'), document.getElementById('movecount'), document.forms.go);--%>
+        window.onload = initGame(document.getElementById('gocanvas'), document.getElementById('movecount'), document.forms.go);
+<%--    <%}%>--%>
+<%--    document.forms.go.enableLogs.onclick = function(ev) {--%>
+<%--        var dm=document.getElementById('displayMoves');--%>
+<%--        if (dm) dm.style.display = this.checked ? '' : 'none';--%>
+<%--    }--%>
+
+    // make session data to js variable
+    <%for(int i =0; i<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
+        iterNumber =<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().size()%>;
+        var gibo = [];
+        gPiecesKH_tmp = []
+        <% for(int j =0; j<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().size(); j++){ %>
+            var player = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getPlayer()%>;
+            var columnNumber = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getCol()%>;
+            var rowNumber = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getRow()%>;
+
+            goOnKH(rowNumber, columnNumber, player);
+
+        <%}%>
+        gPiecesKH[<%=i%>] = gPiecesKH_tmp;
+
+    <%
     }
+    %>
 </script>
 </html>

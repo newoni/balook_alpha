@@ -62,6 +62,7 @@ public class BoardService {
 
     public Header<BoardListResponse> showBoardList(String request) throws IOException {
         List<Board> boardList = boardRepository.findAll();
+
         ArrayList<BoardResponse> boardResponseArrayList = new ArrayList<BoardResponse>();
         BoardListResponse boardListResponse = new BoardListResponse();
 
@@ -97,7 +98,6 @@ public class BoardService {
         }
 
         boardListResponse.setBoardList(boardResponseArrayList);
-
 
         return Header.OK(boardListResponse);
     }

@@ -33,6 +33,12 @@ var gGameInProgress;
 var gPassedCount = 0; // Two Passes => Quit
 var gResigned = false;
 
+// KH variables
+var gPiecesKH = []; //only one board game. in KH version, variable gPieces is array which have component of gPiecesKH
+var gPiecesKH_tmp = []; // temperature array. only for making gPiecesKH
+
+
+
 // 바둑판 리사이징
 function resizeBoard(boardsize) {
 	kBoardWidth = boardsize; // 파라미터로 들어온 값 == 가로 사이즈
@@ -95,17 +101,22 @@ function goOnClick(e) {
     return addPiece(cell, player); // cell에 돌 추가
 
 }
+
 // ####s made by KH <21.06.27>
-function goOnKH(){
-    console.log('KH function is invoked');
-    var cell = getKHPosition();
-    var player = gMoveCount % 2 ? WHITE : BLACK; // gMoveCount 짝수는 흰돌 홀수는 흑돌
-    return addPiece(cell, player); // cell에 돌 추가
+function goOnKH(row, col, playerNumber){
+    var cell = getKHPosition(row, col);
+    var player = playerNumber % 2 ? BLACK : WHITE; // gMoveCount 짝수는 흰돌 홀수는 흑돌
+    addPieceKH(cell, player); // cell에 돌 추가
 }
 
-function getKHPosition(){
-    x=gCanvasElement.offsetLeft -120;
-    y=gCanvasElement.offsetTop -210;
+function goOnKHAfter(idx){
+    gPieces[idx] = gPiecesKH;
+}
+
+// make KH position
+function getKHPosition(row, col){
+    x=gCanvasElement.offsetLeft + col*30  -150;
+    y=gCanvasElement.offsetTop + row *30  -210;
     var cell = new Cell(Math.floor(y/kPieceHeight), Math.floor(x/kPieceWidth));
     return cell;
 }
@@ -185,6 +196,36 @@ function addPiece(cell, color) {
 	nextPlayer()
     //showUpdatedBoard();
 	return true;
+}
+
+
+/** Add piece to board with KH version */
+function addPieceKH(cell, color) {
+    console.log('addPiece KH version is invoked');
+    console.log(cell);
+    console.log(color);
+
+    cell.color = color;
+    log(cell);
+
+    // check for capture or illegal move // 잘못된 이동 확인 여부
+    var points = checkCapture(cell, color, true);
+    if (points) {
+        updateScore(color, points);
+    } else if (illegalmove(cell, color)) {
+        log("Illegal Move to " + cell);
+        warn("Illegal Move to " + cell);
+        return false;
+    }
+    if (!moveToCell(cell)) {
+        log("Cannot move to " + cell)
+        return false
+    }
+    // moveAndCapture(cell)
+    gPiecesKH_tmp.push(cell)  // midify subject
+    // nextPlayer()
+    //showUpdatedBoard();
+    return true;
 }
 
 /** Next Player's Turn */ //다음 플레이어 턴
@@ -374,4 +415,55 @@ function initGame(canvasElement, moveCountElement, frm) {
     if (!resumeGame()) {
 	newGame();
     }
+}
+
+
+// init Game KH version
+function initGameKH(idx, canvasElement, moveCountElement, frm) {
+    console.log("init Game is invoked");
+    initGame.frm = frm;
+    if (frm && frm.boardSize) frm.boardSize.onchange = function(ev) {
+        console.log("first if");
+        if (gPieces.length === 0 || gGameInProgress === false) { // first move or game over
+            gPieces.length = 0; // truncate
+            resizeBoard(this.value);
+            GO.setSize(this.value);
+
+        } else {
+            info("must finish current game");
+            this.value = goboard.length;
+            this.disabled=true;
+        }
+    }
+    if (!canvasElement) {
+        console.log("2nd if");
+        canvasElement = document.createElement("canvas");
+        canvasElement.id = "gocanvas";
+        document.body.appendChild(canvasElement);
+    }
+    if (!moveCountElement) {
+        console.log("3rd if");
+        moveCountElement = document.createElement("p");
+        document.body.appendChild(moveCountElement);
+    }
+    gCanvasElement = canvasElement;
+    gCanvasElement.width = kPixelWidth;
+    gCanvasElement.height = kPixelHeight;
+    gMoveCountElem = moveCountElement;
+    gDrawingContext = gCanvasElement.getContext("2d");
+    initForm(frm);
+    if (!resumeGame()) {
+        newGameKH(idx);
+    }
+}
+
+//newGame KH version
+function newGameKH(idx) {
+    gPieces = gPiecesKH[idx];
+    gNumPieces = gPieces.length;
+    gSelectedPieceIndex = -1;
+    gSelectedPieceHasMoved = false;
+    gMoveCount = 0;
+    gGameInProgress = true;
+    drawBoard();
 }

@@ -38,7 +38,7 @@
             <li><a href="search_result.jsp"><img class="search_icon" src="/img/search.png"></a></li>
             <li><a href="../board/createPage"><img class="write_icon" src="/img/write.png"></a></li>
             <li><a href="../chat/showChatListPage"><img class="chat_icon" src="/img/chat.png"></a></li>
-            <li><a href="../customer/myProfile"><img class="profile_icon" src=<%=picturePath%>></a></li>
+            <li><a onclick="sendJSON4Profile('/customer/check4Profile/<%=session.getAttribute("nickname")%>')"><img class="profile_icon" src=<%=picturePath%>></a></li>
         </ul>
     </div>
 </header>
@@ -159,4 +159,33 @@
     </div>
 </section>
 </body>
+
+<script>
+    var xhr = new XMLHttpRequest();
+    function sendJSON4Profile(address){
+        xhr.open('GET', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+
+                console.log("sendJSON successed")
+                console.log(xhr.responseText);
+                if(xhr.responseText == "my_profile"){
+                    location.href="../customer/myProfile";
+                }else{
+                    location.href="../customer/otherProfile";
+                }
+                console.log("reloaded");
+
+            } else {
+                console.log("sendJSON 4 Profile");
+                console.error(xhr.responseText);
+            }
+        };
+    }
+</script>
+
 </html>

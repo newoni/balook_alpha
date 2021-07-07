@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,10 +63,9 @@ public class BoardService {
         ArrayList<BoardResponse> boardResponseArrayList = new ArrayList<BoardResponse>();
         BoardListResponse boardListResponse = new BoardListResponse();
 
-//        start get gibo
 
         for(Board board: boardList) {
-            System.out.println(board.getId());
+//        start get gibo
             File file = new File(board.getFilePath());
 
             ArrayList<Stone> gibo = new ArrayList<Stone>();
@@ -106,4 +102,61 @@ public class BoardService {
 
         return Header.OK(boardListResponse);
     }
+
+    //input - nick name,
+    //output - boards which is written by nickname(input)
+    public Header<BoardListResponse> readSomeoneBoards(String nickname) throws IOException {
+        Customer customer = customerRepository.findByNickNameLike(nickname);
+
+        ArrayList<Board> boardArrayList = new ArrayList<Board>();
+
+        boardArrayList = (ArrayList<Board>) boardRepository.findByAuthor(customer.getId());
+
+        ArrayList<BoardResponse> boardResponseArrayList = new ArrayList<BoardResponse>();
+
+        for(Board board : boardArrayList){
+            //        start get gibo
+            File file = new File(board.getFilePath());
+
+            ArrayList<Stone> gibo = new ArrayList<Stone>();
+            if (file.exists()) {
+                BufferedReader inFile = new BufferedReader(new FileReader(file));
+                String sLine = null;
+                while ((sLine = inFile.readLine()) != null) {
+                    if(sLine.startsWith("STO")){
+                        Stone stone = Stone.builder()
+                                .player(sLine.split(" ")[3])
+                                .row(sLine.split(" ")[4])
+                                .col(sLine.split(" ")[5])
+                                .build();
+
+                        gibo.add(stone);
+                    }
+
+                }
+            }
+//            end get gibo
+
+
+            Customer author = customerRepository.findById(board.getAuthor()).get();
+            BoardResponse boardResponse = BoardResponse.builder()
+                    .boardedAt(board.getBoardedAt())
+                    .author(author.getNickName())
+                    .contents(board.getContents())
+                    .filePath(board.getFilePath())
+                    .updatedAt(board.getUpdatedAt())
+                    .title(board.getTitle())
+                    .id(board.getId())
+                    .gibo(gibo)
+                    .build();
+
+            boardResponseArrayList.add(boardResponse);
+        }
+
+        BoardListResponse boardListResponse = new BoardListResponse();
+        boardListResponse.setBoardList(boardResponseArrayList);
+
+        return Header.OK(boardListResponse);
+    }
+
 }

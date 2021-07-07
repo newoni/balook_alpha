@@ -1,5 +1,8 @@
 package com.example.demo.controller.page;
 
+import com.example.demo.repository.LikesRepository;
+import com.example.demo.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,10 +13,14 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping(value="/customer")
 public class CustomerPageController {
+
     @RequestMapping(value = "/myProfile",method = RequestMethod.GET)
     public String myProfile(){
         return "/jsp/my_profile";
     }
+
+    @RequestMapping(value="otherProfile",method = RequestMethod.GET)
+    public String otherProfile(){return "/jsp/other_profile";}
 
     @RequestMapping(value = "/signIn", method = RequestMethod.GET)
     public String login(){
@@ -46,20 +53,5 @@ public class CustomerPageController {
 
     }
 
-    @RequestMapping(value = "/check4Profile/{author}", method = RequestMethod.GET)
-    public String check4Profile(@PathVariable String author, HttpSession session){
-        if(session.getAttribute("nickname").toString() == author){
-            System.out.println("my page is invoked");
-            System.out.println("my page is invoked");
-            return "/jsp/my_profile";
-        }else{
-            System.out.println("author is");
-            System.out.println(author);
-            System.out.println("session nickname is");
-            System.out.println(session.getAttribute("nickname").toString());
-            session.setAttribute("opponentNickName", author);
-            System.out.println("other page is invoked");
-            return "/jsp/other_profile";
-        }
-    }
+
 }

@@ -65,7 +65,7 @@
             </li>
             <li><a href="../board/createPage"><img class="write_icon" src="/img/write.png"></a></li>
             <li><a href="../chat/showChatListPage" onclick="getChatList()"><img class="chat_icon" src="/img/chat.png"></a></li>
-            <li><a href="customer/myProfile"><img class="profile_icon" src=<%= picturePath %>></a></li>
+            <li><a onclick="sendJSON4Profile('customer/check4Profile/<%=session.getAttribute("nickname")%>')"><img class="profile_icon" src=<%= picturePath %>></a></li>
         </ul>
     </div>
 </header>
@@ -75,15 +75,16 @@
             <div class="card_board_list">
                 <div class="card_board_header">
                     <ul>
-                        <li><a href="/customer/check4Profile?authorNickName=<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>"><img class="profile" src="<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthorPicturePath()%>"></a></li>
-                        <li><a href="/customer/check4Profile?authorNickName=<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>"><%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%></a></li>
+<%--                        <li><a href="/customer/check4Profile?authorNickName=<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>"><img class="profile" src="<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthorPicturePath()%>"></a></li>--%>
+                        <li><a onclick="sendJSON4Profile('/customer/check4Profile/<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>')"><img class="profile" src="<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthorPicturePath()%>"></a></li>
+<%--                        <li><a href="/customer/check4Profile?authorNickName=<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>"><%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%></a></li>--%>
+                        <li><a onclick="sendJSON4Profile('/customer/check4Profile/<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>')"><%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%></a></li>
                         <li class="more_li"><a href="#"><img class="more" src="/img/more.png"></a></li>
                     </ul>
                 </div>
                 <div class="card_board_cont">
                     <div class="board_cont_item1">
                         <canvas class="tmp_canvas" height="451" width="451" id="gocanvas<%=i%>"></canvas>
-<%--                        <canvas height="451" width="451" id="gocanvas"></canvas>--%>
                         <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount<%=i%>">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
 
                         <FORM style="display:none;" id="go" name="go">
@@ -229,14 +230,37 @@
         };
     }
 
+    function sendJSON4Profile(address){
+        xhr.open('GET', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+
+                console.log("sendJSON successed")
+                console.log(xhr.responseText);
+                if(xhr.responseText == "my_profile"){
+                    location.href="../customer/myProfile";
+                }else{
+                    location.href="../customer/otherProfile";
+                }
+                console.log("reloaded");
+
+            } else {
+                console.log("sendJSON 4 Profile");
+                console.error(xhr.responseText);
+            }
+        };
+    }
+
     function getChatList(){
         mkTime();
         mkData4chatList();
         header_data = {time:time, data:data};
         sendJSON4chatList(header_data, "/chat/showChatList/<%=session.getAttribute("nickname").toString()%>");
     }
-
-
 
     //for go
     function initGameKHs(){

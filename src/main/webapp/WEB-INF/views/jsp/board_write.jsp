@@ -82,9 +82,34 @@
 
 </body>
 <script>
+    var xhr = new XMLHttpRequest();
     function afterSubmit(){
         location.replace("../main");
+    }
 
+    function sendJSON4Profile(address){
+        xhr.open('GET', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+
+                console.log("sendJSON successed")
+                console.log(xhr.responseText);
+                if(xhr.responseText == "my_profile"){
+                    location.href="../customer/myProfile";
+                }else{
+                    location.href="../customer/otherProfile";
+                }
+                console.log("reloaded");
+
+            } else {
+                console.log("sendJSON 4 Profile");
+                console.error(xhr.responseText);
+            }
+        };
     }
 
 </script>

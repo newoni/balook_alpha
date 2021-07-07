@@ -10,4 +10,5 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<Board, Long> {
     Board findByAuthorAndTitle(Long author, String title);
 
+    List<Board> findByAuthor(Long author);
 }

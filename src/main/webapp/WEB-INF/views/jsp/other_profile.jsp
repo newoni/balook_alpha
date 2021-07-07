@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.example.demo.model.network.response.BoardResponse" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 6/29/21
@@ -18,8 +19,20 @@
   <style>
 
   </style>
+  <script type="text/javascript" src="/js/go.js"></script>
+  <script type="text/javascript" src="/js/gocanvas.js"></script>
 </head>
 <body>
+<%
+  // for profile picture
+  String picturePath="";
+  if(session.getAttribute("picturePath") == null){
+    System.out.println("session.getAttribute picturePath is null");
+    picturePath = "/img/myprofile.png";
+  }else{
+    picturePath = session.getAttribute("picturePath").toString();
+  }
+%>
 <header class="header_container">
   <div class="logo">
     <ul>
@@ -32,7 +45,7 @@
       <li><a href="search_result.jsp"><img class="search_icon" src="/img/search.png"></a></li>
       <li><a href="board_write.jsp"><img class="write_icon" src="/img/write.png"></a></li>
       <li><a href="chating.jsp"><img class="chat_icon" src="/img/chat.png"></a></li>
-      <li><a href="other_profile.jsp"><img class="profile_icon" src="/img/profile.png"></a></li>
+      <li><a onclick="sendJSON4Profile('/customer/check4Profile/<%=session.getAttribute("nickname")%>')"><img class="profile_icon" src="<%=picturePath%>"></a></li>
     </ul>
   </div>
 </header>
@@ -46,7 +59,7 @@
           </div>
           <div class="other_profile_info_name_setting">
             <div class="other_profile_info_name_setting_my_name">
-              <%=session.getAttribute("authorNickName").toString()%>>
+              <%=session.getAttribute("authorNickName").toString()%>
             </div>
           </div>
         </div>
@@ -82,16 +95,79 @@
         </div>
       </div>
       <div class="my_boards">
-        <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/Ed_-y4RVAAEBBCp.jpg"></a></div>
-        <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/J2oWs_zZ_400x400.jpg"></a></div>
-        <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/puppy-1189067_1280.jpg"></a></div>
-        <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/unnamed (1).jpg"></a></div>
-        <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/unnamed.jpg"></a></div>
-        <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/WO4SKPUA62ESBOT2QY7QB5XTAI.jpg">   </a></div>
-        <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/다운로드.jpg">   </a></div>
+        <%for(int i = 0; i<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
+          <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/Ed_-y4RVAAEBBCp.jpg"></a></div>
+        <%}%>
       </div>
     </div>
   </div>
 </section>
 </body>
+
+<script>
+  var xhr = new XMLHttpRequest();
+
+  function sendJSON4Profile(address){
+    xhr.open('GET', address);
+    xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+    xhr.send(); // 데이터를 stringify해서 보냄
+
+    xhr.onload = function() {
+      if (xhr.status === 200 || xhr.status === 201) {
+        console.log("function invoked ");
+
+        console.log("sendJSON successed")
+        console.log(xhr.responseText);
+        if(xhr.responseText == "my_profile"){
+          location.href="../customer/myProfile";
+        }else{
+          location.href="../customer/otherProfile";
+        }
+        console.log("reloaded");
+
+      } else {
+        console.log("sendJSON 4 Profile");
+        console.error(xhr.responseText);
+      }
+    };
+  }
+
+  //for go
+  function initGameKHs(){
+    <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
+    window.onload =initGameKH(<%=i%>,document.getElementById('gocanvas<%=i%>'), document.getElementById('movecount'), document.forms.go);
+    // window.onload = initGame(document.getElementById('gocanvas'), document.getElementById('movecount'), document.forms.go);
+    <%}%>
+  }
+
+  // make session data to js variable
+  function getGiboData(){
+    <%for(int i =0; i<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
+
+    <% for(int j =0; j<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().size(); j++){ %>
+    var player = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getPlayer()%>;
+    var columnNumber = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getCol()%>;
+    var rowNumber = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getRow()%>;
+
+    goOnKH(<%=i%>, rowNumber, columnNumber, player);
+    gPiecesKH[<%=i%>] = gPiecesKH_tmp.slice();
+    drawBoardKH(<%=i%>);
+    gMoveCount[<%=i%>] = gPiecesKH[<%=i%>].length;
+
+    <%}%>
+    gPiecesKH_tmp = [];
+    <%
+    }
+    %>
+    gPieces = gPiecesKH.slice(); //for move draw, make duplication
+  }
+
+  function initPage(){
+    initGameKHs();
+    getGiboData();
+  }
+
+  window.onload = initPage();
+</script>
+
 </html>

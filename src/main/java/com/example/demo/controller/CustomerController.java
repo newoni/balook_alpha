@@ -1,20 +1,20 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.entity.Customer;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.CustomerRequest;
 import com.example.demo.model.network.response.BoardListResponse;
+import com.example.demo.model.network.response.BoardResponse;
 import com.example.demo.model.network.response.CustomerResponse;
 import com.example.demo.service.BoardService;
 import com.example.demo.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @RestController
@@ -74,5 +74,25 @@ public class CustomerController {
     @RequestMapping(value="/countProfiles")
     public Header<CustomerResponse> countProfiles(@RequestBody Header<CustomerRequest> header){
         return customerService.countProfiles(header);
+    }
+
+    @RequestMapping(value = "/check4Profile/{authorNickName}", method = RequestMethod.GET)
+    public String check4Profile(@PathVariable String authorNickName, HttpSession session) throws IOException {
+
+        ArrayList<BoardResponse> boardResponseArrayList = boardService.readSomeoneBoards(authorNickName).getData().getBoardList();
+
+        session.setAttribute("boardList", boardResponseArrayList);
+
+        System.out.println("for profile page, session in boardList attribute is modified.");
+        System.out.println("for profile page, session in boardList attribute is modified.");
+        System.out.println(boardResponseArrayList);
+
+        if(session.getAttribute("nickname").toString().equals(authorNickName)){
+            return "my_profile";
+        }else{
+            //for catch who's profile page
+            session.setAttribute("authorNickName", authorNickName);
+            return "other_profile";
+        }
     }
 }

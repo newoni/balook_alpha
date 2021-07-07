@@ -3,14 +3,13 @@
 <%@ page import="com.example.demo.model.network.Header" %>
 <%@ page import="com.example.demo.service.LikesService" %>
 <%@ page import="com.example.demo.model.network.request.LikesRequest" %>
-<%@ page import="com.example.demo.model.network.response.LikesResponse" %>
 <%@ page import="com.example.demo.service.FollowService" %>
 <%@ page import="com.example.demo.model.network.request.FollowRequest" %>
-<%@ page import="com.example.demo.model.network.response.FollowResponse" %>
 <%@ page import="com.example.demo.service.FeedbackService" %>
 <%@ page import="com.example.demo.model.network.request.FeedbackRequest" %>
-<%@ page import="com.example.demo.model.network.response.FeedbackResponse" %>
 <%@ page import="org.springframework.beans.factory.annotation.Autowired" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.demo.model.network.response.*" %>
 <%--
   Created by IntelliJ IDEA.
   User: user
@@ -31,6 +30,9 @@
     <style>
 
     </style>
+
+    <script type="text/javascript" src="/js/go.js"></script>
+    <script type="text/javascript" src="/js/gocanvas.js"></script>
 </head>
 <body>
 <%
@@ -45,8 +47,8 @@
 <header class="header_container">
     <div class="logo">
         <ul>
-            <li><a href="main.jsp"><img class="logo" src="/img/logo.png"></a></li>
-            <li><a href="main.jsp">balook</a></li>
+            <li><a href="../../main"><img class="logo" src="/img/logo.png"></a></li>
+            <li><a href="../../main">balook</a></li>
         </ul>
     </div>
     <div class="menu">
@@ -54,7 +56,7 @@
             <li><a href="search_result.jsp"><img class="search_icon" src="/img/search.png"></a></li>
             <li><a href="../board/createPage"><img class="write_icon" src="/img/write.png"></a></li>
             <li><a href="../chat/showChatListPage"><img class="chat_icon" src="/img/chat.png"></a></li>
-            <li><a href="myProfile"><img class="profile_icon" src=<%=picturePath%>></a></li>
+            <li><a onclick="sendJSON4Profile('/customer/check4Profile/<%=session.getAttribute("nickname")%>')"><img class="profile_icon" src=<%=picturePath%>></a></li>
         </ul>
     </div>
 </header>
@@ -68,7 +70,7 @@
                     </div>
                     <div class="my_profile_info_name_setting">
                         <div class="my_profile_info_name_setting_my_name">
-                            <%=session.getAttribute("nickname").toString()%>>
+                            <%=session.getAttribute("nickname").toString()%>
                         </div>
                         <div class="my_profile_info_name_setting_modify_button">
                             <a href="my_profile_modify.jsp"><img src="/img/setting.png"></a>
@@ -117,13 +119,35 @@
                 </div>
             </div>
             <div class="my_boards">
-                <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/Ed_-y4RVAAEBBCp.jpg"></a></div>
-                <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/J2oWs_zZ_400x400.jpg"></a></div>
-                <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/puppy-1189067_1280.jpg"></a></div>
-                <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/unnamed (1).jpg"></a></div>
-                <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/unnamed.jpg"></a></div>
-                <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/WO4SKPUA62ESBOT2QY7QB5XTAI.jpg">   </a></div>
-                <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/다운로드.jpg">   </a></div>
+                <%for(int i = 0; i<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
+                    <canvas class="tmp_canvas" height="451" width="451" id="gocanvas<%=i%>"></canvas>
+                    <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount<%=i%>">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
+
+                    <FORM style="display:none;" id="go" name="go">
+                        <FIELDSET>
+                            <LEGEND ACCESSKEY=A>Actions:</LEGEND>
+                            <input type="button" name="confirm" value="Confirm" />
+                            <input type="button" name="pass" value="Pass" />
+                            <input type="button" name="resign" value="Resign" />
+                        </FIELDSET>
+                        <FIELDSET>
+                            <LEGEND ACCESSKEY=P>Next Player:</LEGEND>
+                            <input type="radio" name="player" value="b" id="black" onclick="return false" /><label for="black" class="blackLabel">Black</label>
+                            <input type="radio" name="player" value="w" id="white" onclick="return false" /><label for="white" class="whiteLabel">White</label>
+                        </FIELDSET>
+                        <br />
+                        <label>Show SGF logs: <input type="checkbox" title="show SGF logs" name="enableLogs" id="enableLogs"  /></label>
+                        <div id="displayMoves" style="display:none"></div>
+                        <label>Size of Board:
+                            <select name= "boardSize">
+                                <option>5</option>
+                                <option>9</option>
+                                <option>13</option>
+                                <option selected="selected">19</option>
+                            </select>
+                        </label>
+                    </FORM>
+                <%}%>
             </div>
         </div>
     </div>
@@ -146,9 +170,6 @@
 
     var data
     var header_data
-
-    window.onload(onload());
-
 
     function onload(){
         mkTime();
@@ -202,5 +223,66 @@
         };
     }
 
+    function sendJSON4Profile(address){
+        xhr.open('GET', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+
+                console.log("sendJSON successed")
+                console.log(xhr.responseText);
+                if(xhr.responseText == "my_profile"){
+                    location.href="../customer/myProfile";
+                }else{
+                    location.href="../customer/otherProfile";
+                }
+                console.log("reloaded");
+
+            } else {
+                console.log("sendJSON 4 Profile");
+                console.error(xhr.responseText);
+            }
+        };
+    }
+
+    //for go
+    function initGameKHs(){
+        <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
+            window.onload =initGameKH(<%=i%>,document.getElementById('gocanvas<%=i%>'), document.getElementById('movecount'), document.forms.go);
+        // window.onload = initGame(document.getElementById('gocanvas'), document.getElementById('movecount'), document.forms.go);
+        <%}%>
+    }
+
+    // make session data to js variable
+    function getGiboData(){
+        <%for(int i =0; i<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
+
+        <% for(int j =0; j<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().size(); j++){ %>
+            var player = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getPlayer()%>;
+            var columnNumber = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getCol()%>;
+            var rowNumber = <%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getGibo().get(j).getRow()%>;
+
+            goOnKH(<%=i%>, rowNumber, columnNumber, player);
+            gPiecesKH[<%=i%>] = gPiecesKH_tmp.slice();
+            drawBoardKH(<%=i%>);
+            gMoveCount[<%=i%>] = gPiecesKH[<%=i%>].length;
+
+        <%}%>
+        gPiecesKH_tmp = [];
+        <%
+        }
+        %>
+        gPieces = gPiecesKH.slice(); //for move draw, make duplication
+    }
+
+    function initPage(){
+        initGameKHs();
+        getGiboData();
+    }
+
+    window.onload = initPage();
 </script>
 </html>

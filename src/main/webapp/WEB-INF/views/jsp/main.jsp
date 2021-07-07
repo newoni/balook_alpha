@@ -40,6 +40,7 @@
 // for profile picture
     String picturePath="";
     if(session.getAttribute("picturePath") == null){
+        System.out.println("session.getAttribute picturePath is null");
         picturePath = "/img/myprofile.png";
     }else{
         picturePath = session.getAttribute("picturePath").toString();
@@ -74,8 +75,8 @@
             <div class="card_board_list">
                 <div class="card_board_header">
                     <ul>
-                        <li><a href="#"><img class="profile" src="/img/profile.png"></a></li>
-                        <li><a href="#"><%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(0).getAuthor()%></a></li>
+                        <li><a href="/customer/check4Profile?authorNickName=<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>"><img class="profile" src="<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthorPicturePath()%>"></a></li>
+                        <li><a href="/customer/check4Profile?authorNickName=<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>"><%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%></a></li>
                         <li class="more_li"><a href="#"><img class="more" src="/img/more.png"></a></li>
                     </ul>
                 </div>
@@ -123,7 +124,7 @@
                 </div>
                 <div class="card_board_footer">
                     <ul class="footer_icon">
-                        <li><a href="#"><img src="../img/like.png"></a></li>
+                        <li><a onclick="sendJSON4createLike('/likes/check/<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>/<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getTitle()%>')"><img src="../img/like.png"></a></li>
                         <li><a href="board_view.jsp"><img src="/img/comments.png"></a></li>
                         <li><a href="board_view.jsp"><img src="/img/feedback.png"></a></li>
                     </ul>
@@ -201,12 +202,41 @@
         };
     }
 
+    function sendJSON4createLike(address){
+        xhr.open('GET', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+                if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
+                    console.log("sendJSON successed")
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    location.href="../../main";
+                    console.log("reloaded");
+
+                }else{
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    alert("sendJSON failed...");
+                    location.href="../../main";
+                }
+
+            } else {
+                console.error(xhr.responseText);
+                location.href="../../main";
+            }
+        };
+    }
+
     function getChatList(){
         mkTime();
         mkData4chatList();
         header_data = {time:time, data:data};
         sendJSON4chatList(header_data, "/chat/showChatList/<%=session.getAttribute("nickname").toString()%>");
     }
+
+
 
     //for go
     function initGameKHs(){

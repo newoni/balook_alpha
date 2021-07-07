@@ -3,9 +3,7 @@ package com.example.demo.model.entity;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -18,8 +16,16 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="COMMENTS")
+@SequenceGenerator(
+        name="COMMENT_SEQ_GEN",
+        sequenceName = "COMMENTS_SEQ",
+        initialValue = 1,
+        allocationSize=1
+)
 public class Comments {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator="COMMENTS_SEQ_GEN")
     private Long id;
 
     private Long author;

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LikesRepository extends JpaRepository<Likes, Long> {
     Long countByAuthor(Long authorId);
+
+    Likes findByAuthorAndTargetBoard(Long author, Long targetBoard);
 }

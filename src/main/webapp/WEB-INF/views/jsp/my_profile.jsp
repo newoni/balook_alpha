@@ -68,7 +68,7 @@
                     </div>
                     <div class="my_profile_info_name_setting">
                         <div class="my_profile_info_name_setting_my_name">
-                            kangh.h
+                            <%=session.getAttribute("nickname").toString()%>>
                         </div>
                         <div class="my_profile_info_name_setting_modify_button">
                             <a href="my_profile_modify.jsp"><img src="/img/setting.png"></a>

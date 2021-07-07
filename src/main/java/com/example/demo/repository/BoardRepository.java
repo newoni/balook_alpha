@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    List<Board> findByAuthorAndTitle(String author, String title);
+    Board findByAuthorAndTitle(Long author, String title);
+
 }

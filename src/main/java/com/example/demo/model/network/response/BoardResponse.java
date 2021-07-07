@@ -17,6 +17,7 @@ public class BoardResponse {
     private Long id;
     private String title;
     private String author;
+    private String authorPicturePath;
     private String filePath;
     private String contents;
     private LocalDate boardedAt;

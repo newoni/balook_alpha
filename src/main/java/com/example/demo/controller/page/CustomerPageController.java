@@ -1,8 +1,11 @@
 package com.example.demo.controller.page;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value="/customer")
@@ -41,5 +44,22 @@ public class CustomerPageController {
     public String member_join() {
         return "/jsp/member_join";         // 실제 호출될 /WEB-INF/jsp/views/viewtest.jsp
 
+    }
+
+    @RequestMapping(value = "/check4Profile/{author}", method = RequestMethod.GET)
+    public String check4Profile(@PathVariable String author, HttpSession session){
+        if(session.getAttribute("nickname").toString() == author){
+            System.out.println("my page is invoked");
+            System.out.println("my page is invoked");
+            return "/jsp/my_profile";
+        }else{
+            System.out.println("author is");
+            System.out.println(author);
+            System.out.println("session nickname is");
+            System.out.println(session.getAttribute("nickname").toString());
+            session.setAttribute("opponentNickName", author);
+            System.out.println("other page is invoked");
+            return "/jsp/other_profile";
+        }
     }
 }

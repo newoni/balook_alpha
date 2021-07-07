@@ -92,6 +92,7 @@ public class BoardService {
 
             BoardResponse boardResponse = BoardResponse.builder()
                     .author((customerRepository.findById(board.getAuthor())).get().getNickName())
+                    .authorPicturePath((customerRepository.findById(board.getAuthor())).get().getPicturePath())
                     .title(board.getTitle())
                     .boardedAt(board.getBoardedAt())
                     .gibo(gibo)

@@ -99,6 +99,7 @@
 
 
 .my_profile_container .my_boards{
+    min-width: 500px;
     display:flex;
     flex-wrap: wrap;
 }
@@ -115,6 +116,9 @@
 }
 
 @media screen and (min-width:280px) and (max-width:499px){
+    .my_profile_container .my_boards {
+        min-width: 0px;
+    }
     .my_profile_container .my_profile{
         flex-direction: column;
     }

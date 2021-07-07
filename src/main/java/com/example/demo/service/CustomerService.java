@@ -109,6 +109,7 @@ public class CustomerService {
                 .nickName(customerRequest.getNickname())
                 .email(customerRequest.getEmail())
                 .phoneNumber(customerRequest.getFrontPhoneNumber())
+                .picturePath("/img/myprofile.png")
                 .build();
 
         Customer newCustomer = customerRepository.save(customer);

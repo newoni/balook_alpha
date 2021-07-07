@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.LikesRequest;
+import com.example.demo.model.network.response.BoardResponse;
 import com.example.demo.model.network.response.LikesResponse;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.LikesService;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/likes")
@@ -29,4 +32,16 @@ class LikesController {
         }
     }
 
+    @RequestMapping(value="/likeStatus/{nickname}", method=RequestMethod.GET)
+    public String showLikedBoards(@PathVariable String nickname, HttpSession session) throws IOException {
+        System.out.println("Here is show Liked Boards which is in Likes Controller");
+        try{
+        ArrayList<BoardResponse> boardResponseArrayList = likesService.showLikedBoards(nickname).getData().getBoardList();
+        session.setAttribute("boardList", boardResponseArrayList);
+        return "OK";
+        }catch(Exception e){
+            return "ERROR";
+        }
+
+    }
 }

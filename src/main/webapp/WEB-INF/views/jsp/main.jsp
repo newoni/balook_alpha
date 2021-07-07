@@ -75,9 +75,7 @@
             <div class="card_board_list">
                 <div class="card_board_header">
                     <ul>
-<%--                        <li><a href="/customer/check4Profile?authorNickName=<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>"><img class="profile" src="<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthorPicturePath()%>"></a></li>--%>
                         <li><a onclick="sendJSON4Profile('/customer/check4Profile/<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>')"><img class="profile" src="<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthorPicturePath()%>"></a></li>
-<%--                        <li><a href="/customer/check4Profile?authorNickName=<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>"><%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%></a></li>--%>
                         <li><a onclick="sendJSON4Profile('/customer/check4Profile/<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>')"><%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%></a></li>
                         <li class="more_li"><a href="#"><img class="more" src="/img/more.png"></a></li>
                     </ul>

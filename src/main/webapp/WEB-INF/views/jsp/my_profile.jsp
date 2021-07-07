@@ -80,7 +80,9 @@
 
                 <div class="my_profile_status">
                     <ul>
-                        <a href="../likes/likeStatus">
+                        <a href="/likes/likeStatus/<%=session.getAttribute("nickname").toString()%>">
+                        <a onclick="sendJSON4LikedBoard('/likes/likeStatus/<%=session.getAttribute("nickname").toString()%>')">
+
                             <li>
                                 <div class="my_profile_status_likes">
                                     <div class="my_profile_status_likes_name">
@@ -193,6 +195,31 @@
     function mkData(){
         data = {
             "nickname" : nickName
+        };
+    }
+
+    function sendJSON4LikedBoard(address){
+        xhr.open('GET', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+
+                console.log("sendJSON successed")
+                console.log(xhr.responseText);
+                if(xhr.responseText == "OK"){
+                    location.href="/likes/likeStatus";
+                }else{
+                    location.href="../../main";
+                }
+                console.log("reloaded");
+
+            } else {
+                console.log("sendJSON 4 Profile");
+                console.error(xhr.responseText);
+            }
         };
     }
 

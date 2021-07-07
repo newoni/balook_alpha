@@ -1,5 +1,6 @@
 <%@ page import="com.example.demo.model.network.response.BoardResponse" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.demo.model.network.response.BoardListResponse" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 6/29/21
@@ -96,7 +97,33 @@
       </div>
       <div class="my_boards">
         <%for(int i = 0; i<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
-          <div class="my_boards_img_card"><a href="board_view.jsp"><img src="/img/Ed_-y4RVAAEBBCp.jpg"></a></div>
+          <canvas class="tmp_canvas" height="451" width="451" id="gocanvas<%=i%>"></canvas>
+          <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount<%=i%>">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
+
+          <FORM style="display:none;" id="go" name="go">
+            <FIELDSET>
+              <LEGEND ACCESSKEY=A>Actions:</LEGEND>
+              <input type="button" name="confirm" value="Confirm" />
+              <input type="button" name="pass" value="Pass" />
+              <input type="button" name="resign" value="Resign" />
+            </FIELDSET>
+            <FIELDSET>
+              <LEGEND ACCESSKEY=P>Next Player:</LEGEND>
+              <input type="radio" name="player" value="b" id="black" onclick="return false" /><label for="black" class="blackLabel">Black</label>
+              <input type="radio" name="player" value="w" id="white" onclick="return false" /><label for="white" class="whiteLabel">White</label>
+            </FIELDSET>
+            <br />
+            <label>Show SGF logs: <input type="checkbox" title="show SGF logs" name="enableLogs" id="enableLogs"  /></label>
+            <div id="displayMoves" style="display:none"></div>
+            <label>Size of Board:
+              <select name= "boardSize">
+                <option>5</option>
+                <option>9</option>
+                <option>13</option>
+                <option selected="selected">19</option>
+              </select>
+            </label>
+          </FORM>
         <%}%>
       </div>
     </div>

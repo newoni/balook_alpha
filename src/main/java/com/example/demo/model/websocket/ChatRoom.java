@@ -12,7 +12,7 @@ import java.util.Set;
 public class ChatRoom {
     private String roomId;
     private String name;
-    private Set<WebSocketSession> sessions = new HashSet<WebSocketSession>();
+    private Set<WebSocketSession> sessions = new HashSet<>();
 
     @Builder
     public ChatRoom(String roomId, String name){
@@ -21,9 +21,10 @@ public class ChatRoom {
     }
 
     public void handleActions(WebSocketSession session, ChatMessage chatMessage, ChatService chatService){
-        if(chatMessage.getType().equals(MessageType.JOIN)){
+        System.out.println("handleActions is invoked");
+        if(chatMessage.getType().equals(ChatMessage.MessageType.ENTER)){
             sessions.add(session);
-            chatMessage.setContent(chatMessage.getSender()+"is entered");
+            chatMessage.setMessage(chatMessage.getSender()+"is entered");
         }
         sendMessage(chatMessage, chatService);
     }

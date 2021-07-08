@@ -10,6 +10,7 @@ public class ChatRequest {
     private LocalDate date;
     private String contents;
     private String nickName;
+    private String opponent;
 }
 
 

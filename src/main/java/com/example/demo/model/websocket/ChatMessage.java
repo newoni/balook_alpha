@@ -5,9 +5,12 @@ import lombok.Data;
 
 @Data
 public class ChatMessage {
-    private MessageType Type;
+    public enum MessageType{
+        ENTER, TALK
+    }
+    private MessageType type;
     private String roomId;
-    private String content;
+    private String message;
     private String sender;
 
 }

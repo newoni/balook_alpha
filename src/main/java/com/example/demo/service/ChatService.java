@@ -78,6 +78,63 @@ public class ChatService {
 
     }
 
+    public Header<ChatResponse> check4Create(String nickname, String partner){
+        Customer customer1 = customerRepository.findByNickNameLike(nickname);
+        Customer customer2 = customerRepository.findByNickNameLike(partner);
+
+        try {
+            try {
+                Chat resChat = chatRepository.findByParticipant1AndParticipant2(customer1.getId(), customer2.getId());
+
+                ChatResponse chatResponse = ChatResponse.builder()
+                        .participant1(nickname)
+                        .participant2(partner)
+                        .filePath(resChat.getFilePath())
+                        .build();
+
+                return Header.OK(chatResponse);
+
+            } catch (Exception e) {
+                log.info("There's no user/participant1, partner/participant pair");
+                Chat resChat = chatRepository.findByParticipant1AndParticipant2(customer2.getId(), customer1.getId());
+
+                ChatResponse chatResponse = ChatResponse.builder()
+                        .participant1(nickname)
+                        .participant2(partner)
+                        .filePath(resChat.getFilePath())
+                        .build();
+
+                return Header.OK(chatResponse);
+            }
+        }catch(Exception e){
+            log.info("there's no chat rooms");
+            log.info("create chatRoom start");
+            ChatRoom chatRoom = createRoom(nickname+partner);
+
+            log.info("save chaRoom information to DB");
+
+            Chat chat = Chat.builder()
+                    .participant1(customer1.getId())
+                    .participant2(customer2.getId())
+                    .filePath(chatRoom.getRoomId())
+                    .build();
+            log.info("save chaRoom information to DB completed.");
+            Chat newChat = chatRepository.save(chat);
+
+            Customer resCustomer1 = customerRepository.findById(newChat.getParticipant1()).get();
+            Customer resCustomer2 = customerRepository.findById(newChat.getParticipant2()).get();
+
+            ChatResponse chatResponse = ChatResponse.builder()
+                    .participant1(resCustomer1.getNickName())
+                    .participant2(resCustomer2.getNickName())
+                    .filePath(newChat.getFilePath())
+                    .build();
+
+            return Header.OK(chatResponse);
+        }
+
+    }
+
     //#### s web socket chatting
     private final ObjectMapper objectMapper;
     private Map<String, ChatRoom> chatRooms;

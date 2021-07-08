@@ -228,7 +228,6 @@
   // for chat
   function mkData4ChatView(opponent){
     data = {
-      "nickname" : "<%=session.getAttribute("nickname").toString()%>",
       "opponent" : opponent
     };
   }
@@ -236,6 +235,7 @@
   function sendJSON4ChatView(input1, address) {
     xhr.open('POST', address);
     xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+    // xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
     xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
 
     xhr.onload = function () {
@@ -251,7 +251,12 @@
     mkTime();
     mkData4ChatView(opponent);
 
-    sendJSON4ChatView(data, "/chat/checkChat");
+    header_data ={
+      "time": time,
+      "data":data
+    }
+
+    sendJSON4ChatView(header_data, "../../chat/check4Create");
   }
 </script>
 

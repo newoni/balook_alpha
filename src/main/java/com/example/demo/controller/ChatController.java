@@ -4,11 +4,13 @@ import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.ChatRequest;
 import com.example.demo.model.network.response.ChatListResponse;
 import com.example.demo.model.network.response.ChatResponse;
+import com.example.demo.model.websocket.ChatRoom;
 import com.example.demo.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping(value="/chat")
@@ -30,5 +32,15 @@ public class ChatController {
         System.out.println(resHeader);
 
         return resHeader;
+    }
+
+    @PostMapping(value="")
+    public ChatRoom createRoom(@RequestParam String name){
+        return chatService.createRoom(name);
+    }
+
+    @GetMapping
+    public List<ChatRoom> findAllRoom(){
+        return chatService.findAllRoom();
     }
 }

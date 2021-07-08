@@ -6,15 +6,24 @@ import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.ChatRequest;
 import com.example.demo.model.network.response.ChatListResponse;
 import com.example.demo.model.network.response.ChatResponse;
+import com.example.demo.model.websocket.ChatRoom;
 import com.example.demo.repository.ChatRepository;
 import com.example.demo.repository.CustomerRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.util.*;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class ChatService {
     @Autowired
     ChatRepository chatRepository;
@@ -68,4 +77,44 @@ public class ChatService {
         return Header.OK(chatListResponse);
 
     }
+
+    //#### s web socket chatting
+    private final ObjectMapper objectMapper;
+    private Map<String, ChatRoom> chatRooms;
+
+    @PostConstruct
+    private void init(){
+        chatRooms = new LinkedHashMap<>();
+    }
+
+    public List<ChatRoom> findAllRoom(){
+        return new ArrayList<>(chatRooms.values());
+    }
+
+    public ChatRoom findRoomById(String roomId){
+        return chatRooms.get(roomId);
+    }
+
+    public ChatRoom createRoom(String name){
+        System.out.println("createRoom is invoked. this is Chat Service");
+        String randomId = UUID.randomUUID().toString();
+        ChatRoom chatRoom = ChatRoom.builder()
+                .roomId(randomId)
+                .name(name)
+                .build();
+
+        System.out.println(randomId);
+        chatRooms.put(randomId, chatRoom);
+        return chatRoom;
+    }
+
+    public <T> void sendMessage(WebSocketSession session, T message){
+        try{
+            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+        }catch(IOException e){
+            log.error(e.getMessage(), e);
+        }
+    }
+
+//    ####e
 }

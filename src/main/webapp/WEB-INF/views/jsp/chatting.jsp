@@ -49,6 +49,7 @@
   <div class="main_container">
     <div class="chat_wrap">
       <%
+        try{
         for(int i=0 ; i< ((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().size() ; i++){
           if(session.getAttribute("nickname")==((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant2()){
       %>
@@ -98,7 +99,9 @@
         </div>
       </div>
 
-      <%}}%>
+      <%}}
+        }catch(Exception e){}
+      %>
     </div>
   </div>
 </section>

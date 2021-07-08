@@ -44,8 +44,8 @@
   <div class="menu">
     <ul>
       <li><a href="search_result.jsp"><img class="search_icon" src="/img/search.png"></a></li>
-      <li><a href="board_write.jsp"><img class="write_icon" src="/img/write.png"></a></li>
-      <li><a href="chating.jsp"><img class="chat_icon" src="/img/chat.png"></a></li>
+      <li><a href="../board/createPage"><img class="write_icon" src="/img/write.png"></a></li>
+      <li><a href="../chat/showChatListPage" onclick="getChatList()"><img class="chat_icon" src="/img/chat.png"></a></li>
       <li><a onclick="sendJSON4Profile('/customer/check4Profile/<%=session.getAttribute("nickname")%>')"><img class="profile_icon" src="<%=picturePath%>"></a></li>
     </ul>
   </div>
@@ -80,7 +80,7 @@
               </li>
             </a>
 
-            <a href="chating.jsp">
+            <a onclick="goChat('<%=session.getAttribute("authorNickName").toString()%>')">
               <li>
                 <div class="other_profile_status_chat">
                   <div class="other_profile_status_chat_name">
@@ -132,8 +132,37 @@
 </body>
 
 <script>
+  var nickName = '<%=session.getAttribute("nickname").toString()%>'
+  var obj;
+
   var xhr = new XMLHttpRequest();
 
+  var now
+  var year
+  var month
+  var date
+  var hour
+  var minute
+  var second
+  var time
+
+  var data
+  var header_data
+
+  var opponent // In chat List, opponent nick name
+
+  function mkTime(){
+    now = new Date();
+    year = now.getFullYear();
+    month = now.getMonth() + 1;
+    date = now.getDate();
+    hour = now.getHours();
+    minute = now.getMinutes();
+    second = now.getSeconds();
+    time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
+  }
+
+  //for go to profile page
   function sendJSON4Profile(address){
     xhr.open('GET', address);
     xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
@@ -195,6 +224,35 @@
   }
 
   window.onload = initPage();
+
+  // for chat
+  function mkData4ChatView(opponent){
+    data = {
+      "nickname" : "<%=session.getAttribute("nickname").toString()%>",
+      "opponent" : opponent
+    };
+  }
+
+  function sendJSON4ChatView(input1, address) {
+    xhr.open('POST', address);
+    xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+    xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
+    xhr.onload = function () {
+      if (xhr.status === 200 || xhr.status === 201) {
+        location.href = "../../chat/showChat";
+      } else {
+        console.error(xhr.responseText);
+      }
+    };
+  }
+
+  function goChat(opponent){
+    mkTime();
+    mkData4ChatView(opponent);
+
+    sendJSON4ChatView(data, "/chat/checkChat");
+  }
 </script>
 
 </html>

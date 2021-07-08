@@ -97,7 +97,7 @@
       </div>
       <div class="my_boards">
         <%for(int i = 0; i<((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
-          <canvas class="tmp_canvas" height="451" width="451" id="gocanvas<%=i%>"></canvas>
+        <a href="/board/boardList"><canvas class="tmp_canvas" height="451" width="451" id="gocanvas<%=i%>"></canvas></a>
           <p style="margin-top: 0pt; font-style: normal; display:none;" class="legend">Moves: <span id="movecount<%=i%>">0</span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="warnings"></span></p>
 
           <FORM style="display:none;" id="go" name="go">

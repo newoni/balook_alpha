@@ -33,10 +33,10 @@ class LikesController {
     }
 
     @RequestMapping(value="/likeStatus/{nickname}", method=RequestMethod.GET)
-    public String showLikedBoards(@PathVariable String nickname, HttpSession session) throws IOException {
+    public String readLikeBoards(@PathVariable String nickname, HttpSession session) throws IOException {
         System.out.println("Here is show Liked Boards which is in Likes Controller");
         try{
-        ArrayList<BoardResponse> boardResponseArrayList = likesService.showLikedBoards(nickname).getData().getBoardList();
+        ArrayList<BoardResponse> boardResponseArrayList = likesService.readLikeBoards(nickname).getData().getBoardList();
         session.setAttribute("boardList", boardResponseArrayList);
         return "OK";
         }catch(Exception e){

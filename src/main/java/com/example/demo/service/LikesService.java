@@ -93,7 +93,7 @@ public class LikesService {
         likesRepository.delete(likes);
     }
 
-    public Header<BoardListResponse> showLikedBoards(String nickname) throws IOException {
+    public Header<BoardListResponse> readLikeBoards(String nickname) throws IOException {
         System.out.println("show Liked Boards is invoked which is in Likes Service");
         Customer customer = customerRepository.findByNickNameLike(nickname);
         List<Likes> likesList = likesRepository.findByAuthor(customer.getId());

@@ -34,7 +34,7 @@ public class BoardPageController {
 //        define file name, derectory
 //        source: https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true
 //        File saveFile = new File(uploadFolder, uploadFile.getOriginalFilename());
-        String destination = "/home/balook/IdeaProjects/demo/gibo/" + uploadFile.getOriginalFilename();
+        String destination = "/home/balook/IdeaProjects/workingdir/gibo/" + uploadFile.getOriginalFilename();
         File saveFile = new File(destination);
 
         System.out.println("saveFile");
@@ -72,4 +72,8 @@ public class BoardPageController {
 
     }
 
+    @RequestMapping(value = "/boardList", method = RequestMethod.GET)
+    public String boardList(){
+        return "/jsp/board_list";
+    }
 }

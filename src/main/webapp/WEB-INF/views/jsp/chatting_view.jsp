@@ -62,7 +62,7 @@
       <div class="chat_footer">
         <form>
           <input id="textMessage" type="text">
-          <button onclick="sendMessage()">전송</button>
+          <input type="button" onclick="sendMessage()">전송</input>
         </form>
       </div>
     </div>
@@ -71,8 +71,10 @@
 
 <script>
 <%--this is for web Socket chatting--%>
-var webSocket = new WebSocket("ws://192.168.177.128:8081/ws/chat");
+var webSocket = new WebSocket("ws://192.168.163.130:8081/ws/chat");
 var messageTextArea = document.getElementById("messageTextArea");
+
+
 // WebSocket 서버와 접속 시 호출되는 함수
 webSocket.onopen = function() {
 // 콘솔 텍스트에 메시지를 출력한다.
@@ -92,6 +94,7 @@ webSocket.onopen = function() {
 webSocket.onclose = function(message) {
 // 콘솔 텍스트에 종료 메시지 출력
   messageTextArea.value += "Server Disconnect...\n";
+  alert("socket disconnected");
 
 };
 // WebSocket 서버와 통싞 중 에러 발생 시 호출되는 함수
@@ -111,10 +114,14 @@ webSocket.onmessage = function(result) {
 // Send 버튼 클릭 시 호출되는 메소드
 function sendMessage() {
 // 전송 메시지 텍스트 박스 객체 가져오기
+  console.log("Hi1");
   var message = document.getElementById("textMessage");
 // 콘솔 텍스트에 메시지 출력
+
+  console.log("Hi2");
   messageTextArea.value += "Send to Server => "+message.value+"\n";
 
+  console.log("Hi3");
   var data = {
     "type":"TALK",
     "room_id": "<%=session.getAttribute("roomId").toString()%>",
@@ -122,17 +129,20 @@ function sendMessage() {
     "sender":"<%=session.getAttribute("nickname").toString()%>"
   }
 
+  console.log("Hi4");
   console.log("data is");
   console.log(JSON.stringify(data));
 
-
+  console.log("Hi4.5");
 
 // WebSocket 서버에 메시지 전송
-//   webSocket.send(JSON.stringify(data));
+  webSocket.send(JSON.stringify(data));
 
+  console.log("Hi5");
   console.log("sendMessage is successed.");
 // 전송 메시지 작성 텍스트 박스 초기화
   message.value = "";
+  console.log("Hi6");
 
 }
 

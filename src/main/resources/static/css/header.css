@@ -57,16 +57,17 @@ body {
     position: relative;
 }
 .header_container .menu ul .dropdown:hover .search_content {
-    display: block;
+    visibility: visible;
+    margin-top: 15px;
 }
 .header_container .menu ul .dropdown .search_content {
-    display: none;
+    visibility: hidden;
+    transition: all 0.6s;
     position: absolute;
     z-index: 1;
 }
 .header_container .menu ul li .search_content form input {
     display: block;
-    margin-top: 15px;
     width: 200px;
     height: 30px;
     color: white;

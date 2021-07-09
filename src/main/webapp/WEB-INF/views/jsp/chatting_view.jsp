@@ -141,8 +141,6 @@ function disconnect() {
 // WebSocket 접속 해제
   webSocket.close();
 
-
-
 }
 </script>
 

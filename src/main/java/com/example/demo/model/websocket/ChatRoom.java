@@ -26,6 +26,10 @@ public class ChatRoom {
     public void handleActions(WebSocketSession session, ChatMessage chatMessage, ChatService chatService) throws IOException {
         System.out.println("handleActions is invoked");
 
+        log.info("sessions:");
+        log.info(sessions.toString());
+        log.info("this will be added");
+        log.info(session.toString());
 
         if(chatMessage.getType().equals(ChatMessage.MessageType.ENTER)){
             sessions.add(session);

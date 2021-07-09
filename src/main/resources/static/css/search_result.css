@@ -1,6 +1,6 @@
 .section_container .main_container .card_board_list {
     background-color: rgb(52, 52, 53);
-    width: 500px;
+    width: 100%;
     margin-top: 10%;
     display: flex;
     flex-direction: column;

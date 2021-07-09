@@ -54,6 +54,7 @@ body {
     margin:0 0 3% 0;
 }
 .section_container .main_container .find_pw_container .find_pw {
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }

@@ -99,13 +99,14 @@
 
 
 .my_profile_container .my_boards{
-    min-width: 500px;
     display:flex;
     flex-wrap: wrap;
+    padding-bottom: 10%;
 }
 
 .my_profile_container .my_boards .my_boards_img_card{
     width:33.3%;
+    height: 400px;
     overflow: hidden;
 }
 
@@ -116,9 +117,8 @@
 }
 
 @media screen and (min-width:280px) and (max-width:499px){
-    .my_profile_container .my_boards {
-        min-width: 0px;
-    }
+    .my_profile_container .my_boards { padding-bottom:0; }
+    .my_profile_container .my_boards .my_boards_img_card {width: 100%;}
     .my_profile_container .my_profile{
         flex-direction: column;
     }

@@ -95,7 +95,7 @@ public class ChatService {
                 return Header.OK(chatResponse);
 
             } catch (Exception e) {
-                log.info("There's no user/participant1, partner/participant pair");
+                log.info("There's no user/participant1, partner/participant2 pair");
                 Chat resChat = chatRepository.findByParticipant1AndParticipant2(customer2.getId(), customer1.getId());
 
                 ChatResponse chatResponse = ChatResponse.builder()
@@ -119,6 +119,7 @@ public class ChatService {
                     .filePath(chatRoom.getRoomId())
                     .build();
             log.info("save chaRoom information to DB completed.");
+            log.info("roomId is:" + chatRoom.getRoomId());
             Chat newChat = chatRepository.save(chat);
 
             Customer resCustomer1 = customerRepository.findById(newChat.getParticipant1()).get();
@@ -147,8 +148,8 @@ public class ChatService {
     public List<ChatRoom> findAllRoom(){
         return new ArrayList<>(chatRooms.values());
     }
-
     public ChatRoom findRoomById(String roomId){
+        log.info("rooms:" + chatRooms);
         return chatRooms.get(roomId);
     }
 

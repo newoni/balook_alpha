@@ -57,16 +57,94 @@
         </div>
       </div>
       <div class="chat_cont">
-        <textarea>ㅎㅇ</textarea>
+        <textarea id="messageTextArea"></textarea>
       </div>
       <div class="chat_footer">
         <form>
-          <input type="text">
-          <button type="submit">전송</button>
+          <input id="textMessage" type="text">
+          <button onclick="sendMessage()">전송</button>
         </form>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+<%--this is for web Socket chatting--%>
+var webSocket = new WebSocket("ws://192.168.177.128:8081/ws/chat");
+var messageTextArea = document.getElementById("messageTextArea");
+// WebSocket 서버와 접속 시 호출되는 함수
+webSocket.onopen = function() {
+// 콘솔 텍스트에 메시지를 출력한다.
+  var data = {
+    "type":"ENTER",
+    "room_id": "<%=session.getAttribute("roomId").toString()%>",
+    "message":"",
+    "sender":"<%=session.getAttribute("nickname").toString()%>"
+  }
+// WebSocket 서버에 메시지 전송
+  webSocket.send(JSON.stringify(data));
+
+  messageTextArea.value += "<%=session.getAttribute("roomId").toString()%>"+"\n";
+};
+
+// WebSocket 서버와 접속 종료 시 호출되는 함수
+webSocket.onclose = function(message) {
+// 콘솔 텍스트에 종료 메시지 출력
+  messageTextArea.value += "Server Disconnect...\n";
+
+};
+// WebSocket 서버와 통싞 중 에러 발생 시 호출되는 함수
+webSocket.onerror = function(message) {
+// 콘솔 텍스트에 오류 메시지 표시
+  messageTextArea.value += "error...\n";
+};
+// WebSocket 서버로 부터 메시지 수싞 시 호출되는 함수
+webSocket.onmessage = function(result) {
+  console.log("got return");
+  console.log(result);
+  console.log(JSON.parse(result.data)["message"]);
+// 콘솔 텍스트에 메시지를 출력한다.
+  messageTextArea.value += JSON.parse(result.data)["message"] + "\n";
+};
+
+// Send 버튼 클릭 시 호출되는 메소드
+function sendMessage() {
+// 전송 메시지 텍스트 박스 객체 가져오기
+  var message = document.getElementById("textMessage");
+// 콘솔 텍스트에 메시지 출력
+  messageTextArea.value += "Send to Server => "+message.value+"\n";
+
+  var data = {
+    "type":"TALK",
+    "room_id": "<%=session.getAttribute("roomId").toString()%>",
+    "message":message.value,
+    "sender":"<%=session.getAttribute("nickname").toString()%>"
+  }
+
+  console.log("data is");
+  console.log(JSON.stringify(data));
+
+
+
+// WebSocket 서버에 메시지 전송
+//   webSocket.send(JSON.stringify(data));
+
+  console.log("sendMessage is successed.");
+// 전송 메시지 작성 텍스트 박스 초기화
+  message.value = "";
+
+}
+
+// Disconnect 버튼 클릭 시 호출되는 함수
+function disconnect() {
+// WebSocket 접속 해제
+  webSocket.close();
+
+
+
+}
+</script>
+
 </body>
 </html>

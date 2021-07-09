@@ -3,12 +3,15 @@ package com.example.demo.model.websocket;
 import com.example.demo.service.ChatService;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
 @Getter
+@Slf4j
 public class ChatRoom {
     private String roomId;
     private String name;
@@ -20,16 +23,24 @@ public class ChatRoom {
         this.name = name;
     }
 
-    public void handleActions(WebSocketSession session, ChatMessage chatMessage, ChatService chatService){
+    public void handleActions(WebSocketSession session, ChatMessage chatMessage, ChatService chatService) throws IOException {
         System.out.println("handleActions is invoked");
+
+
         if(chatMessage.getType().equals(ChatMessage.MessageType.ENTER)){
             sessions.add(session);
-            chatMessage.setMessage(chatMessage.getSender()+"is entered");
+            chatMessage.setMessage(chatMessage.getSender()+" is entered");
+            log.info("after add, sessions");
+            System.out.println(sessions);
         }
+
+        log.info("sendMessage will invoke");
         sendMessage(chatMessage, chatService);
+
     }
 
-    public <T> void sendMessage(T message, ChatService chatService){
-        sessions.parallelStream().forEach(session -> chatService.sendMessage(session, message));
+    public <T> void sendMessage(T message, ChatService chatService) throws IOException {
+
+            sessions.parallelStream().forEach(session -> chatService.sendMessage(session, message));
     }
 }

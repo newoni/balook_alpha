@@ -124,8 +124,8 @@
                 <div class="card_board_footer">
                     <ul class="footer_icon">
                         <li><a onclick="sendJSON4createLike('/likes/check/<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>/<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getTitle()%>')"><img src="../img/like.png"></a></li>
-                        <li><a href="board_view.jsp"><img src="/img/comments.png"></a></li>
-                        <li><a href="board_view.jsp"><img src="/img/feedback.png"></a></li>
+                        <li><a onclick="readOneBoard('<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>','<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getTitle()%>')"><img src="/img/comments.png"></a></li>
+                        <li><a onclick="readOneBoard('<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getAuthor()%>','<%=((ArrayList<BoardResponse>)(session.getAttribute("boardList"))).get(i).getTitle()%>')"><img src="/img/feedback.png"></a></li>
                     </ul>
                     <div class="footer_comments">
                         <ul>
@@ -171,6 +171,7 @@
         time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
     }
 
+    //for chatting
     function mkData4chatList(){
         data = {
             "nickname" : nickName
@@ -201,6 +202,55 @@
         };
     }
 
+    function getChatList(){
+        mkTime();
+        mkData4chatList();
+        header_data = {time:time, data:data};
+        sendJSON4chatList(header_data, "/chat/showChatList/<%=session.getAttribute("nickname").toString()%>");
+    }
+
+    //for read one board
+    function mkData4readOneBoard(author, title){
+        data = {
+            "author" : author,
+            "title" : title
+        };
+    }
+
+    function sendJSON4readOneBoard(input1, address){
+        xhr.open('POST', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+                if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
+                    console.log("sendJSON successed")
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    location.href="../board/readBoard";
+
+                }else{
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    alert("sendJSON failed...");
+                    location.reload();
+                }
+
+            } else {
+                console.error(xhr.responseText);
+            }
+        };
+    }
+
+    function readOneBoard(author, title){
+        mkTime();
+        mkData4readOneBoard(author, title);
+        header_data = {time:time, data:data};
+        sendJSON4readOneBoard(header_data, "/board/readOneBoard");
+    }
+
+
+    //for likes
     function sendJSON4createLike(address){
         xhr.open('GET', address);
         xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
@@ -228,6 +278,7 @@
         };
     }
 
+    //for profile
     function sendJSON4Profile(address){
         xhr.open('GET', address);
         xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
@@ -253,17 +304,10 @@
         };
     }
 
-    function getChatList(){
-        mkTime();
-        mkData4chatList();
-        header_data = {time:time, data:data};
-        sendJSON4chatList(header_data, "/chat/showChatList/<%=session.getAttribute("nickname").toString()%>");
-    }
-
     //for go
     function initGameKHs(){
         <%for(int i =0; i<((ArrayList<BoardListResponse>)(session.getAttribute("boardList"))).size() ; i++){%>
-             window.onload =initGameKH(<%=i%>,document.getElementById('gocanvas<%=i%>'), document.getElementById('movecount'), document.forms.go);
+             window.onload =initGameKH(<%=i%>,document.getElementById('gocanvas<%=i%>'), document.getElementById('movecount<%=i%>'), document.forms.go);
             // window.onload = initGame(document.getElementById('gocanvas'), document.getElementById('movecount'), document.forms.go);
         <%}%>
     }

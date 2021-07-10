@@ -10,6 +10,7 @@ import com.example.demo.model.network.response.CustomerResponse;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.service.BoardService;
 import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -27,8 +28,19 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping(value="/board")
+@Slf4j
 public class BoardController {
     @Autowired
     BoardService boardService;
+
+    @RequestMapping(value="/readOneBoard", method = RequestMethod.POST)
+    public Header<BoardResponse> readOneBoard(@RequestBody Header<BoardRequest> request, HttpSession session) throws IOException {
+        log.info("read One board is invoked");
+        Header<BoardResponse> result = boardService.readOneBoard(request);
+        log.info("set result board data to session");
+        session.setAttribute("board", result.getData());
+
+        return result;
+    }
 
 }

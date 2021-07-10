@@ -76,4 +76,8 @@ public class BoardPageController {
     public String boardList(){
         return "/jsp/board_list";
     }
+
+    @RequestMapping(value = "/readBoard", method = RequestMethod.GET)
+    public String readBoard(){return "/jsp/board_view";}
+
 }

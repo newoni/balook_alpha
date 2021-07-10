@@ -9,6 +9,7 @@ import com.example.demo.model.network.response.BoardListResponse;
 import com.example.demo.model.network.response.BoardResponse;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.repository.CustomerRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class BoardService {
     @Autowired
     BoardRepository boardRepository;
@@ -103,6 +105,46 @@ public class BoardService {
         return Header.OK(boardListResponse);
     }
 
+    public Header<BoardResponse> readOneBoard(Header<BoardRequest> header) throws IOException {
+        BoardRequest body = header.getData();
+        Customer customer = customerRepository.findByNickNameLike(body.getAuthor());
+        Board board = boardRepository.findByAuthorAndTitle(customer.getId(), body.getTitle());
+
+        //        start get gibo
+        File file = new File(board.getFilePath());
+
+        ArrayList<Stone> gibo = new ArrayList<Stone>();
+        if (file.exists()) {
+            BufferedReader inFile = new BufferedReader(new FileReader(file));
+            String sLine = null;
+            while ((sLine = inFile.readLine()) != null) {
+                if(sLine.startsWith("STO")){
+                    Stone stone = Stone.builder()
+                            .player(sLine.split(" ")[3])
+                            .row(sLine.split(" ")[4])
+                            .col(sLine.split(" ")[5])
+                            .build();
+
+                    gibo.add(stone);
+                }
+
+            }
+        }
+
+
+        Customer newCustomer = customerRepository.findById(board.getAuthor()).get();
+        BoardResponse boardResponse = BoardResponse.builder()
+                .author(newCustomer.getNickName())
+                .title(board.getTitle())
+                .boardedAt(board.getBoardedAt())
+                .contents(board.getContents())
+                .id(board.getId())
+                .authorPicturePath(newCustomer.getPicturePath())
+                .gibo(gibo)
+                .build();
+
+        return Header.OK(boardResponse);
+    }
     //input - nick name,
     //output - boards which is written by nickname(input)
     public Header<BoardListResponse> readSomeoneBoards(String nickname) throws IOException {

@@ -51,7 +51,13 @@
       <%
         try{
         for(int i=0 ; i< ((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().size() ; i++){
-          if(session.getAttribute("nickname")==((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant2()){
+          System.out.println("session value:");
+          System.out.println(session.getAttribute("nickname").toString());
+          System.out.println("opponent value:");
+          System.out.println(((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant2());
+          System.out.println(((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant1());
+          System.out.println(session.getAttribute("nickname").toString()==((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant2());
+          if(session.getAttribute("nickname").toString().equals(((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant2())){
       %>
         <div class="chat_list">
           <div class="chat_profile">
@@ -59,18 +65,17 @@
           </div>
           <div class="chat_cont">
             <ul>
-              <a href="/showChat" onlcick="readOneChat()">
-                <li><h3><%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant1()%></h3></li>
-                <li><p>너는 지금 뭐해 자니 밖이야?</p></li>
-              </a>
+              <li><h3><a onclick="mkInfo4readOneChat('<%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant1()%>')"><%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant1()%></a></h3></li>
+              <li><p><a onclick="mkInfo4readOneChat('<%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant1()%>')">너는 지금 뭐해 자니 밖이야?</a></p></li>
             </ul>
+
           </div>
           <div class="chat_date">
             <p><%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getTime()%></p>
           </div>
           <div class="chat_delete">
             <form>
-              <button type="submit">삭제</button>
+              <button onclick="mkInfo4delete('<%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant1()%>')">삭제</button>
             </form>
           </div>
         </div>
@@ -82,19 +87,19 @@
           <a href="my_profile.jsp"><img src="/img/profile.png"></a>
         </div>
         <div class="chat_cont">
-          <ul>
-            <a href="/chat/showChat" onlcick="readOneChat()">
-              <li><h3><%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant2()%></h3></li>
-              <li><p>너는 지금 뭐해 자니 밖이야?</p></li>
-            </a>
-          </ul>
+
+            <ul>
+              <li><h3><a onclick="mkInfo4readOneChat('<%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant2()%>')"><%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant2()%></a></h3></li>
+              <li><p><a onclick="mkInfo4readOneChat('<%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant2()%>')">너는 지금 뭐해 자니 밖이야?</a></p></li>
+            </ul>
+
         </div>
         <div class="chat_date">
           <p><%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getTime()%></p>
         </div>
         <div class="chat_delete">
           <form>
-            <button type="submit">삭제</button>
+            <button onclick="mkInfo4delete('<%=((Header<ChatListResponse>)(session.getAttribute("chats"))).getData().getChatResponseList().get(i).getParticipant2()%>')">삭제</button>
           </form>
         </div>
       </div>
@@ -108,14 +113,76 @@
 </body>
 <script>
   var xhr = new XMLHttpRequest();
-  function mkData(){
+
+  var now
+  var year
+  var month
+  var date
+  var hour
+  var minute
+  var second
+  var time
+
+  var data
+  var info
+
+  function mkTime(){
+    now = new Date();
+    year = now.getFullYear();
+    month = now.getMonth() + 1;
+    date = now.getDate();
+    hour = now.getHours();
+    minute = now.getMinutes();
+    second = now.getSeconds();
+    time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
+  }
+
+  function mkData4readOneChat(opponent){
     data = {
-      "nickname" : nickName
+      "opponent" : opponent
     };
   }
 
-  function sendJSON(input1, address){
-    xhr.open('POST', address);
+  function sendJSON4readOneChat(input1, address){
+    xhr.open('POST', address); // cehck
+    xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+    xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
+    xhr.onload = function() {
+      if (xhr.status === 200 || xhr.status === 201) {
+        console.log("function invoked ");
+        if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
+          console.log(JSON.parse(xhr.responseText)["result_code"]);
+          location.href="/chat/showChat";
+        }else{
+          console.log(JSON.parse(xhr.responseText)["result_code"]);
+          alert("sendJSON failed...");
+          location.reload();
+        }
+
+      } else {
+        console.error(xhr.responseText);
+      }
+    };
+  }
+
+  function mkInfo4readOneChat(opponent){
+    console.log("mkInfo4ReadOneChat is invoked");
+    mkTime();
+    mkData4readOneChat(opponent);
+    info = {time:time, data:data};
+    sendJSON4readOneChat(info,"/chat/readOneChat");
+  }
+
+  //for delte chat
+  function mkData4delete(input){
+    data = {
+      "opponent" : input
+    };
+  }
+
+  function sendJSON4delete(input1, address){
+    xhr.open('POST', address); // cehck
     xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
     xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
 
@@ -125,7 +192,7 @@
         if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
           console.log("sendJSON successed")
           console.log(JSON.parse(xhr.responseText)["result_code"]);
-          // document.getElementsByClassName("my_profile_status_likes_number")[0].innerHTML=JSON.parse(xhr.response)["data"]['likes_count'];
+          location.href="../../main";
 
         }else{
           console.log(JSON.parse(xhr.responseText)["result_code"]);
@@ -139,11 +206,23 @@
     };
   }
 
-  function readOneChat(){
-    mkTime();
-    mkData()
+  function mkInfo4delete(input){
+    var action =confirm("delete this chat room?");
+    if(action){
+      mkTime();
+      mkData4delete(input);
+      info={time:time, data:data};
+
+      sendJSON4delete(info, "/chat/deleteOneChat");
+
+      alert("sendJSON is activated");
+    }
+    console.log(action);
+
   }
 
+
+  //for profile
   function sendJSON4Profile(address){
     xhr.open('GET', address);
     xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로

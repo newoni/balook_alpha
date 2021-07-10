@@ -21,6 +21,25 @@ public class ChatController {
     @Autowired
     ChatService chatService;
 
+    @RequestMapping(value="/readOneChat", method= RequestMethod.POST)
+    public Header<ChatResponse> readOneChat(@RequestBody Header<ChatRequest> request, HttpSession session){
+
+        Header<ChatResponse> result = chatService.readOneChat(request, session.getAttribute("nickname").toString());
+
+        session.setAttribute("roomId", result.getData().getFilePath());
+
+        return result;
+    }
+
+    @RequestMapping(value="/deleteOneChat", method= RequestMethod.POST)
+    public Header<ChatResponse> deleteOneChat(@RequestBody Header<ChatRequest> request, HttpSession session){
+        log.info("delete One Chat is invoked");
+        Header<ChatResponse> result = chatService.deleteOneChat(request, session.getAttribute("nickname").toString());
+
+        return result;
+
+    }
+
     @RequestMapping(value= "/showChatList/{nickname}", method= RequestMethod.GET)
     public Header<ChatListResponse> showChatList(@PathVariable String nickname, HttpSession session){
         System.out.println("here is chat rest controller nickname is");

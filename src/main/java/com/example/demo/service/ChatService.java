@@ -31,6 +31,65 @@ public class ChatService {
     @Autowired
     CustomerRepository customerRepository;
 
+    public Header<ChatResponse> readOneChat(Header<ChatRequest> request, String nickname){
+        Customer customer1 = customerRepository.findByNickNameLike(nickname);
+        Customer customer2 = customerRepository.findByNickNameLike(request.getData().getOpponent());
+        log.info("customer1 is");
+        log.info(customer1.toString());
+        log.info("customer2 is");
+        log.info(customer2.toString());
+        try {
+            Chat resChat = chatRepository.findByParticipant1AndParticipant2(customer1.getId(), customer2.getId());
+
+            ChatResponse chatResponse = ChatResponse.builder()
+                    .participant1(nickname)
+                    .participant2(request.getData().getOpponent())
+                    .filePath(resChat.getFilePath())
+                    .build();
+
+            return Header.OK(chatResponse);
+
+        } catch (Exception e) {
+            log.info("There's no user/participant1, partner/participant2 pair");
+            log.info("find user/participant2, partner/participant1 pair");
+            Chat resChat = chatRepository.findByParticipant1AndParticipant2(customer2.getId(), customer1.getId());
+
+            ChatResponse chatResponse = ChatResponse.builder()
+                    .participant1(nickname)
+                    .participant2(request.getData().getOpponent())
+                    .filePath(resChat.getFilePath())
+                    .build();
+
+            return Header.OK(chatResponse);
+        }
+    }
+
+    public Header<ChatResponse> deleteOneChat(Header<ChatRequest> request, String nickname){
+        Customer customer1 = customerRepository.findByNickNameLike(nickname);
+        Customer customer2 = customerRepository.findByNickNameLike(request.getData().getOpponent());
+        log.info("customer1 is");
+        log.info(customer1.toString());
+        log.info("customer2 is");
+        log.info(customer2.toString());
+
+        try {
+            Chat resChat = chatRepository.findByParticipant1AndParticipant2(customer1.getId(), customer2.getId());
+
+            chatRepository.delete(resChat);
+
+            return Header.OK();
+
+        } catch (Exception e) {
+            log.info("There's no user/participant1, partner/participant2 pair");
+            log.info("find user/participant2, partner/participant1 pair");
+            Chat resChat = chatRepository.findByParticipant1AndParticipant2(customer2.getId(), customer1.getId());
+
+            chatRepository.delete(resChat);
+
+            return Header.OK();
+        }
+    }
+
     public Header<ChatListResponse> showChatList(String request){
 
         ArrayList<ChatResponse> chatResponseList = new ArrayList<ChatResponse>();
@@ -166,11 +225,12 @@ public class ChatService {
         return chatRoom;
     }
 
-    public <T> void sendMessage(WebSocketSession session, T message){
+    public <T> void sendMessage(WebSocketSession session, T message) throws IOException {
         try{
             session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
         }catch(IOException e){
             log.error(e.getMessage(), e);
+            session.close();
         }
     }
 

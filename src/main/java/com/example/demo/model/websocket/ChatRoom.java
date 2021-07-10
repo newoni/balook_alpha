@@ -45,6 +45,12 @@ public class ChatRoom {
 
     public <T> void sendMessage(T message, ChatService chatService) throws IOException {
 
-            sessions.parallelStream().forEach(session -> chatService.sendMessage(session, message));
+            sessions.parallelStream().forEach(session -> {
+                try {
+                    chatService.sendMessage(session, message);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
     }
 }

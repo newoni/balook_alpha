@@ -64,7 +64,7 @@
                 </div>
             </li>
             <li><a href="../board/createPage"><img class="write_icon" src="/img/write.png"></a></li>
-            <li><a href="../chat/showChatListPage" onclick="getChatList()"><img class="chat_icon" src="/img/chat.png"></a></li>
+            <li><a onclick="getChatList()"><img class="chat_icon" src="/img/chat.png"></a></li>
             <li><a onclick="sendJSON4Profile('customer/check4Profile/<%=session.getAttribute("nickname")%>')"><img class="profile_icon" src=<%= picturePath %>></a></li>
         </ul>
     </div>
@@ -189,6 +189,7 @@
                 if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
                     console.log("sendJSON successed")
                     console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    location.href="../chat/showChatListPage";
 
                 }else{
                     console.log(JSON.parse(xhr.responseText)["result_code"]);

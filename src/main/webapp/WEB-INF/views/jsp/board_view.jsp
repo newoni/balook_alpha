@@ -30,7 +30,7 @@
         <ul>
             <li><a href="search_result.jsp"><img class="search_icon" src="/img/search.png"></a></li>
             <li><a href="board_write.jsp"><img class="write_icon" src="/img/write.png"></a></li>
-            <li><a href="chating.jsp"><img class="chat_icon" src="/img/chat.png"></a></li>
+            <li><a onclick="sendJSON4chatList()"><img class="chat_icon" src="/img/chat.png"></a></li>
             <li><a href="my_profile.jsp"><img class="profile_icon" src="/img/profile.png"></a></li>
         </ul>
     </div>
@@ -152,7 +152,6 @@
     var header_data
 
     //for go
-
     // make session data to js variable
     function getOneGiboData(){
 
@@ -177,6 +176,57 @@
     }
 
     window.onload = initPage();
+
+    //for chat
+    function mkTime(){
+        now = new Date();
+        year = now.getFullYear();
+        month = now.getMonth() + 1;
+        date = now.getDate();
+        hour = now.getHours();
+        minute = now.getMinutes();
+        second = now.getSeconds();
+        time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
+    }
+
+    //for chatting
+    function mkData4chatList(){
+        data = {
+            "nickname" : nickName
+        };
+    }
+
+    function sendJSON4chatList(input1, address){
+        xhr.open('GET', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+                if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
+                    console.log("sendJSON successed")
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+
+                }else{
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    alert("sendJSON failed...");
+                    location.reload();
+                }
+
+            } else {
+                console.error(xhr.responseText);
+            }
+        };
+    }
+
+    function getChatList(){
+        mkTime();
+        mkData4chatList();
+        header_data = {time:time, data:data};
+        sendJSON4chatList(header_data, "/chat/showChatList/<%=session.getAttribute("nickname").toString()%>");
+    }
+
 </script>
 </body>
 </html>

@@ -62,9 +62,7 @@ public class CommentsService {
         return Header.OK(commentsResponse);
     }
 
-    public Header<CommentsListResponse>  getOneBoardCommentsList(Header<CommentsRequest> request){
-        String authorNickName = request.getData().getAuthor();
-        String title = request.getData().getTitle();
+    public Header<CommentsListResponse>  getOneBoardCommentsList(String authorNickName, String title){
         log.info("author Nickname: " + authorNickName);
         log.info("title: " + title);
 
@@ -76,7 +74,7 @@ public class CommentsService {
 
 
 
-        ArrayList<Comments> commentsList = (ArrayList<Comments>)(commentsRepository.findByAuthor(board.getId()));
+        ArrayList<Comments> commentsList = (ArrayList<Comments>)(commentsRepository.findByTargetBoard(board.getId()));
         ArrayList<CommentsResponse> commentsResponseArrayList = new ArrayList<CommentsResponse>();
 
         for(Comments comments : commentsList){
@@ -96,4 +94,5 @@ public class CommentsService {
 
         return Header.OK(commentsListResponse);
     }
+
 }

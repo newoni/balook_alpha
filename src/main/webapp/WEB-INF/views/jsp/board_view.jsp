@@ -1,4 +1,8 @@
-<%@ page import="com.example.demo.model.network.response.BoardResponse" %><%--
+<%@ page import="com.example.demo.model.network.response.BoardResponse" %>
+<%@ page import="com.example.demo.model.network.response.CommentsListResponse" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.demo.model.network.response.CommentsResponse" %>
+<%@ page import="com.example.demo.model.network.response.FeedbackResponse" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 6/29/21
@@ -19,19 +23,29 @@
     <title>test_index</title>
 </head>
 <body>
+<%
+    // for profile picture
+    String picturePath="";
+    if(session.getAttribute("picturePath") == null){
+        System.out.println("session.getAttribute picturePath is null");
+        picturePath = "/img/myprofile.png";
+    }else{
+        picturePath = session.getAttribute("picturePath").toString();
+    }
+%>
 <header class="header_container">
     <div class="logo">
         <ul>
-            <li><a href="main.jsp"><img class="logo" src="/img/logo.png"></a></li>
-            <li><a href="main.jsp">balook</a></li>
+            <li><a href="../../main"><img class="logo" src="/img/logo.png"></a></li>
+            <li><a href="../../main">balook</a></li>
         </ul>
     </div>
     <div class="menu">
         <ul>
             <li><a href="search_result.jsp"><img class="search_icon" src="/img/search.png"></a></li>
-            <li><a href="board_write.jsp"><img class="write_icon" src="/img/write.png"></a></li>
+            <li><a href="/createPage"><img class="write_icon" src="/img/write.png"></a></li>
             <li><a onclick="getChatList()"><img class="chat_icon" src="/img/chat.png"></a></li>
-            <li><a href="my_profile.jsp"><img class="profile_icon" src="/img/profile.png"></a></li>
+            <li><a onclick="sendJSON4Profile('../customer/check4Profile/<%=session.getAttribute("nickname")%>')"><img class="profile_icon" src=<%= picturePath %>></a></li>
         </ul>
     </div>
 </header>
@@ -41,8 +55,8 @@
 
             <div class="board_header">
                 <ul>
-                    <li><a onclick="sendJSON4Profile('/customer/check4Profile/<%=((BoardResponse)(session.getAttribute("board"))).getAuthor()%>')"><img class="profile" src="<%=((BoardResponse)(session.getAttribute("board"))).getAuthorPicturePath()%>"></a></li>
-                    <li><a onclick="sendJSON4Profile('/customer/check4Profile/<%=((BoardResponse)(session.getAttribute("board"))).getAuthor()%>')"><%=((BoardResponse)(session.getAttribute("board"))).getAuthor()%></a></li>
+                    <li><a onclick="sendJSON4Profile('../customer/check4Profile/<%=((BoardResponse)(session.getAttribute("board"))).getAuthor()%>')"><img class="profile" src="<%=((BoardResponse)(session.getAttribute("board"))).getAuthorPicturePath()%>"></a></li>
+                    <li><a onclick="sendJSON4Profile('../customer/check4Profile/<%=((BoardResponse)(session.getAttribute("board"))).getAuthor()%>')"><%=((BoardResponse)(session.getAttribute("board"))).getAuthor()%></a></li>
                     <li class="more_li"><a href="#"><img class="more" src="/img/more.png"></a></li>
                 </ul>
             </div>
@@ -96,8 +110,9 @@
                 <div class="footer_comments">
                     <div class="footer_comments_view">
                         <ul>
-                            <li><a href="#">vue_ys</a><a href="#">ㄹㅇ 실화냐? 이게 된다고?</a></li>
-                            <li><a href="#">vue_ys</a><a href="#">#고스트 바둑왕</a></li>
+                            <%for(int i =0 ; i<((ArrayList<CommentsResponse>)(session.getAttribute("commentsList"))).size(); i++){%>
+                                <li><a onclick="sendJSON4Profile('../../customer/check4Profile/<%=session.getAttribute("nickname")%>')"> <%=((ArrayList<CommentsResponse>)(session.getAttribute("commentsList"))).get(i).getAuthor()%></a><a href="#"><%=((ArrayList<CommentsResponse>)(session.getAttribute("commentsList"))).get(i).getContents()%></a></li>
+                            <%}%>
                         </ul>
                     </div>
                     <div class="footer_comments_write">
@@ -111,18 +126,17 @@
 
                     <div class="footer_feedbacks_view">
                         <ul>
-                            <li><a href="#">kangh.h</a><a href="#">테스트 피드백</a></li>
-                            <li><a href="#">kangh.h</a><a href="#">#고스트 바둑광</a></li>
-                            <li><a href="#">kangh.h</a><a href="#">#고스트</a></li>
-                            <li><a href="#">kangh.h</a><a href="#">#바둑광</a></li>
+                            <%for(int i =0; i< ((ArrayList<FeedbackResponse>)(session.getAttribute("feedbackList"))).size(); i++){ %>
+                            <li><a onclick="sendJSON4Profile('../../customer/check4Profile/<%=session.getAttribute("nickname")%>')"><%=((ArrayList<FeedbackResponse>)(session.getAttribute("feedbackList"))).get(i).getRequestTo()%></a><a href="#"><%=((ArrayList<FeedbackResponse>)(session.getAttribute("feedbackList"))).get(i).getContents()%>></a></li>
                             <li><a href="#">kangh.h</a><a href="#">테스트 피드백 입니다</a></li>
+                            <%}%>
                         </ul>
                     </div>
 
                     <div class="footer_feedbacks_write">
                         <form>
                             <input class="footer_feedbacks_write_text" type="text" placeholder="피드백을 작성하세요">
-                            <input class="footer_feedbacks_write_submit" type="submit">
+                            <button class="footer_feedbacks_write_submit" onclick="createFeedback()">submit</button>
                         </form>
                     </div>
 
@@ -249,12 +263,13 @@
                 if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
                     console.log("sendJSON successed")
                     console.log(JSON.parse(xhr.responseText)["result_code"]);
-                    location.reload();
+                    history.go(0);
+                    // location.reload();
 
                 }else{
                     console.log(JSON.parse(xhr.responseText)["result_code"]);
                     alert("sendJSON failed...");
-                    location.reload();
+                    history.go(0);
                 }
 
             } else {
@@ -268,6 +283,76 @@
         mkData4createComment();
         header_data = {time:time, data:data};
         sendJSON4createComment(header_data, "/comments/createComments");
+    }
+
+    //for feedback create
+    function mkData4createFeedback(){
+        data = {
+            "request_user_nick_name" : "<%=((BoardResponse)(session.getAttribute("board"))).getAuthor()%>",
+            "contents" : document.getElementsByClassName("footer_feedbacks_write_text")[0].value,
+            "title" : "<%=((BoardResponse)(session.getAttribute("board"))).getTitle()%>"
+        };
+
+        console.log(data);
+    }
+
+    function sendJSON4createFeedback(input1, address){
+        xhr.open('POST', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+                if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
+                    console.log("sendJSON successed")
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    history.go(0);
+                    // location.reload();
+
+                }else{
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    alert("sendJSON failed...");
+                    history.go(0);
+                }
+
+            } else {
+                console.error(xhr.responseText);
+            }
+        };
+    }
+
+    function createFeedback(){
+        mkTime();
+        mkData4createFeedback();
+        header_data = {time:time, data:data};
+        sendJSON4createComment(header_data, "/feedback/createFeedback");
+    }
+
+    //for profile
+    function sendJSON4Profile(address){
+        xhr.open('GET', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+
+                console.log("sendJSON successed")
+                console.log(xhr.responseText);
+                if(xhr.responseText == "my_profile"){
+                    location.href="../../customer/myProfile";
+                }else{
+                    location.href="../../customer/otherProfile";
+                }
+                console.log("reloaded");
+
+            } else {
+                console.log("sendJSON 4 Profile");
+                console.error(xhr.responseText);
+            }
+        };
     }
 
 </script>

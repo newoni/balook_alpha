@@ -27,8 +27,8 @@ public class CommentsController {
         log.info("comments create method is invoked");
         Header<CommentsResponse> result = commentsService.create(request, session.getAttribute("nickname").toString());
 
-        log.info("getOnBoardCommentsList is invoked which is comments repository method");
-        Header<CommentsListResponse> headerWithCommentsListResponse = commentsService.getOneBoardCommentsList(request);
+        log.info("getOneBoardCommentsList is invoked which is comments repository method");
+        Header<CommentsListResponse> headerWithCommentsListResponse = commentsService.getOneBoardCommentsList(request.getData().getAuthor(), request.getData().getTitle());
 
         log.info("set session commentsList");
         session.setAttribute("commentsList", headerWithCommentsListResponse.getData().getCommentsResponseArrayList());

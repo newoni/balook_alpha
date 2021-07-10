@@ -15,6 +15,7 @@ public class FeedbackRequest {
     private String requestUserNickName;
     private String responseUserNickName;
     private Long boardId;
+    private String title;
     private String contents;
     private String nickName;
 }

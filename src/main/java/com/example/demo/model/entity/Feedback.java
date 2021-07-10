@@ -22,6 +22,7 @@ import javax.persistence.*;
         allocationSize=1
 )
 public class Feedback {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
             generator="FEEDBACK_SEQ_GEN")

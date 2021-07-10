@@ -30,7 +30,7 @@
         <ul>
             <li><a href="search_result.jsp"><img class="search_icon" src="/img/search.png"></a></li>
             <li><a href="board_write.jsp"><img class="write_icon" src="/img/write.png"></a></li>
-            <li><a onclick="sendJSON4chatList()"><img class="chat_icon" src="/img/chat.png"></a></li>
+            <li><a onclick="getChatList()"><img class="chat_icon" src="/img/chat.png"></a></li>
             <li><a href="my_profile.jsp"><img class="profile_icon" src="/img/profile.png"></a></li>
         </ul>
     </div>
@@ -103,7 +103,7 @@
                     <div class="footer_comments_write">
                         <form>
                             <input class="footer_comments_write_text" type="text" placeholder="댓글을 작성하세요">
-                            <input class="footer_comments_write_submit" type="submit">
+                            <button class="footer_comments_write_submit" onclick="createComments()">submit</button>
                         </form>
                     </div>
                 </div>
@@ -151,6 +151,17 @@
     var data
     var header_data
 
+    function mkTime(){
+        now = new Date();
+        year = now.getFullYear();
+        month = now.getMonth() + 1;
+        date = now.getDate();
+        hour = now.getHours();
+        minute = now.getMinutes();
+        second = now.getSeconds();
+        time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
+    }
+
     //for go
     // make session data to js variable
     function getOneGiboData(){
@@ -177,18 +188,6 @@
 
     window.onload = initPage();
 
-    //for chat
-    function mkTime(){
-        now = new Date();
-        year = now.getFullYear();
-        month = now.getMonth() + 1;
-        date = now.getDate();
-        hour = now.getHours();
-        minute = now.getMinutes();
-        second = now.getSeconds();
-        time = year +"/"+ month +"/"+ date +" "+ hour +":"+ minute +":"+ second;
-    }
-
     //for chatting
     function mkData4chatList(){
         data = {
@@ -207,6 +206,7 @@
                 if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
                     console.log("sendJSON successed")
                     console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    location.href="../../chat/showChatListPage";
 
                 }else{
                     console.log(JSON.parse(xhr.responseText)["result_code"]);
@@ -225,6 +225,49 @@
         mkData4chatList();
         header_data = {time:time, data:data};
         sendJSON4chatList(header_data, "/chat/showChatList/<%=session.getAttribute("nickname").toString()%>");
+    }
+
+    //for comment create
+    function mkData4createComment(){
+        data = {
+            "author" : "<%=((BoardResponse)(session.getAttribute("board"))).getAuthor()%>",
+            "contents" : document.getElementsByClassName("footer_comments_write_text")[0].value,
+            "title" : "<%=((BoardResponse)(session.getAttribute("board"))).getTitle()%>"
+        };
+
+        console.log(data);
+    }
+
+    function sendJSON4createComment(input1, address){
+        xhr.open('POST', address);
+        xhr.setRequestHeader('Content-Type', 'application/json'); // 컨텐츠타입을 json으로
+        xhr.send(JSON.stringify(input1)); // 데이터를 stringify해서 보냄
+
+        xhr.onload = function() {
+            if (xhr.status === 200 || xhr.status === 201) {
+                console.log("function invoked ");
+                if(JSON.parse(xhr.responseText)["result_code"]=="OK"){
+                    console.log("sendJSON successed")
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    location.reload();
+
+                }else{
+                    console.log(JSON.parse(xhr.responseText)["result_code"]);
+                    alert("sendJSON failed...");
+                    location.reload();
+                }
+
+            } else {
+                console.error(xhr.responseText);
+            }
+        };
+    }
+
+    function createComments(){
+        mkTime();
+        mkData4createComment();
+        header_data = {time:time, data:data};
+        sendJSON4createComment(header_data, "/comments/createComments");
     }
 
 </script>

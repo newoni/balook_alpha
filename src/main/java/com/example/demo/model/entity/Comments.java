@@ -4,20 +4,19 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Builder
-@Accessors
-@Getter
-@Setter
+@Accessors(chain = true)
 @Data
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="COMMENTS")
 @SequenceGenerator(
-        name="COMMENT_SEQ_GEN",
+        name="COMMENTS_SEQ_GEN",
         sequenceName = "COMMENTS_SEQ",
         initialValue = 1,
         allocationSize=1
@@ -34,7 +33,7 @@ public class Comments {
 
     private String contents;
 
-    private Date boardedAt;
+    private LocalDate boardedAt;
 
-    private Date updatedAt;
+    private LocalDate updatedAt;
 }

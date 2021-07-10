@@ -174,7 +174,7 @@
     sendJSON4readOneChat(info,"/chat/readOneChat");
   }
 
-  //for delte chat
+  //for delete chat
   function mkData4delete(input){
     data = {
       "opponent" : input

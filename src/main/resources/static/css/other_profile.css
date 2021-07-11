@@ -11,7 +11,7 @@
 .other_profile_container .other_profile .other_profile_info{
     display:flex;
     flex-direction: column;
-    width: 30%;
+    width: 50%;
 }
 
 .other_profile_container .other_profile .other_profile_info .other_profile_info_img{    
@@ -52,7 +52,7 @@
 
 .other_profile_container .other_profile .other_profile_status{
     display:flex;
-    width:70%;
+    width:50%;
 }
 
 .other_profile_container .other_profile .other_profile_status ul{

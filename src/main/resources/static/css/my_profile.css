@@ -10,7 +10,7 @@
 .my_profile_container .my_profile .my_profile_info{
     display:flex;
     flex-direction: column;
-    width: 30%;
+    width: 50%;
 }
 
 .my_profile_container .my_profile .my_profile_info .my_profile_info_img{    

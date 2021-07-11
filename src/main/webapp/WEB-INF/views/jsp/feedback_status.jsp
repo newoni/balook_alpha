@@ -50,9 +50,9 @@
     <div class="main_container">
         <div class="feedback_container">
             <div class="feedback_select">
-                <div class="feedback_select_box"><button>요청 받은 피드백</button></div>
-                <div class="feedback_select_box"><button>요청한 피드백</button></div>
-                <div class="feedback_select_box"><button>해결된 피드백</button></div>
+                <div class="feedback_select_box"><button onclick="change2responseTofeedback()">요청 받은 피드백</button></div>
+                <div class="feedback_select_box"><button onclick="change2requestTofeedback()">요청한 피드백</button></div>
+                <div class="feedback_select_box"><button onclick="change2finishedTofeedback()">해결된 피드백</button></div>
             </div>
 
             <div class="feedback_card_container">
@@ -96,5 +96,6 @@
         </div>
     </div>
 </section>
+<script type="text/javascript" src="/js/change_feedbackmode.js"></script>
 </body>
 </html>

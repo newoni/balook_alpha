@@ -95,7 +95,9 @@
 
     display:flex;
     justify-content: space-between;
-    align-items: center
+    align-items: center;
+
+    display:none;
 }
 
 .feedback_container .feedback_card_container .feedback_card4request .feedback_card4request_user_image{
@@ -142,7 +144,9 @@
 
     display:flex;
     justify-content: space-between;
-    align-items: center
+    align-items: center;
+
+    display: none;
 }
 
 .feedback_container .feedback_card_container .feedback_card4finished .feedback_card4finished_user_image{

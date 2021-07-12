@@ -31,8 +31,8 @@
 <header class="header_container">
     <div class="logo">
         <ul>
-            <li><a href="main.html"><img class="logo" src="/img/logo.png"></a></li>
-            <li><a href="main.html">balook</a></li>
+            <li><a href="../../main"><img class="logo" src="/img/logo.png"></a></li>
+            <li><a href="../../main">balook</a></li>
         </ul>
     </div>
     <div class="menu">
@@ -84,7 +84,7 @@
 <script>
     var xhr = new XMLHttpRequest();
     function afterSubmit(){
-        location.replace("../main");
+        location.replace("../../main");
     }
 
     function sendJSON4Profile(address){

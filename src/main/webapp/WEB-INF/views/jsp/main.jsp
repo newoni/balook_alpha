@@ -129,9 +129,9 @@
                     </ul>
                     <div class="footer_comments">
                         <ul>
-                            <li><a href="board_view.jsp">vue_ys</a><a href="#">ㄹㅇ 실화냐? 이게 된다고?</a></li>
-                            <li><a href="board_view.jsp">vue_ys</a><a href="#">#고스트 바둑왕</a></li>
-                            <li><a href="board_view.jsp">더보기</a></li>
+<%--                            <li><a href="board_view.jsp">vue_ys</a><a href="#">ㄹㅇ 실화냐? 이게 된다고?</a></li>--%>
+<%--                            <li><a href="board_view.jsp">vue_ys</a><a href="#">#고스트 바둑왕</a></li>--%>
+<%--                            <li><a href="board_view.jsp">더보기</a></li>--%>
                         </ul>
                     </div>
                 </div>

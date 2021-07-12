@@ -28,7 +28,7 @@ var gNumPieces;
 var gSelectedPieceIndex;
 var gSelectedPieceHasMoved;
 var gMoveCount=[];
-var gMoveCountElem;
+var gMoveCountElem=[];
 var gGameInProgress;
 
 var gPassedCount = 0; // Two Passes => Quit
@@ -278,7 +278,7 @@ function drawBoardKH(idx) { // 새로운 바둑판 그리기
         drawPieceKH(idx, gPiecesKH[idx][i], isBlack(gPiecesKH[idx][i], i == gSelectedPieceIndex));
     }
 
-    gMoveCountElem.innerHTML = gMoveCount[idx];
+    gMoveCountElem[idx].innerHTML = gMoveCount[idx];
 
     saveGameState();
 }
@@ -353,7 +353,7 @@ function drawMovedBoardKH(idx, num) {
     }
     gMoveCount[idx] +=num;
 
-    gMoveCountElem.innerHTML = gMoveCount[idx];
+    gMoveCountElem[idx].innerHTML = gMoveCount[idx];
 
     saveGameState();
 }
@@ -456,7 +456,7 @@ function initGameKH(idx, canvasElement, moveCountElement, frm) {
     gCanvasElement[idx] = canvasElement;
     gCanvasElement[idx].width = kPixelWidth;
     gCanvasElement[idx].height = kPixelHeight;
-    gMoveCountElem = moveCountElement;
+    gMoveCountElem[idx] = moveCountElement;
     gDrawingContext[idx] = gCanvasElement[idx].getContext("2d");
     // gCanvasElement.addEventListener("click", goOnClick, false);
     initForm(frm);

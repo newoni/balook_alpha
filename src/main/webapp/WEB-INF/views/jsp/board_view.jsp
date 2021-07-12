@@ -128,7 +128,6 @@
                         <ul>
                             <%for(int i =0; i< ((ArrayList<FeedbackResponse>)(session.getAttribute("feedbackList"))).size(); i++){ %>
                             <li><a onclick="sendJSON4Profile('../../customer/check4Profile/<%=session.getAttribute("nickname")%>')"><%=((ArrayList<FeedbackResponse>)(session.getAttribute("feedbackList"))).get(i).getRequestTo()%></a><a href="#"><%=((ArrayList<FeedbackResponse>)(session.getAttribute("feedbackList"))).get(i).getContents()%>></a></li>
-                            <li><a href="#">kangh.h</a><a href="#">테스트 피드백 입니다</a></li>
                             <%}%>
                         </ul>
                     </div>

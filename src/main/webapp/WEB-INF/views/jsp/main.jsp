@@ -116,7 +116,7 @@
                             <li onclick="drawMovedBoardKH(<%=i%>,-5)"> <<</li>
                             <li onclick="drawMovedBoardKH(<%=i%>,-1)"> <</li>
                             <li onclick="drawMovedBoardKH(<%=i%>,1)"> > </li>
-                            <li onclick="drawMovedBoardKH(<%=i%>,5)"> >>> </li>
+                            <li onclick="drawMovedBoardKH(<%=i%>,5)"> >> </li>
                             <li onclick="drawMovedBoardKH(<%=i%>,gPiecesKH[<%=i%>].length-gMoveCount[<%=i%>])"> >>></li>
                         </ul>
                     </div>

@@ -62,7 +62,7 @@
       <div class="chat_footer">
         <form>
           <input id="textMessage" type="text">
-          <input type="button" onclick="sendMessage()">전송</input>
+          <input type="button" onclick="sendMessage()" value="전송">
         </form>
       </div>
     </div>
@@ -71,7 +71,7 @@
 
 <script>
 <%--this is for web Socket chatting--%>
-var webSocket = new WebSocket("ws://192.168.163.130:8081/ws/chat");
+var webSocket = new WebSocket("ws://192.168.177.128:8081/ws/chat");
 var messageTextArea = document.getElementById("messageTextArea");
 
 
@@ -95,7 +95,7 @@ webSocket.onclose = function(message) {
 // 콘솔 텍스트에 종료 메시지 출력
   messageTextArea.value += "Server Disconnect...\n";
   alert("socket disconnected");
-  webSocket = new WebSocket("ws://192.168.163.130:8081/ws/chat");
+  webSocket = new WebSocket("ws://192.168.177.128:8081/ws/chat");
 
 };
 // WebSocket 서버와 통싞 중 에러 발생 시 호출되는 함수
